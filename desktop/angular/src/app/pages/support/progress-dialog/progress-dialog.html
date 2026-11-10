@@ -1,7 +1,7 @@
 <!-- Progress Indicator -->
 <div *ngIf="state !== 'error' && state !== 'done'">
 
-  <caption class="text-xxs text-secondary">Status</caption>
+  <caption class="text-xxs text-secondary"><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.b0f27b5da4aa">Status</ng-container></caption>
 
   <div class="flex flex-row gap-2">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -13,17 +13,17 @@
     <div [ngSwitch]="state">
       <!-- Uploading debug data -->
       <ng-template ngSwitchCase="debug-info">
-        <span>Uploading debug data ....</span>
+        <span><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.e0c0c6a423d9">Uploading debug data ....</ng-container></span>
       </ng-template>
 
       <!-- Github Issue -->
       <ng-template ngSwitchCase="create-issue">
-        <span>Creating GitHub issue ...</span>
+        <span><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.10cce75f455c">Creating GitHub issue ...</ng-container></span>
       </ng-template>
 
       <!-- Private ticket -->
       <ng-template ngSwitchCase="create-ticket">
-        <span>Creating private support ticket ...</span>
+        <span><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.7ef21b0c7031">Creating private support ticket ...</ng-container></span>
       </ng-template>
     </div>
   </div>
@@ -41,30 +41,30 @@
 
     <span class="text-base text-primary">
       <ng-template [ngIf]="dialogRef.data.type === 'github' && dialogRef.data.generateUrl">
-        Ticket prepared successfully
+        <ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.5f750fe18694">Ticket prepared successfully</ng-container>
       </ng-template>
 
       <ng-template [ngIf]="dialogRef.data.type !== 'github' || !dialogRef.data.generateUrl">
-        Ticket created successfully!
+        <ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.c40bc22240b2">Ticket created successfully!</ng-container>
       </ng-template>
     </span>
   </span>
 
   <div *ngIf="dialogRef.data.type === 'github' && dialogRef.data.generateUrl">
-    <span>Use the following button to open the pre-filled GitHub issue form:</span>
+    <span><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.af769c7230c7">Use the following button to open the pre-filled GitHub issue form:</ng-container></span>
 
     <br />
 
     <div class="flex flex-row items-center justify-center p-4">
-      <button class="bg-blue" (click)="integration.openExternal(url)">Create Issue</button>
+      <button class="bg-blue" (click)="integration.openExternal(url)"><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.ad1b75177cf0">Create Issue</ng-container></button>
     </div>
   </div>
 
   <div *ngIf="dialogRef.data.type === 'github' && !dialogRef.data.generateUrl" class="flex flex-col">
     <span>
-      We successfully create the issue on GitHub for you.
+      <ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.b1f3a2cffa75">We successfully create the issue on GitHub for you.</ng-container>
       <br />
-      Use the following link to check for updates:
+      <ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.d0b8c99eb4ae">Use the following link to check for updates:</ng-container>
     </span>
 
     <span class="inline-block w-full text-center mt-4 underline text-secondary"
@@ -72,7 +72,7 @@
   </div>
 
   <span *ngIf="dialogRef.data.type === 'private' && dialogRef.data.email">
-    We will contact you as soon as possbile.
+    <ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.2faa0098aaa2">We will contact you as soon as possbile.</ng-container>
   </span>
 </ng-template>
 
@@ -87,17 +87,17 @@
     </svg>
 
     <span class="text-base text-primary">
-      Failed to create Support Ticket
+      <ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.8143c6690560">Failed to create Support Ticket</ng-container>
     </span>
   </span>
 
 
   <span>
-    An error occured while creating your support ticket:
+    <ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.43fac5608433">An error occured while creating your support ticket:</ng-container>
   </span>
 
   <span class="text-red block w-full text-center">
-    {{ error || 'Unknown Error' }}
+    <ng-container *ngIf="error; else unknownError">{{ error }}</ng-container><ng-template #unknownError><ng-container i18n="@@support.unknownError">Unknown Error</ng-container></ng-template>
   </span>
 </div>
 
@@ -105,10 +105,10 @@
 <div class="flex flex-row justify-center items-center gap-2">
 
   <button *ngIf="state === 'done' && !!url && dialogRef.data.type === 'github' && !dialogRef.data.generateUrl "
-    class="bg-blue" (click)="integration.openExternal(url)">Open Issue</button>
+    class="bg-blue" (click)="integration.openExternal(url)"><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.cdcbaae3af1a">Open Issue</ng-container></button>
 
   <button *ngIf="state === 'done' && !!url && dialogRef.data.type === 'github' && !dialogRef.data.generateUrl "
-    (click)="copyUrl()">Copy URL</button>
+    (click)="copyUrl()"><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.ab29b6114955">Copy URL</ng-container></button>
 
-  <button (click)="dialogRef.close()" class="btn">Close</button>
+  <button (click)="dialogRef.close()" class="btn"><ng-container i18n="@@ui.src.app.pages.support.progress.dialog.progress.dialog.eff823d9ccef">Close</ng-container></button>
 </div>

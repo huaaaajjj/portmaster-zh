@@ -32,7 +32,17 @@ export class ExitService {
    * should be shown. It actually emits the message that should be shown.
    * An empty string indicates the overlay should be closed.
    */
-  get showOverlay$() { return this._showOverlay.asObservable() }
+  readonly showOverlay$ = this._showOverlay.pipe(
+    // Keep the state-machine values stable; only the emitted display text is localized.
+    map(message => {
+      switch (message) {
+        case MessageConnecting: return $localize`:@@ts.exit.connecting:Connecting to Portmaster`;
+        case MessageShutdown: return $localize`:@@ts.exit.shuttingDown:Shutting Down Portmaster`;
+        case MessageRestart: return $localize`:@@ts.exit.restarting:Restarting Portmaster`;
+        default: return message;
+      }
+    })
+  );
 
   constructor(
     private stateService: UIStateService,
@@ -87,8 +97,8 @@ export class ExitService {
               })
             )
             .subscribe(this.uai.httpObserver(
-              'Reloading UI ...',
-              'Failed to Reload UI',
+              $localize`:@@ts.navigation.reloadingUi:Reloading UI ...`,
+              $localize`:@@ts.navigation.reloadUiFailed:Failed to Reload UI`,
             ))
         }
       })
@@ -124,22 +134,22 @@ export class ExitService {
   shutdownPortmaster() {
     this.dialog.confirm({
       canCancel: true,
-      header: 'Shutting Down Portmaster',
-      message: 'Shutting down the Portmaster will stop all Portmaster components and will leave your system unprotected!',
-      caption: 'Caution',
+      header: $localize`:@@ts.exit.shuttingDown:Shutting Down Portmaster`,
+      message: $localize`:@@ts.exit.shutdownWarning:Shutting down the Portmaster will stop all Portmaster components and will leave your system unprotected!`,
+      caption: $localize`:@@ts.common.caution:Caution`,
       buttons: [
         {
           id: 'shutdown',
           class: 'danger',
-          text: 'Shut Down Portmaster'
+          text: $localize`:@@ts.exit.shutdown:Shut Down Portmaster`
         }
       ]
     })
       .onAction('shutdown', () => {
         this.portapi.shutdownPortmaster()
           .subscribe(this.uai.httpObserver(
-            'Shutting Down ...',
-            'Failed to Shut Down',
+            $localize`:@@ts.exit.shutdownProgress:Shutting Down ...`,
+            $localize`:@@ts.exit.shutdownFailed:Failed to Shut Down`,
           ))
       })
   }

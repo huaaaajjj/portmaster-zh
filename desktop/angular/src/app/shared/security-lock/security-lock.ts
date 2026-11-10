@@ -41,7 +41,7 @@ export class SecurityLockComponent implements OnInit {
         this.lockLevel = {
           level: SecurityLevel.Normal,
           class: 'text-green-300',
-          displayText: 'Secure',
+          displayText: $localize`:@@ts.securityLock.secure:Secure`,
         }
 
         // update the shield depending on the worst state.
@@ -50,14 +50,14 @@ export class SecurityLockComponent implements OnInit {
             this.lockLevel = {
               level: SecurityLevel.High,
               class: 'text-yellow-300',
-              displayText: 'Warning'
+              displayText: $localize`:@@ts.securityLock.warning:Warning`
             }
             break;
           case ModuleStateType.Error:
             this.lockLevel = {
               level: SecurityLevel.Extreme,
               class: 'text-red-300',
-              displayText: 'Insecure'
+              displayText: $localize`:@@ts.securityLock.insecure:Insecure`
             }
             break;
         }
@@ -67,9 +67,9 @@ export class SecurityLockComponent implements OnInit {
         if (pausedState?.Data) {
           const pauseData = pausedState.Data as ControlPauseStateData;
           if (pauseData.Interception === true) {
-            this.lockLevel.displayText = 'Insecure: PAUSED';
+            this.lockLevel.displayText = $localize`:@@ts.securityLock.paused:Insecure: PAUSED`;
           } else if (pauseData.SPN === true) {
-            this.lockLevel.displayText = 'Secure (SPN Paused)';
+            this.lockLevel.displayText = $localize`:@@ts.securityLock.spnPaused:Secure (SPN Paused)`;
           }
         }
 

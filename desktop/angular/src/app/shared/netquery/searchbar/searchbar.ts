@@ -13,6 +13,7 @@ import { ExpertiseService } from "../../expertise";
 import { objKeys } from "../../utils";
 import { NetqueryHelper } from "../connection-helper.service";
 import { Parser, ParseResult } from "../textql";
+import { connectionValueLabel } from "../utils";
 
 export type SfngSearchbarFields = {
   [key in keyof Partial<NetqueryConnection>]: any[];
@@ -60,7 +61,7 @@ export class SfngNetquerySuggestionDirective<K extends keyof NetqueryConnection>
     if (typeof this.sfngNetquerySuggestion === 'string') {
       return this.sfngNetquerySuggestion;
     }
-    return '' + this.sfngNetquerySuggestion?.value;
+    return this.sfngNetquerySuggestion?.display || '' + this.sfngNetquerySuggestion?.value;
   }
 }
 
@@ -114,6 +115,7 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
   suggestions: SfngSearchbarSuggestion<any>[] = [];
 
   textSearch = '';
+  readonly valueLabel = connectionValueLabel;
 
   @HostListener('focus')
   onFocus() {
@@ -323,7 +325,8 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
       const selectedSuggestion = this.suggestionValues.toArray().findIndex(val => val.active);
       if (selectedSuggestion > 0) { // we must skip 0 here as well as that's the dummy element
         const sug = this.suggestionValues.get(selectedSuggestion);
-        this.applySuggestion(sug?.sfngSuggestion?.field, sug?.sfngNetquerySuggestion, event, sug?.sfngSuggestion?.start)
+        const value = sug?.sfngNetquerySuggestion;
+        this.applySuggestion(sug?.sfngSuggestion?.field, typeof value === 'string' ? value : value?.value, event, sug?.sfngSuggestion?.start)
 
         return;
       }

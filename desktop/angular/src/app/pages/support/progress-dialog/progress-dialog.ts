@@ -167,7 +167,7 @@ export class SupportProgressDialogComponent implements OnInit {
     }
 
     this.integration.writeToClipboard(this.url)
-      .then(() => this.uai.success('URL Copied To Clipboard'))
-      .catch(err => this.uai.error('Failed to Copy To Clipboard', this.uai.getErrorMessage(err)))
+      .then(() => this.uai.success($localize`:@@settings.ts.f3d47fb039f4:URL Copied To Clipboard`))
+      .catch(err => this.uai.error($localize`:@@settings.ts.d4cf27bebbf8:Failed to Copy To Clipboard`, this.uai.getErrorMessage(err)))
   }
 }

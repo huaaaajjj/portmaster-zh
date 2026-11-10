@@ -1,0 +1,262 @@
+# 非官方简体中文帮助；保留原始消息键、链接与动作数据。
+myKey:
+  title: 提示示例
+  content: |
+    这是使用 Markdown 格式编写的内容。
+
+    这项全新的功能支持多种 Markdown 特性，例如：
+    - 有序列表
+    - 多个列表项
+
+    还支持 :rocket: 表情符号。
+
+    ### :tada: :facepalm:
+  url: 'https://docs.safing.io/?source=Portmaster'
+  urlText: 让我看看！
+  nextKey: navMonitor
+introTipup:
+  title: 欢迎！
+  content: |
+    感谢你安装 Portmaster。
+intro:
+  title: Portmaster 使用提示
+  content: |
+    打开提示，了解 Portmaster 的使用方法。
+
+    这样的提示遍布整个界面。有些提示还可以带你逐步了解某个界面元素或功能。
+  nextKey: navShield
+navShield:
+  title: 状态盾牌与总览
+  content: |
+    盾牌显示 Portmaster 的整体状态。如果它不再是绿色，请查看相关通知，了解发生了什么。
+
+    __点击盾牌可打开总览。__
+  nextKey: navMonitor
+navMonitor:
+  title: 网络监视器
+  content: |
+    查看并调查设备上的全部网络活动。
+  nextKey: navApps
+  buttons:
+    - name: 开始导览
+      action:
+        Type: open-page
+        Payload: monitor
+      nextKey: networkMonitor
+navApps:
+  title: 应用专属设置
+  content: |
+    为单个应用配置设置，覆盖全局默认值。
+  nextKey: navMap
+  buttons:
+    - name: 开始导览
+      action:
+        Type: open-page
+        Payload: apps
+      nextKey: appsTitle
+navMap:
+  title: SPN 地图
+  content: |
+    查看 SPN 地图，了解连接的路由路径。
+  nextKey: navSettings
+navSettings:
+  title: 全局设置
+  content: |
+    配置 Portmaster 的全局设置。
+  nextKey: navSupport
+  buttons:
+    - name: 开始导览
+      action:
+        Type: open-page
+        Payload: settings
+      nextKey: globalSettings
+navSupport:
+  title: 获取帮助
+  content: |
+    报告问题、联系支持人员，或查看完整的 Portmaster 文档。
+  nextKey: navTools
+  buttons:
+    - name: 打开页面
+      action:
+        Type: open-page
+        Payload: support
+navTools:
+  title: 版本与工具
+  content: |
+    查看 Portmaster 的版本，使用特殊操作和工具。
+  nextKey: navPause
+navPause:
+  title: 暂停与恢复
+  content: |
+    临时暂停 Portmaster 的保护与网络监视。
+
+    你可以只暂停 SPN，也可以暂停全部保护。
+  nextKey: navPower
+navPower:
+  title: 关闭与重启
+  content: |
+    关闭或重新启动 Portmaster。
+  nextKey: uiMode
+uiMode:
+  title: 界面模式
+  content: |
+    快速调整界面显示的设置和信息数量。
+
+    被隐藏的设置仍然生效。关闭界面后，模式会恢复为默认值。
+  buttons:
+    - name: 更改默认界面模式
+      action:
+        Type: open-setting
+        Payload:
+          Key: core/expertiseLevel
+pilot-widget:
+  title: Portmaster 状态
+  content: "盾牌显示 Portmaster 的当前状态：\n\n- \U0001F7E2 一切正常\n- \U0001F7E1 存在异常，请检查\n- \U0001F534 存在危险，请立即处理\n\n系统托盘图标也使用同样的颜色提示。\n"
+pilot-widget-NetworkRating:
+  title: 网络信任等级
+  content: |
+    即使连接到新网络，也能掌控自己的隐私。
+
+    你可以让某些设置只在特定网络环境下生效。例如，在家允许敏感连接，但在公共图书馆禁止这些连接。
+
+    每次切换网络时，只需调整网络信任等级。
+  nextKey: pilot-widget-NetworkRating-Trusted
+pilot-widget-NetworkRating-Trusted:
+  title: 网络信任等级：可信
+  content: |
+    你信任当前网络，认为它能够提供安全保护。
+
+    例如：
+    - 家庭网络
+    - 可信朋友的网络
+  nextKey: pilot-widget-NetworkRating-Untrusted
+pilot-widget-NetworkRating-Untrusted:
+  title: 网络信任等级：不可信
+  content: |
+    你不信任当前网络，无法确定它是否能保障安全与隐私。
+
+    例如：
+    - 咖啡馆、图书馆、列车或酒店等场所的公共 Wi-Fi
+    - 不熟悉网络安全的亲友所提供的网络
+  nextKey: pilot-widget-NetworkRating-Danger
+pilot-widget-NetworkRating-Danger:
+  title: 网络信任等级：危险
+  content: |
+    你认为当前网络已遭入侵，或对你存在其他威胁。
+
+    例如：
+    - 家庭网络出现可疑活动
+
+    <small>_注意：选择“危险”等级后，Portmaster 会采用非常严格的保护措施，可能导致某些应用无法正常工作。_</small>
+broadcast-info:
+  title: 公告通知
+  content: |
+    公告通知是在检查更新时由 Portmaster 下载的公开消息。
+
+    Portmaster 会在本地判断哪些消息需要显示。
+  url: 'https://github.com/safing/portmaster/issues/703'
+  urlText: 了解更多
+dashboardIntro:
+  title: 总览
+  content: |
+    总览显示 Portmaster 已启用的功能，以及设备上的网络活动。
+
+    除非另有说明，图表和统计数据均基于过去 10 分钟的活动，每 10 秒刷新一次。
+networkMonitor:
+  title: 网络活动
+  content: |
+    查看设备上的全部网络活动。
+
+    这里列出了过去 10 分钟内所有应用和进程的网络连接。点击任意应用或进程可进一步调查。
+networkMonitor-App-Focus-connection-history:
+  title: 网络活动
+  content: |
+    实时查看连接。点击任意连接可查看详情并执行操作。
+    <br /><br />
+    <span class="inline-block">
+      <span class="pill-container">
+        <span class="counter">2k+</span>
+        <span class="pill">
+          <span class="percentage"></span>
+        </span>
+      </span>
+    </span> <b>状态摘要</b>
+    <br /><br />
+    分组连接的彩色条显示连接总数，以及允许连接（绿色）与阻止或失败连接（灰色）的比例。
+    <br /><br />
+    单个连接有三种状态：<br />
+    <span class="verdict accept"></span><span class="verdict accept outdated"></span> <b>已允许</b> <br />
+    <span class="block verdict"></span><span class="block verdict outdated"></span> <b>已阻止</b> <br />
+    <span class="verdict failed"></span><span class="verdict failed outdated"></span> <b>连接失败</b> <br />
+
+    实心圆表示连接由_当前_设置允许或阻止。<br />
+    空心圆表示连接由_之前_的设置允许或阻止，当前设置可能给出不同的判定。
+globalSettings:
+  title: 全局设置
+  content: |
+    在这里设置系统范围的偏好，并为所有应用和连接配置默认规则。
+
+    你可以先创建严格的全局规则，再在应用设置中添加例外；应用设置会覆盖全局默认值。
+appsTitle:
+  title: 应用总览
+  content: |
+    Portmaster 观察到参与网络活动的所有应用和进程都列在这里，并可单独配置。
+
+    应用按以下分类显示，每个应用只出现一次：
+
+    - **活动应用：** 当前活跃、可在网络监视器中看到的应用
+    - **近期使用：** 过去一周内有过网络活动的应用
+    - **近期修改：** 过去一周内修改过设置的应用
+    - **其他：** 所有其他应用
+appSettings:
+  title: 应用设置
+  content: |
+    配置应用专属设置，覆盖全局设置。
+
+    你可以先创建严格的全局规则，再在应用设置中添加例外；应用设置会覆盖全局默认值。
+  nextKey: appSettings-Filter
+appSettings-Filter:
+  title: 显示模式
+  content: |
+    快速切换显示的设置范围：
+
+    **查看已启用的覆盖项：**<br>
+    只显示覆盖全局默认值的应用专属设置。
+
+    **查看全部：**<br>
+    显示所有设置，并突出显示覆盖全局默认值的应用专属设置。
+appSettings-QuickSettings:
+  title: 快速调整关键设置
+  content: |
+    __阻止连接__
+
+    设置在没有其他规则允许或阻止出站连接时采用的默认操作。
+
+    如果其他设置可能覆盖此操作，开关旁的黄色圆点会提示可能存在的例外。
+
+    __SPN__
+
+    快速为此应用启用或关闭 SPN。
+
+    如果其他设置可能覆盖此操作，开关旁的黄色圆点会提示可能存在的例外。
+
+    __保留历史__
+
+    将连接保存到本地磁盘数据库，以便日后查看和搜索。
+
+    更改可能需要几分钟才能应用到所有连接。
+support-page-related-issues:
+  title: 本地问题搜索
+  content: |
+    公开问题仅在本地搜索。在你主动决定发送信息之前，数据不会离开设备。
+
+    公开的 GitHub 问题通过支持系统下载，避免直接暴露给 GitHub。
+spn:
+  title: Safing 隐私网络
+  content: |
+    Safing 隐私网络（SPN）是 Portmaster 的附加功能，可保护你的身份和网络流量，防止他人窥探。它将连接分散到多个服务器，让你同时从多个位置访问互联网，从而提升隐私保护。
+  url: 'https://safing.io/spn/?source=Portmaster'
+  urlText: 了解更多
+process-tags:
+  title: 进程标签
+  content: 进程标签是 Portmaster 收集的特殊进程元数据。你可以在指纹中使用这些标签，更准确地匹配原本难以识别或无法正确匹配的进程。

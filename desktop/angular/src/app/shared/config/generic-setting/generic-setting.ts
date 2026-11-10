@@ -131,7 +131,7 @@ export class GenericSettingComponent<S extends BaseSetting<any, any>> implements
 
   /** The label to display in the reset-value button */
   @Input()
-  resetLabelText = 'Reset';
+  resetLabelText = $localize`:@@settings.ts.daee7606b339:Reset`;
 
   /** Emits an event whenever the setting should be saved. */
   @Output()
@@ -350,7 +350,7 @@ export class GenericSettingComponent<S extends BaseSetting<any, any>> implements
     if (this._setting?.Help) {
       this.sfngTipUpButtons = [
         {
-          name: 'Show More',
+          name: $localize`:@@settings.ts.ba8a80fdd737:Show More`,
           action: {
             ID: '',
             Text: '',
@@ -552,17 +552,17 @@ export class GenericSettingComponent<S extends BaseSetting<any, any>> implements
   restartNow() {
     if (this._setting?.RequiresRestart) {
       this.dialog.confirm({
-        header: 'Restart Portmaster',
-        message: 'Do you want to restart the Portmaster now?',
+        header: $localize`:@@settings.ts.ee012301aebc:Restart Portmaster`,
+        message: $localize`:@@settings.ts.d0e0598e17ca:Do you want to restart the Portmaster now?`,
         buttons: [
           {
             id: 'no',
-            text: 'Maybe Later',
+            text: $localize`:@@settings.ts.166b26ab559b:Maybe Later`,
             class: 'outline',
           },
           {
             id: 'restart',
-            text: 'Restart',
+            text: $localize`:@@settings.ts.6b983a81e5e8:Restart`,
             class: 'danger'
           }
         ]
@@ -570,8 +570,8 @@ export class GenericSettingComponent<S extends BaseSetting<any, any>> implements
         .onAction('restart', () =>
           this.portapi.restartPortmaster()
             .subscribe(this.actionIndicator.httpObserver(
-              'Restarting ...',
-              'Failed to Restart',
+              $localize`:@@settings.ts.de9fd84d3ba7:Restarting ...`,
+              $localize`:@@settings.ts.160774f6764c:Failed to Restart`,
             ))
         )
         .onAction('no', () => {
@@ -590,8 +590,8 @@ export class GenericSettingComponent<S extends BaseSetting<any, any>> implements
           })
         )
         .subscribe(this.actionIndicator.httpObserver(
-          'Reloading UI ...',
-          'Failed to Reload UI',
+          $localize`:@@settings.ts.2afcd9c35d70:Reloading UI ...`,
+          $localize`:@@settings.ts.6c42ef6a1b79:Failed to Reload UI`,
         ))
     }
   }

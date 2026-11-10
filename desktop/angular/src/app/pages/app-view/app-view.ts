@@ -59,6 +59,7 @@ import { SaveSettingEvent } from 'src/app/shared/config/generic-setting/generic-
 import { ExpertiseService } from 'src/app/shared/expertise';
 import { SfngNetqueryViewer } from 'src/app/shared/netquery';
 import { EditProfileDialog } from './../../shared/edit-profile-dialog/edit-profile-dialog';
+import { getFingerprintOperationLabel, getFingerprintTypeLabel } from '../../shared/utils';
 
 @Component({
   templateUrl: './app-view.html',
@@ -66,6 +67,8 @@ import { EditProfileDialog } from './../../shared/edit-profile-dialog/edit-profi
   animations: [fadeOutAnimation, fadeInAnimation],
 })
 export class AppViewComponent implements OnInit, OnDestroy {
+  readonly fingerprintTypeLabel = getFingerprintTypeLabel;
+  readonly fingerprintOperationLabel = getFingerprintOperationLabel;
   private readonly integration = inject(INTEGRATION_SERVICE);
 
   @ViewChild(SfngNetqueryViewer)
@@ -245,7 +248,7 @@ export class AppViewComponent implements OnInit, OnDestroy {
         }
 
         console.error(err);
-        this.actionIndicator.error('Failed to save setting', err);
+        this.actionIndicator.error($localize`:@@ts.appView.saveSettingFailed:Failed to save setting`, err);
       },
     });
   }
@@ -300,8 +303,8 @@ export class AppViewComponent implements OnInit, OnDestroy {
     }
 
     const observer = this.actionIndicator.httpObserver(
-      'History successfully removed',
-      'Failed to remove history'
+      $localize`:@@ts.appView.historyRemoved:History successfully removed`,
+      $localize`:@@ts.appView.removeHistoryFailed:Failed to remove history`
     );
 
     this.netquery
@@ -362,7 +365,7 @@ export class AppViewComponent implements OnInit, OnDestroy {
             });
 
             this.actionIndicator.error(
-              'Failed To Get Profile',
+              $localize`:@@ts.appView.getProfileFailed:Failed To Get Profile`,
               this.actionIndicator.getErrorMessgae(err)
             );
 
@@ -393,8 +396,8 @@ export class AppViewComponent implements OnInit, OnDestroy {
                   complete: () => {
                     if (fingerprintsChanged) {
                       this.actionIndicator.info(
-                        'Profile ID Changed',
-                        'The fingerprint change caused the profile to be re-keyed. You can find the app in the app list to continue editing.'
+                        $localize`:@@ts.appView.profileIdChanged:Profile ID Changed`,
+                        $localize`:@@ts.appView.profileRekeyed:The fingerprint change caused the profile to be re-keyed. You can find the app in the app list to continue editing.`
                       );
                     }
                     this.router.navigate(['/app/']);
@@ -641,7 +644,7 @@ export class AppViewComponent implements OnInit, OnDestroy {
         console.log(data);
         // Copy to clip-board if supported
         await this.integration.writeToClipboard(data);
-        this.actionIndicator.success('Copied to Clipboard');
+        this.actionIndicator.success($localize`:@@ts.common.copiedToClipboard:Copied to Clipboard`);
       });
   }
 
@@ -661,21 +664,21 @@ export class AppViewComponent implements OnInit, OnDestroy {
     this.dialog
       .confirm({
         canCancel: true,
-        caption: 'Caution',
-        header: 'Deleting Profile ' + this.appProfile.Name,
+        caption: $localize`:@@ts.common.caution:Caution`,
+        header: $localize`:@@ts.appView.deletingProfile:Deleting Profile ${this.appProfile.Name}:PROFILE:`,
         message:
-          'Do you really want to delete this profile? All settings will be lost.',
+          $localize`:@@ts.appView.deleteProfileConfirmation:Do you really want to delete this profile? All settings will be lost.`,
         buttons: [
-          { id: '', text: 'Cancel', class: 'outline' },
-          { id: 'delete', class: 'danger', text: 'Yes, delete it' },
+          { id: '', text: $localize`:@@ts.common.cancel:Cancel`, class: 'outline' },
+          { id: 'delete', class: 'danger', text: $localize`:@@ts.common.confirmDelete:Yes, delete it` },
         ],
       })
       .onAction('delete', () => {
         this.profileService.deleteProfile(this.appProfile!).subscribe(() => {
           this.router.navigate(['/app/overview']);
           this.actionIndicator.success(
-            'Profile Deleted',
-            'Successfully deleted profile ' + this.appProfile?.Name
+            $localize`:@@ts.appView.profileDeleted:Profile Deleted`,
+            $localize`:@@ts.appView.deletedProfile:Successfully deleted profile ${this.appProfile?.Name}:PROFILE:`
           );
         });
       });

@@ -4,5 +4,5 @@
   <span style="direction: ltr; unicode-bidi: bidi-override;">{{domain}}</span>
 </ng-container>
 <ng-template #scopeTranslationTemplate>
-  {{ scopeTranslation[scope || ''] || 'N/A' }}
+  {{ scopeTranslation.get(scope || '') || scope || notAvailable }}
 </ng-template>

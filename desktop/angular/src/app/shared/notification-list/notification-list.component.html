@@ -1,4 +1,4 @@
-<caption class="text-xs text-secondary" *ngIf="!!notifications.length">Notifications</caption>
+<caption class="text-xs text-secondary" *ngIf="!!notifications.length"><ng-container i18n="@@ui.src.app.shared.notification.list.notification.list.component.082c1f7253c4">Notifications</ng-container></caption>
 
 <div class="flex flex-col w-full gap-2">
   <div class="row" (click)="toggelView(notif)" *ngFor="let notif of notifications; trackBy: trackBy">

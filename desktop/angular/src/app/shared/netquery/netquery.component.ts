@@ -15,7 +15,7 @@ import { IPScopeNames, LocalAppProfile, NetqueryHelper } from "./connection-help
 import { SfngSearchbarFields } from "./searchbar";
 import { SfngTagbarValue } from "./tag-bar";
 import { Parser } from "./textql";
-import { connectionFieldTranslation, mergeConditions } from "./utils";
+import { connectionFieldTranslation, connectionValueLabel, mergeConditions } from "./utils";
 import { DefaultBandwidthChartConfig } from "./line-chart/line-chart";
 import { INTEGRATION_SERVICE } from "src/app/integration";
 
@@ -62,11 +62,11 @@ const orderByKeys: (keyof Partial<NetqueryConnection>)[] = [
   'profile',
 ]
 
-export const reloadIntervalValues: { [key: string]: number } = {
-  "⏸\u00A0\u00A0Don't auto-reload": 0,
-  "↻\u00A0\u00A0Reload every 10 seconds": 10,
-  "↻\u00A0\u00A0Reload every 1 minute": 60,
-  "↻\u00A0\u00A0Reload every 5 minutes": 300,
+export const reloadIntervalValues: { [key: string]: { seconds: number; label: string } } = {
+  "⏸\u00A0\u00A0Don't auto-reload": { seconds: 0, label: $localize`:@@netquery.reload.off:⏸  Don't auto-reload` },
+  "↻\u00A0\u00A0Reload every 10 seconds": { seconds: 10, label: $localize`:@@netquery.reload.tenSeconds:↻  Reload every 10 seconds` },
+  "↻\u00A0\u00A0Reload every 1 minute": { seconds: 60, label: $localize`:@@netquery.reload.oneMinute:↻  Reload every 1 minute` },
+  "↻\u00A0\u00A0Reload every 5 minutes": { seconds: 300, label: $localize`:@@netquery.reload.fiveMinutes:↻  Reload every 5 minutes` },
 }
 
 interface LocalQueryResult extends QueryResult {
@@ -149,7 +149,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
   /** @private A list of quick-date settings for the nz-range-picker */
   quickDateSettings: QuickDateSetting[] = [
     {
-      name: 'Today',
+      name: $localize`:@@netquery.date.today:Today`,
       apply: () => {
         const now = new Date();
         return [
@@ -159,7 +159,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
       }
     },
     {
-      name: 'Last 24 Hours',
+      name: $localize`:@@netquery.date.lastDay:Last 24 Hours`,
       apply: () => {
         const now = new Date();
         return [
@@ -169,7 +169,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
       }
     },
     {
-      name: 'Last 7 Days',
+      name: $localize`:@@netquery.date.lastWeek:Last 7 Days`,
       apply: () => {
         const now = new Date();
         return [
@@ -179,7 +179,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
       }
     },
     {
-      name: 'Last Month',
+      name: $localize`:@@netquery.date.lastMonth:Last Month`,
       apply: () => {
         const now = new Date();
         return [
@@ -193,8 +193,9 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
   applyQuickDateSetting(qds: QuickDateSetting) {
     const [from, to] = qds.apply()
 
-    const fromStr = formatDate(from, 'medium', this.localeId)
-    const toStr = formatDate(to, 'medium', this.localeId)
+    // These strings are serialized into textql; localized tag labels are display-only.
+    const fromStr = formatDate(from, 'medium', 'en-US')
+    const toStr = formatDate(to, 'medium', 'en-US')
 
     this.onFieldsParsed({
       from: [fromStr],
@@ -260,13 +261,14 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
 
   /** Auto-reload: The list of all intervals */
   readonly reloadIntervals = Object.keys(reloadIntervalValues);
+  readonly reloadIntervalValues = reloadIntervalValues;
   /** Auto-reload: The name of the currently selected auto-reload interval */
   autoReloadIntervalName: string = ''; 
   /** Auto-reload: The timestamp of auto-reload being enabled */
   autoReloadEnabledTimestamp: Date | null = null;
   /** Auto-reload: Enable/disable auto-reload and set the interval */
   onAutoRefreshChange(intervalName: string) {
-    const delaySec = reloadIntervalValues[intervalName] || 0;
+    const delaySec = reloadIntervalValues[intervalName]?.seconds || 0;
     if (delaySec <= 0) {      
       this.autoReloadIntervalName = '';     
       return;
@@ -288,7 +290,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
           return 0;
         }
 
-        const intervalSeconds = reloadIntervalValues[this.autoReloadIntervalName] || 0;
+        const intervalSeconds = reloadIntervalValues[this.autoReloadIntervalName]?.seconds || 0;
         if (intervalSeconds <= 0) return 0;
       
         const startTime = (this.autoReloadEnabledTimestamp && this.autoReloadEnabledTimestamp > this.lastReload) ? this.autoReloadEnabledTimestamp : this.lastReload;
@@ -434,7 +436,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
     if (fromValid) {
       this.dateFilter.push(fromValue)
       this.models.from.searchValues = [
-        formatDate(fromValue, 'medium', this.localeId)
+        formatDate(fromValue, 'medium', 'en-US')
       ]
     }
 
@@ -445,7 +447,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
 
       this.dateFilter.push(toValue)
       this.models.to.searchValues = [
-        formatDate(toValue, 'medium', this.localeId)
+        formatDate(toValue, 'medium', 'en-US')
       ]
     }
 
@@ -494,13 +496,13 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
     encrypted: {},
     scope: {
       visible: 'combinedMenu',
-      menuTitle: 'Network Scope',
+      menuTitle: $localize`:@@netquery.networkScope:Network Scope`,
       suggestions: objKeys(IPScopeNames)
         .sort()
         .filter(key => key !== IPScope.Undefined)
         .map(scope => {
           return {
-            Name: IPScopeNames[scope],
+            Name: connectionValueLabel('scope', scope),
             Value: scope,
             count: 0,
             Description: ''
@@ -518,16 +520,16 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
     ip_protocol: {},
     direction: {
       visible: 'combinedMenu',
-      menuTitle: 'Direction',
+      menuTitle: connectionFieldTranslation['direction'],
       suggestions: [
         {
-          Name: 'Inbound',
+          Name: connectionValueLabel('direction', 'inbound'),
           Value: 'inbound',
           Description: '',
           count: 0,
         },
         {
-          Name: 'Outbound',
+          Name: connectionValueLabel('direction', 'outbound'),
           Value: 'outbound',
           Description: '',
           count: 0,
@@ -538,7 +540,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
     asn: {},
     active: {
       visible: 'combinedMenu',
-      menuTitle: 'Active',
+      menuTitle: connectionFieldTranslation['active'],
       suggestions: booleanSuggestionValues(),
     },
     tunneled: {
@@ -557,6 +559,8 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
 
   /** Translations for the connection field names */
   keyTranslation = connectionFieldTranslation;
+  readonly valueLabel = connectionValueLabel;
+  readonly notAvailable = connectionValueLabel('', null);
 
   /** A list of keys for group-by */
   groupByKeys: string[] = [];
@@ -672,8 +676,8 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
                 .pipe(
                   catchError(err => {
                     this.actionIndicator.error(
-                      'Internal Error',
-                      'Failed to load chart: ' + this.actionIndicator.getErrorMessgae(err)
+                      $localize`:@@netquery.internalError:Internal Error`,
+                      $localize`:@@netquery.loadChartFailed:Failed to load chart: ${this.actionIndicator.getErrorMessgae(err)}:ERROR:`
                     );
 
                     return of([] as ChartResult[]);
@@ -683,8 +687,8 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
                 .pipe(
                   catchError(err => {
                     this.actionIndicator.error(
-                      'Internal Error',
-                      'Failed to load bandwidth chart: ' + this.actionIndicator.getErrorMessgae(err)
+                      $localize`:@@netquery.internalError:Internal Error`,
+                      $localize`:@@netquery.loadBandwidthChartFailed:Failed to load bandwidth chart: ${this.actionIndicator.getErrorMessgae(err)}:ERROR:`
                     );
 
                     return of([] as BandwidthChartResult<any>[]);
@@ -1034,7 +1038,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
             }
 
             if (!allowedKeys.has(val as any)) {
-              this.actionIndicator.error("Invalid search query", "Column " + val + " is not allowed for groupby")
+              this.actionIndicator.error($localize`:@@netquery.invalidQuery:Invalid search query`, $localize`:@@netquery.invalidGroupByColumn:Column ${val}:COLUMN: is not allowed for groupby`)
               return false;
             }
             return true;
@@ -1047,7 +1051,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
         this.orderByKeys = (fields.orderBy || this.orderByKeys)
           .filter(val => {
             if (!allowedKeys.has(val as any)) {
-              this.actionIndicator.error("Invalid search query", "Column " + val + " is not allowed for orderby")
+              this.actionIndicator.error($localize`:@@netquery.invalidQuery:Invalid search query`, $localize`:@@netquery.invalidOrderByColumn:Column ${val}:COLUMN: is not allowed for orderby`)
               return false;
             }
             return true;
@@ -1057,7 +1061,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
       }
 
       if (!allowedKeys.has(key)) {
-        this.actionIndicator.error("Invalid search query", "Column " + key + " is not allowed for filtering");
+        this.actionIndicator.error($localize`:@@netquery.invalidQuery:Invalid search query`, $localize`:@@netquery.invalidFilterColumn:Column ${key}:COLUMN: is not allowed for filtering`);
         return;
       }
 
@@ -1071,7 +1075,7 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
           }
 
           if (typeof val === 'object' && '$ne' in val) {
-            this.actionIndicator.error("NOT conditions are not yet supported")
+            this.actionIndicator.error($localize`:@@netquery.notUnsupported:NOT conditions are not yet supported`)
             return;
           }
 
@@ -1143,10 +1147,10 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
   copyQuery() {
     this.integration.writeToClipboard(this.getQueryString())
       .then(() => {
-        this.actionIndicator.success("Query copied to clipboard", 'Go ahead and share your query!')
+        this.actionIndicator.success($localize`:@@netquery.queryCopied:Query copied to clipboard`, $localize`:@@netquery.queryShare:Go ahead and share your query!`)
       })
       .catch((err) => {
-        this.actionIndicator.error('Failed to copy to clipboard', this.actionIndicator.getErrorMessgae(err))
+        this.actionIndicator.error($localize`:@@netquery.copyFailed:Failed to copy to clipboard`, this.actionIndicator.getErrorMessgae(err))
       })
   }
 
@@ -1356,13 +1360,13 @@ function initializeModels(models: { [key: string]: Partial<Model<any>> }): { [ke
 function booleanSuggestionValues(): Suggestion<any>[] {
   return [
     {
-      Name: 'Yes',
+      Name: connectionValueLabel('allowed', true),
       Value: true,
       Description: '',
       count: 0,
     },
     {
-      Name: 'No',
+      Name: connectionValueLabel('allowed', false),
       Value: false,
       Description: '',
       count: 0,

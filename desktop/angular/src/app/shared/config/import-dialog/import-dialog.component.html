@@ -1,6 +1,6 @@
 <header class="flex flex-row justify-between items-center mb-2">
   <h1 class="m-0 text-sm font-light">
-    Import {{ dialogRef.data.type === "setting" ? "Settings" : "Profile" }}
+    <ng-container i18n="@@settings.importTitle">{dialogRef.data.type, select, setting {Import Settings} other {Import Profile}}</ng-container>
   </h1>
 
   <svg role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
@@ -11,35 +11,35 @@
   </svg>
 </header>
 
-<span class="text-xs font-light">Please paste the "Export Content" or use "Choose File" to select one from
-  your hard disk.</span>
+<span class="text-xs font-light"><ng-container i18n="@@settings.ui.db0691678a99">Please paste the "Export Content" or use "Choose File" to select one from
+  your hard disk.</ng-container></span>
 
 <pre tabindex="0" class="block flex-grow w-full rounded border border-gray-500 language-yaml overflow-auto outline-none"
   #codeBlock id="yaml" contenteditable="true" (blur)="onBlur()" (mouseleave)="onBlur()" (paste)="onPaste($event)"></pre>
 
 <fieldset class="p-2 text-xs font-light bg-gray-400 rounded border border-gray-500 border-solid">
-  <legend class="px-2 py-1 m-0 text-xs w-fit">Configuration</legend>
+  <legend class="px-2 py-1 m-0 text-xs w-fit"><ng-container i18n="@@settings.ui.b332c3492d5e">Configuration</ng-container></legend>
 
   <div class="p-2 space-y-2">
     <div class="flex flex-row gap-2" *ngIf="dialogRef.data.type === 'setting'">
       <input type="checkbox" [(ngModel)]="reset" id="reset" />
-      <label class="text-primary" for="reset">Reset all settings to default before importing</label>
+      <label class="text-primary" for="reset"><ng-container i18n="@@settings.ui.1e3f00d5675a">Reset all settings to default before importing</ng-container></label>
     </div>
 
     <div class="flex flex-row gap-2" *ngIf="result?.containsUnknown">
       <input type="checkbox" id="allowUnknown" [(ngModel)]="allowUnknown" />
-      <label class="text-primary" for="allowUnknown">Allow unknown settings</label>
+      <label class="text-primary" for="allowUnknown"><ng-container i18n="@@settings.ui.9f9f3f4eee6d">Allow unknown settings</ng-container></label>
     </div>
 
     <!-- Replacing existing profile must be explicitly accepted for profile (but not for settings...) -->
     <div class="flex flex-row gap-2" *ngIf="result?.replacesExisting && dialogRef.data.type === 'profile'">
       <input type="checkbox" id="allowUnknown" [(ngModel)]="allowReplace" />
-      <label class="text-primary" for="allowUnknown">Allow replacing an existing profile</label>
+      <label class="text-primary" for="allowUnknown"><ng-container i18n="@@settings.ui.3d14e98460e0">Allow replacing an existing profile</ng-container></label>
     </div>
 
     <div class="flex flex-row gap-2" *ngIf="result?.restartRequired">
       <input type="checkbox" id="restart" [(ngModel)]="triggerRestart" />
-      <label class="text-primary" for="restart">Automatically restart Portmaster after a successfull import</label>
+      <label class="text-primary" for="restart"><ng-container i18n="@@settings.ui.3de4e8e6ce32">Automatically restart Portmaster after a successfull import</ng-container></label>
     </div>
   </div>
 </fieldset>
@@ -51,7 +51,7 @@
         result.replacesExisting ||
         result.restartRequired))
   ">
-  <legend class="px-2 py-1 m-0 text-xs w-fit">Warning</legend>
+  <legend class="px-2 py-1 m-0 text-xs w-fit"><ng-container i18n="@@settings.ui.e981ddae45d8">Warning</ng-container></legend>
 
   <div *ngIf="!!errorMessage" class="flex flex-row gap-2 items-center p-2 w-full text-xs font-normal">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -64,35 +64,31 @@
 
   <ul *ngIf="result" class="px-2 py-2 pl-7 list-disc">
     <li *ngIf="result.containsUnknown">
-      This export contains unknown settings. To import it, you must enable
-      "Allow unknown settings".
+      <ng-container i18n="@@settings.ui.3621c0e8ad7d">This export contains unknown settings. To import it, you must enable
+      "Allow unknown settings".</ng-container>
     </li>
 
     <li *ngIf="result.replacesExisting">
-      {{
-      dialogRef.data.type === "setting"
-      ? "This export will overwrite settings that have been changed by you."
-      : "This export will overwrite an existing profile."
-      }}
+      <ng-container i18n="@@settings.overwriteWarning">{dialogRef.data.type, select, setting {This export will overwrite settings that have been changed by you.} other {This export will overwrite an existing profile.}}</ng-container>
 
       <ng-container *ngIf="replacedProfiles.length as count">
-        And deletes {{ count }} previously merged profile{{ count > 1 ? 's' : '' }}
+        <ng-container i18n="@@settings.deleteMergedProfiles">{count, plural, =1 {And deletes # previously merged profile} other {And deletes # previously merged profiles}}</ng-container>
       </ng-container>
     </li>
 
     <li *ngIf="result.restartRequired">
-      This export will require a restart of the Portmaster to take effect.
+      <ng-container i18n="@@settings.ui.df1722c47100">This export will require a restart of the Portmaster to take effect.</ng-container>
     </li>
   </ul>
 </fieldset>
 
 <div class="flex flex-row justify-between">
   <button>
-    <label class="block" for="avatarInput"> Choose File </label>
+    <label class="block" for="avatarInput"> <ng-container i18n="@@settings.ui.d7042a659887">Choose File</ng-container> </label>
   </button>
 
   <button class="text-white bg-blue" (click)="import()" [disabled]="!result">
-    Import
+    <ng-container i18n="@@settings.ui.2cff9baabf56">Import</ng-container>
   </button>
 </div>
 

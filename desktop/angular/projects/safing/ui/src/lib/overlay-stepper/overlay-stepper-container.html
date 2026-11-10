@@ -14,9 +14,9 @@
 
 <ng-template #defaultButtonTemplate>
   <div class="flex flex-row justify-between">
-    <button class="w-32 py-2" (click)="goBack()">Go Back</button>
+    <button class="w-32 py-2" (click)="goBack()"><ng-container i18n="@@ui.projects.safing.ui.src.lib.overlay.stepper.overlay.stepper.container.1c7c49fdc261">Go Back</ng-container></button>
     <button class="w-32 py-2 custom bg-blue hover:bg-blue hover:bg-opacity-75 active:shadow-inner"
       [disabled]="(currentStep?.validChange | async) === false" (click)="next()">
-      {{ currentStep?.nextButtonLabel ||  (!isLast ? 'Next' : 'Finish') }}</button>
+      <ng-container *ngIf="currentStep?.nextButtonLabel; else defaultNextLabel">{{ currentStep?.nextButtonLabel }}</ng-container><ng-template #defaultNextLabel><ng-container i18n="@@stepper.nextOrFinish">{isLast, select, true {Finish} other {Next}}</ng-container></ng-template></button>
   </div>
 </ng-template>

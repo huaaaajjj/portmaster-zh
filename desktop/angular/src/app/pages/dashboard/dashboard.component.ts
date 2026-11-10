@@ -54,6 +54,8 @@ const newsResourceIdentifier = "intel/news.yaml"
   ]
 })
 export class DashboardPageComponent implements OnInit, AfterViewInit {
+  readonly notAvailable = $localize`:@@ts.common.notAvailable:N/A`;
+
   @ViewChildren(SfngNetqueryLineChartComponent)
   lineCharts!: QueryList<SfngNetqueryLineChartComponent>;
 
@@ -95,9 +97,9 @@ export class DashboardPageComponent implements OnInit, AfterViewInit {
     seriesKey: 'series',
     seriesLabel: d => {
       if (d === 'sent') {
-        return 'Bytes Sent'
+        return $localize`:@@ts.dashboard.bytesSent:Bytes Sent`
       }
-      return 'Bytes Received'
+      return $localize`:@@ts.dashboard.bytesReceived:Bytes Received`
     },
     value: 'value',
     ticks: 3,
@@ -115,7 +117,7 @@ export class DashboardPageComponent implements OnInit, AfterViewInit {
     },
     formatValue: (stack, series, value, data) => {
       const bytes = new BytesPipe().transform
-      return `${data?.profile_name || stack}\nSent: ${bytes(data?.sent)}\nReceived: ${bytes(data?.received)}`
+      return $localize`:@@ts.dashboard.bandwidthTooltip:${data?.profile_name || stack}:PROFILE:\nSent: ${bytes(data?.sent)}:SENT:\nReceived: ${bytes(data?.received)}:RECEIVED:`
     },
     formatStack: (sel, data) => {
       const bytes = new BytesPipe().transform
@@ -500,8 +502,8 @@ export class DashboardPageComponent implements OnInit, AfterViewInit {
   logoutCompletely(_: Event) {
     this.spn.logout(true)
       .subscribe(this.actionIndicator.httpObserver(
-        'Logout',
-        'You have been logged out of the SPN completely.'
+        $localize`:@@ts.navigation.logout:Logout`,
+        $localize`:@@ts.navigation.loggedOutCompletely:You have been logged out of the SPN completely.`
       ))
   }
 }

@@ -95,7 +95,7 @@ export class ExtDomainListComponent implements OnInit {
           ],
           page: 0,
           pageSize: 1,
-        })
+        }, 'chrome-extension-domain-list')
           .subscribe(result => {
             if (!result[0]) {
               return;

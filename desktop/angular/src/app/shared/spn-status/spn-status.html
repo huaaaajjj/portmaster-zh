@@ -17,21 +17,22 @@
 
     <span [ngSwitch]="spnStatus?.Status" class="-mt-1 text-xs font-medium text-secondary">
       <ng-template ngSwitchCase="disabled">
-        Increase privacy protection
+        <ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.ab4f2b3d4a8b">Increase privacy protection</ng-container>
       </ng-template>
       <ng-template ngSwitchCase="failed">
-        Failed to connect
+        <ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.3fa34f269414">Failed to connect</ng-container>
       </ng-template>
       <ng-template ngSwitchCase="connecting">
-        Connecting to the SPN ...
+        <ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.e7a6a7c978ae">Connecting to the SPN ...</ng-container>
       </ng-template>
       <ng-template ngSwitchCase="connected">
-        You're protected
+        <ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.f8e75e31dc23">You're protected</ng-container>
       </ng-template>
+      <ng-template ngSwitchDefault>{{ spnStatus?.Status }}</ng-template>
     </span>
     <ng-container *ngIf="spnEnabled">
       <span class="text-secondary text-xxs" *appExpertiseLevel="'developer'">
-        Home: <u>{{ spnStatus?.ConnectedIP }}</u> via <u>{{ spnStatus?.ConnectedTransport}}</u>
+        <ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.a8c5bbcfb3f2">Home:</ng-container> <u>{{ spnStatus?.ConnectedIP }}</u> <ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.3ea39b16cf59">via</ng-container> <u>{{ spnStatus?.ConnectedTransport}}</u>
       </span>
     </ng-container>
 
@@ -41,13 +42,13 @@
     <div *ngIf="!packageHasSPN">
       <button class="px-3 py-1.5 uppercase rounded outline-none text-xxs custom bg-blue hover:bg-blue bg-opacity-70"
         (click)="openOrLogin()">
-        Upgrade
+        <ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.1ea26d0638a4">Upgrade</ng-container>
       </button>
     </div>
   </div>
   <div class="relative flex flex-col items-end justify-end flex-grow pb-4" *ngIf="spnEnabled">
     <div class="flex flex-col items-center">
-      <span class="-mb-1 leading-3 uppercase text-xxs text-secondary">Identities</span>
+      <span class="-mb-1 leading-3 uppercase text-xxs text-secondary"><ng-container i18n="@@ui.src.app.shared.spn.status.spn.status.bf76f8018864">Identities</ng-container></span>
       <span class="text-lg text-primary">{{ identities }}</span>
     </div>
   </div>

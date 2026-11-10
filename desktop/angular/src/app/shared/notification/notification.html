@@ -1,8 +1,8 @@
 <div class="flex flex-col items-start">
-  <caption *ngIf="!notification.isBroadcast">Notification</caption>
+  <caption *ngIf="!notification.isBroadcast"><ng-container i18n="@@ui.src.app.shared.notification.notification.a59b51f8c893">Notification</ng-container></caption>
 
   <caption *ngIf="notification.isBroadcast" sfngTipUpAnchor class="flex flex-row gap-2 items-center">
-    Broadcast Notification
+    <ng-container i18n="@@ui.src.app.shared.notification.notification.91020b4ebf10">Broadcast Notification</ng-container>
     <sfng-tipup key="broadcast-info"></sfng-tipup>
   </caption>
 

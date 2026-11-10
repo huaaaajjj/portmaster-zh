@@ -1,16 +1,16 @@
 <sfng-tipup key="uiMode" placement="left" [anchor]="host"></sfng-tipup>
 <sfng-select [ngModel]="(currentLevel | async)" (ngModelChange)="selectLevel($event)" mode="single" sortItems="false">
   <sfng-select-item *sfngSelectValue="expertiseLevels.User">
-    Simple Interface
+    <ng-container i18n="@@ui.src.app.shared.expertise.expertise.switch.cbebe28fcc87">Simple Interface</ng-container>
   </sfng-select-item>
 
   <sfng-select-item *sfngSelectValue="expertiseLevels.Expert">
-    Advanced Interface
+    <ng-container i18n="@@ui.src.app.shared.expertise.expertise.switch.489db3801c8b">Advanced Interface</ng-container>
   </sfng-select-item>
 
   <ng-container *ngIf="savedLevel === expertiseLevels.Developer">
     <sfng-select-item *sfngSelectValue="expertiseLevels.Developer">
-      Developer Interface
+      <ng-container i18n="@@ui.src.app.shared.expertise.expertise.switch.c29eaaa431f7">Developer Interface</ng-container>
     </sfng-select-item>
   </ng-container>
 </sfng-select>

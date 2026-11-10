@@ -8,15 +8,15 @@ export class ElectronIntegrationService extends BrowserIntegrationService {
       return window.app.openExternal(pathOrUrl);
     }
 
-    return Promise.reject('No electron API available')
+    return Promise.reject($localize`:@@ts.integration.electronUnavailable:No electron API available`)
   }
 
   openDir(kind: PortmasterDir): Promise<void> {
     if (!window.app) {
-      return Promise.reject('No electron API available')
+      return Promise.reject($localize`:@@ts.integration.electronUnavailable:No electron API available`)
     }
     if (kind !== 'data') {
-      return Promise.reject('Not supported in electron')
+      return Promise.reject($localize`:@@ts.integration.electronUnsupported:Not supported in electron`)
     }
 
     return window.app.getInstallDir()

@@ -17,9 +17,9 @@
     </svg>
 
     <span class="inline-flex flex-col items-start">
-      <span class="text-secondary">Welcome to the</span>
+      <span class="text-secondary"><ng-container i18n="@@ui.projects.portmaster.chrome.extension.src.app.welcome.intro.component.c4b8c9c27e1a">Welcome to the</ng-container></span>
       <span class="text-lg font-semibold">
-        Portmaster Browser Extension
+        <ng-container i18n="@@ui.projects.portmaster.chrome.extension.src.app.welcome.intro.component.39a64f91500f">Portmaster Browser Extension</ng-container>
       </span>
     </span>
   </h1>
@@ -27,22 +27,22 @@
 <div class="flex flex-col items-center flex-grow p-4 justify-evenly">
   <ng-container *ngIf="state === ''; else: authorizingTemplate">
     <span class="text-sm text-center text-secondary">
-      This extension adds direct support for Portmaster to your Browser. For that, it needs to get access to the
+      <ng-container i18n="@@ui.projects.portmaster.chrome.extension.src.app.welcome.intro.component.4a7ef6d8d7c9">This extension adds direct support for Portmaster to your Browser. For that, it needs to get access to the
       Portmaster on your system. For security reasons, you first need to authorize the Browser Extension to talk to the
-      Portmaster.
+      Portmaster.</ng-container>
     </span>
 
   </ng-container>
 
   <ng-template #authorizingTemplate>
-    <h2 class="text-base text-primary">Waiting for Authorization</h2>
+    <h2 class="text-base text-primary"><ng-container i18n="@@ui.projects.portmaster.chrome.extension.src.app.welcome.intro.component.daa121e2aa8d">Waiting for Authorization</ng-container></h2>
     <span class="text-sm text-center text-secondary">
-      Please open the Portmaster and approve the authorization request.
+      <ng-container i18n="@@ui.projects.portmaster.chrome.extension.src.app.welcome.intro.component.a7045fe3672c">Please open the Portmaster and approve the authorization request.</ng-container>
     </span>
   </ng-template>
 
   <button (click)="authorizeExtension()"
     class="px-3 py-1.5 text-center text-white rounded-md cursor-pointer hover:bg-blue hover:bg-opacity-70 bg-blue outline-none text-sm"
-    type="button">{{ state === 'authorizing' ? 'Retry' : 'Authorize' }}
+    type="button"><ng-container i18n="@@extension.authorize">{state === 'authorizing', select, true {Retry} other {Authorize}}</ng-container>
   </button>
 </div>

@@ -82,20 +82,20 @@ export const DefaultBandwidthChartConfig: ChartConfig<BandwidthChartResult<any>>
     from: -10 * 60,
   },
   valueFormat: (n: d3.NumberValue, seriesKey?: string) => {
-    let prefix = '';
-    if (seriesKey !== undefined) {
-      prefix = seriesKey === 'incoming' ? 'Received: ' : 'Sent: '
-    }
-    return prefix + new BytesPipe().transform(n.valueOf())
+    const bytes = new BytesPipe().transform(n.valueOf());
+    if (seriesKey === undefined) return bytes;
+    return seriesKey === 'incoming'
+      ? $localize`:@@netquery.chart.received:Received: ${bytes}:BYTES:`
+      : $localize`:@@netquery.chart.sent:Sent: ${bytes}:BYTES:`;
   },
   timeFormat: (n: Date) => {
     const diff = Math.floor(new Date().getTime() - n.getTime())
-    return formatDuration(diff, false, true) + " ago"
+    return $localize`:@@netquery.chart.timeAgo:${formatDuration(diff, false, true)}:DURATION: ago`
   },
   tooltipFormat: (n: BandwidthChartResult<any>) => {
     const bytes = new BytesPipe().transform
-    const received = `Received: ${bytes(n?.incoming || 0)}`;
-    const sent = `Sent: ${bytes(n?.outgoing || 0)}`
+    const received = $localize`:@@netquery.chart.received:Received: ${bytes(n?.incoming || 0)}:BYTES:`;
+    const sent = $localize`:@@netquery.chart.sent:Sent: ${bytes(n?.outgoing || 0)}:BYTES:`
 
     if ((n?.incoming || 0) > (n?.outgoing || 0)) {
       return `${received}\n${sent}`

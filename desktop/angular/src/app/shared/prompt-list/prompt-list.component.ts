@@ -36,6 +36,7 @@ const PromptLimit = 3;
   ]
 })
 export class PromptListComponent implements OnInit, OnDestroy {
+  readonly notAvailable = $localize`:@@ts.common.notAvailable:N/A`;
   profiles: ProfilePrompts[] = [];
 
   /**
@@ -202,7 +203,7 @@ export class PromptListComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         error: (err) => {
-          this.uai.error('Failed to change App Settings', this.uai.getErrorMessage(err));
+          this.uai.error($localize`:@@ts.prompts.changeSettingsFailed:Failed to change App Settings`, this.uai.getErrorMessage(err));
         }
       })
 

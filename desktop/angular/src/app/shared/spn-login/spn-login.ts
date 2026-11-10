@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { SPNService, UserProfile } from "@safing/portmaster-api";
 import { catchError, finalize, of } from "rxjs";
 import { ActionIndicatorService } from "../action-indicator";
+import { localizeSPNAccountResponse } from "../spn-account-details/account-text";
 
 @Component({
   selector: 'app-spn-login',
@@ -41,14 +42,18 @@ export class SPNLoginComponent implements OnInit {
       return;
     }
 
+    const username = this.username;
     this.spnService.login({
-      username: this.username,
+      username,
       password: this.password
     })
       .pipe(finalize(() => {
         this.password = '';
       }))
-      .subscribe(this.uai.httpObserver('SPN Login', 'SPN Login'))
+      .subscribe({
+        next: response => this.uai.success($localize`:@@spn.account.login:SPN Login`, localizeSPNAccountResponse(this.uai.getErrorMessage(response), username)),
+        error: error => this.uai.error($localize`:@@spn.account.login:SPN Login`, localizeSPNAccountResponse(this.uai.getErrorMessage(error))),
+      })
   }
 
   ngOnInit(): void {

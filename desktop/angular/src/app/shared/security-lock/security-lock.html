@@ -19,7 +19,7 @@
     <h2 class="p-0 m-0 -mt-3.5 text-base font-light">{{lockLevel?.displayText}}</h2>
     <span *ngIf="!!lockLevel?.class && lockLevel!.class !== 'text-green-300'" class="{{lockLevel?.class}}" [@fadeIn]
       [@fadeOut]>
-      See Notifications
+      <ng-container i18n="@@ui.src.app.shared.security.lock.security.lock.9d7523d8c93b">See Notifications</ng-container>
     </span>
   </ng-container>
 </div>

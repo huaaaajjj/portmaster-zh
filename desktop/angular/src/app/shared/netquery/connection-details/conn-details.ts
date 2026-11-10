@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject } from "@angular/core";
-import { BandwidthChartResult, ConnectionBandwidthChartResult, IPProtocol, IPScope, IsDenied, IsDNSRequest, Netquery, NetqueryConnection, PortapiService, Process, Verdict } from "@safing/portmaster-api";
+import { ConnectionBandwidthChartResult, IPProtocol, IPScope, IsDenied, IsDNSRequest, Netquery, NetqueryConnection, PortapiService, Process, Verdict } from "@safing/portmaster-api";
 import { SfngDialogService } from '@safing/ui';
 import { Subscription } from "rxjs";
 import { ProcessDetailsDialogComponent } from '../../process-details-dialog';
 import { NetqueryHelper } from "../connection-helper.service";
-import { BytesPipe } from "../../pipes/bytes.pipe";
-import { formatDuration } from "../../pipes";
+import { DefaultBandwidthChartConfig } from "../line-chart/line-chart";
+import { connectionValueLabel } from "../utils";
 
 
 
@@ -28,34 +28,19 @@ export class SfngNetqueryConnectionDetailsComponent implements OnInit, OnDestroy
   process: Process | null = null;
 
   readonly IsDNS = IsDNSRequest;
-  readonly verdict = Verdict;
+  readonly valueLabel = connectionValueLabel;
+  readonly notAvailable = connectionValueLabel('', null);
   readonly Protocols = IPProtocol;
   readonly scopes = IPScope;
   private _subscription = Subscription.EMPTY;
 
-  formatBytes = (n: d3.NumberValue, seriesKey?: string) => {
-    let prefix = '';
-    if (seriesKey !== undefined) {
-      prefix = seriesKey === 'incoming' ? 'Received: ' : 'Sent: '
-    }
-    return prefix + new BytesPipe().transform(n.valueOf())
-  }
-
-  formatTime = (n: Date) => {
-    const diff = Math.floor(new Date().getTime() - n.getTime())
-    return formatDuration(diff, false, true) + " ago"
-  }
-
-  tooltipFormat = (n: BandwidthChartResult<any>) => {
-    const bytes = new BytesPipe().transform
-    const received = `Received: ${bytes(n?.incoming || 0)}`;
-    const sent = `Sent: ${bytes(n?.outgoing || 0)}`
-
-    if ((n?.incoming || 0) > (n?.outgoing || 0)) {
-      return `${received}\n${sent}`
-    }
-    return `${sent}\n${received}`
-  }
+  readonly formatBytes = DefaultBandwidthChartConfig.valueFormat;
+  readonly formatTime = DefaultBandwidthChartConfig.timeFormat;
+  readonly tooltipFormat = DefaultBandwidthChartConfig.tooltipFormat;
+  readonly chartLabels = {
+    started: $localize`:@@netquery.chart.started:started`,
+    ended: $localize`:@@netquery.chart.ended:ended`,
+  };
 
   connectionNotice: string = '';
   bwData: ConnectionBandwidthChartResult[] = [];
@@ -132,16 +117,14 @@ export class SfngNetqueryConnectionDetailsComponent implements OnInit, OnDestroy
     }
 
     if (this.conn!.verdict === Verdict.Failed) {
-      this.connectionNotice = 'Failed with previous settings.'
+      this.connectionNotice = $localize`:@@netquery.notice.failed:Failed with previous settings.`
       return;
     }
 
     if (IsDenied(this.conn!.verdict)) {
-      this.connectionNotice = 'Blocked by previous settings.';
+      this.connectionNotice = $localize`:@@netquery.notice.blocked:Blocked by previous settings. Your current settings could decide differently.`;
     } else {
-      this.connectionNotice = 'Allowed by previous settings.';
+      this.connectionNotice = $localize`:@@netquery.notice.allowed:Allowed by previous settings. Your current settings could decide differently.`;
     }
-
-    this.connectionNotice += ' You current settings could decide differently.'
   }
 }

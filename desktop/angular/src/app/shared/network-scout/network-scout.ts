@@ -57,6 +57,20 @@ export class NetworkScoutComponent implements OnInit {
     SortTypes.spnIdentities
   ]
 
+  readonly sortTypeLabels = new Map<SortTypes, string>([
+    [SortTypes.static, $localize`:@@scout.sort.static:Static`],
+    [SortTypes.aToZ, $localize`:@@scout.sort.aToZ:A-Z`],
+    [SortTypes.zToA, $localize`:@@scout.sort.zToA:Z-A`],
+    [SortTypes.totalConnections, $localize`:@@scout.sort.totalConnections:Total Connections`],
+    [SortTypes.connectionsDenied, $localize`:@@scout.sort.connectionsDenied:Denied Connections`],
+    [SortTypes.connectionsAllowed, $localize`:@@scout.sort.connectionsAllowed:Allowed Connections`],
+    [SortTypes.spnIdentities, $localize`:@@scout.sort.spnIdentities:SPN Identities`],
+    [SortTypes.bytesSent, $localize`:@@scout.sort.bytesSent:Bytes Sent`],
+    [SortTypes.bytesReceived, $localize`:@@scout.sort.bytesReceived:Bytes Received`],
+    [SortTypes.totalBytes, $localize`:@@scout.sort.totalBytes:Total Bytes`],
+  ]);
+  readonly staticSortDescription = $localize`:@@scout.sort.staticDescription:The default sort order which adds new apps to the bottom`;
+
   readonly sortMethods = new Map<SortTypes, any>([
     // there's not entry for "Static" here on purpose because we'll use the sort order
     // returned by netquery.

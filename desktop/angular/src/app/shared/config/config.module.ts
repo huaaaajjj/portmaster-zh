@@ -26,6 +26,7 @@ import {
 import { RuleListItemComponent } from './rule-list/list-item';
 import { RuleListComponent } from './rule-list/rule-list';
 import { SafePipe } from './safe.pipe';
+import { SettingTextPipe } from './setting-text.pipe';
 import { ExportDialogComponent } from './export-dialog/export-dialog.component';
 import { ImportDialogComponent } from './import-dialog/import-dialog.component';
 import { SfngAppIconModule } from '../app-icon';
@@ -59,6 +60,7 @@ import { SfngAppIconModule } from '../app-icon';
     ConfigSettingsViewComponent,
     GenericSettingComponent,
     SafePipe,
+    SettingTextPipe,
     ExportDialogComponent,
     ImportDialogComponent,
   ],
@@ -72,6 +74,7 @@ import { SfngAppIconModule } from '../app-icon';
     ConfigSettingsViewComponent,
     GenericSettingComponent,
     SafePipe,
+    SettingTextPipe,
   ],
 })
 export class ConfigModule { }

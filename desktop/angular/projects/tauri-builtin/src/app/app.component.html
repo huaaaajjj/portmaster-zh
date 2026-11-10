@@ -41,20 +41,20 @@
     }">
 
   <ng-template [ngSwitchCase]="null">
-    Connecting to System Service ...
+    <ng-container i18n="@@startup.connecting">Connecting to System Service ...</ng-container>
   </ng-template>
 
   <ng-template [ngSwitchCase]="'Running'">
-    Connecting to System Service ...
+    <ng-container i18n="@@startup.connecting">Connecting to System Service ...</ng-container>
   </ng-template>
 
   <ng-template [ngSwitchCase]="'Stopped'">
 
-    Portmaster System Service is not running:
+    <ng-container i18n="@@startup.stopped">Portmaster System Service is not running:</ng-container>
 
     <button (click)="startService()"
       class="px-2 py-1 rounded uppercase text-xs block self-end btn bg-white bg-opacity-25 text-white hover:bg-red-100 cursor-pointer">
-      Start Now
+      <ng-container i18n="@@startup.startNow">Start Now</ng-container>
     </button>
 
   </ng-template>
@@ -67,14 +67,14 @@
     </svg>
 
     <span>
-      Failed to find Portmaster System Service.
+      <ng-container i18n="@@ui.projects.tauri.builtin.src.app.app.component.d14787ca3eab">Failed to find Portmaster System Service.</ng-container>
       <br />
-      Please reinstall the application.
+      <ng-container i18n="@@ui.projects.tauri.builtin.src.app.app.component.df53ae330d6e">Please reinstall the application.</ng-container>
     </span>
 
     <button (click)="getHelp()"
-      class="px-2 py-1 rounded uppercase text-xs block self-end btn bg-white bg-opacity-25 text-white hover:bg-red-100 cursor-pointer">Get
-      Help</button>
+      class="px-2 py-1 rounded uppercase text-xs block self-end btn bg-white bg-opacity-25 text-white hover:bg-red-100 cursor-pointer"><ng-container i18n="@@ui.projects.tauri.builtin.src.app.app.component.3ab1ccfb7c93">Get
+      Help</ng-container></button>
   </ng-template>
 
   <ng-template [ngSwitchCase]="'unsupported service manager'">
@@ -85,7 +85,7 @@
     </svg>
 
     <span>
-      Your System Service Manager is not supported. Please make sure Portmaster is running.
+      <ng-container i18n="@@ui.projects.tauri.builtin.src.app.app.component.0c3cc64677f1">Your System Service Manager is not supported. Please make sure Portmaster is running.</ng-container>
     </span>
   </ng-template>
 
@@ -97,9 +97,9 @@
     </svg>
 
     <span>
-      Your System Service Manager is not supported. Please make sure Portmaster is running.
+      <ng-container i18n="@@ui.projects.tauri.builtin.src.app.app.component.0c3cc64677f1">Your System Service Manager is not supported. Please make sure Portmaster is running.</ng-container>
     </span>
   </ng-template>
 
-  <span *ngSwitchDefault>Unknown error: {{ status }}</span>
+  <span *ngSwitchDefault i18n="@@startup.unknownError">Unknown error: {{ status }}</span>
 </div>

@@ -158,18 +158,18 @@ export class AppOverviewComponent implements OnInit, OnDestroy {
   deleteSelectedProfiles() {
     this.dialog
       .confirm({
-        header: 'Confirm Profile Deletion',
-        message: `Are you sure you want to delete all ${this.selectedProfileCount} selected profiles?`,
-        caption: 'Attention',
+        header: $localize`:@@ts.appOverview.confirmDeletion:Confirm Profile Deletion`,
+        message: $localize`:@@ts.appOverview.deleteSelectedConfirmation:Are you sure you want to delete all ${this.selectedProfileCount}:COUNT: selected profiles?`,
+        caption: $localize`:@@ts.common.attention:Attention`,
         buttons: [
           {
             id: 'no',
-            text: 'Cancel',
+            text: $localize`:@@ts.common.cancel:Cancel`,
             class: 'outline',
           },
           {
             id: 'yes',
-            text: 'Delete',
+            text: $localize`:@@ts.common.delete:Delete`,
             class: 'danger',
           },
         ],
@@ -182,16 +182,16 @@ export class AppOverviewComponent implements OnInit, OnDestroy {
         ).subscribe({
           next: () => {
             this.actionIndicator.success(
-              'Selected Profiles Delete',
-              'All selected profiles have been deleted'
+              $localize`:@@ts.appOverview.selectedProfilesDeleted:Selected Profiles Delete`,
+              $localize`:@@ts.appOverview.allSelectedDeleted:All selected profiles have been deleted`
             );
           },
           error: (err) => {
             this.actionIndicator.error(
-              'Failed To Delete Profiles',
-              `An error occured while deleting some profiles: ${this.actionIndicator.getErrorMessgae(
+              $localize`:@@ts.appOverview.deleteProfilesFailed:Failed To Delete Profiles`,
+              $localize`:@@ts.appOverview.deleteProfilesError:An error occured while deleting some profiles: ${this.actionIndicator.getErrorMessgae(
                 err
-              )}`
+              )}:ERROR:`
             );
           },
         });

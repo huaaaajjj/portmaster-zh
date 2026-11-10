@@ -8,7 +8,7 @@
         <fa-icon far icon="dot-circle"></fa-icon>
       </span>
       <span class="hop-title text-tertiary">
-        Your Device
+        <ng-container i18n="@@ui.src.app.pages.spn.pin.route.pin.route.16a8eb49f584">Your Device</ng-container>
       </span>
     </li>
 
@@ -18,23 +18,21 @@
         <!-- TODO: use hop icon instead if unknown -->
         <span class="country unknown"></span>
       </ng-template>
-      <span>{{ node.entity.Country || 'No Location' }}</span>
+      <span><ng-container *ngIf="node.entity.Country; else noLocation">{{ node.entity.Country }}</ng-container><ng-template #noLocation><ng-container i18n="@@spn.noLocation">No Location</ng-container></ng-template></span>
       <span class="ip text-tertiary">{{ node.entity.IP || ''
         }}</span>
-      <span class="node-tag" *ngIf="first">Home</span>
-      <span class="node-tag" *ngIf="last">Exit</span>
+      <span class="node-tag" *ngIf="first"><ng-container i18n="@@ui.src.app.pages.spn.pin.route.pin.route.b071da6c34ef">Home</ng-container></span>
+      <span class="node-tag" *ngIf="last"><ng-container i18n="@@ui.src.app.pages.spn.pin.route.pin.route.7b5cc1d3a4f3">Exit</ng-container></span>
       <span *appExpertiseLevel="'expert'" class="text-tertiary"><br />{{ node.pin.Name }}
 
         <span class="ml-2">
-          by
+          <ng-container i18n="@@ui.src.app.pages.spn.pin.route.pin.route.ba35101cef00">by</ng-container>
           <spn-node-icon [bySafing]="node.pin.VerifiedOwner === 'Safing'" isActive="true" isExit="last"></spn-node-icon>
-          {{ node.pin.VerifiedOwner || 'Community' }}
+          <ng-container *ngIf="node.pin.VerifiedOwner; else community">{{ node.pin.VerifiedOwner }}</ng-container><ng-template #community><ng-container i18n="@@spn.community">Community</ng-container></ng-template>
         </span>
       </span>
 
-      <span *appExpertiseLevel="'expert'" class="text-tertiary"><br />AS{{ node.entity.ASN }} - {{ node.entity.ASOrg ||
-          'AS Organization not in DB'
-          }}</span>
+      <span *appExpertiseLevel="'expert'" class="text-tertiary"><br />AS{{ node.entity.ASN }} - <ng-container *ngIf="node.entity.ASOrg; else unknownAsOrg">{{ node.entity.ASOrg }}</ng-container><ng-template #unknownAsOrg><ng-container i18n="@@spn.unknownAsOrg">AS Organization not in DB</ng-container></ng-template></span>
 
       <span *appExpertiseLevel="'developer'" class="text-tertiary"><br />{{ node.pin.ID }}</span>
     </li>
@@ -45,7 +43,7 @@
         <!-- TODO: use destination country flag instead if known -->
       </span>
       <span class="hop-title text-tertiary">
-        Destination
+        <ng-container i18n="@@ui.src.app.pages.spn.pin.route.pin.route.baf1fb7cc3bb">Destination</ng-container>
       </span>
       <!-- TODO: add destination details? (Would be duplicate information from above.) -->
     </li>

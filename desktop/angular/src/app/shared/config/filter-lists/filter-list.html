@@ -16,7 +16,7 @@
         </label>
 
         <span class="details">
-          {{ !!node.license ? 'License: ' + node.license : '' }}
+          <ng-container *ngIf="node.license" i18n="@@settings.license">License: {{ node.license }}</ng-container>
         </span>
         <span class="details">
           <a *ngIf="!!node.website" href="{{node.website}}">
@@ -29,11 +29,11 @@
         <div class="expand" (click)="node.expanded = !node.expanded">
           <ng-container *ngIf="!node.expanded">
             <fa-icon icon="chevron-right"></fa-icon>
-            Expand
+            <ng-container i18n="@@settings.ui.07548c2c6511">Expand</ng-container>
           </ng-container>
           <ng-container *ngIf="node.expanded">
             <fa-icon icon="chevron-down"></fa-icon>
-            Collapse
+            <ng-container i18n="@@settings.ui.be6eb1fc3b05">Collapse</ng-container>
           </ng-container>
         </div>
       </div>

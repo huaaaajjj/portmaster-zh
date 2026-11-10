@@ -1,10 +1,10 @@
 <div class="relative flex flex-wrap items-center justify-center w-full h-full gap-2 px-3 py-2 bg-gray-300 border border-gray-300 rounded shadow">
   <span class="text-primary">
-    Keep History
+    <ng-container i18n="@@ui.src.app.pages.app.view.qs.history.qs.history.component.a3344e1c8209">Keep History</ng-container>
   </span>
 
   <span *ngIf="!canUse" routerLink="/dashboard" class="cursor-pointer text-tertiary hover:underline">
-    Get Plus
+    <ng-container i18n="@@ui.src.app.pages.app.view.qs.history.qs.history.component.abaf41f1f31e">Get Plus</ng-container>
   </span>
 
   <sfng-toggle *ngIf="canUse" [ngModel]="currentValue" (ngModelChange)="updateHistoryEnabled($event)"

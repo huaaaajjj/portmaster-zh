@@ -10,6 +10,31 @@ import { MapPin, MapService } from './../map.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PinDetailsComponent implements OnInit, OnChanges, OnDestroy {
+  readonly notAvailable = $localize`:@@spn.notAvailable:N/A`;
+
+  readonly pinStateLabels = new Map<string, string>([
+    ['None', $localize`:@@spn.node.state.none:None`],
+    ['Invalid', $localize`:@@spn.node.state.invalid:Invalid`],
+    ['Superseded', $localize`:@@spn.node.state.superseded:Superseded`],
+    ['Failing', $localize`:@@spn.node.state.failing:Failing`],
+    ['Offline', $localize`:@@spn.node.state.offline:Offline`],
+    ['HasRequiredInfo', $localize`:@@spn.node.state.hasRequiredInfo:Has required information`],
+    ['Reachable', $localize`:@@spn.node.state.reachable:Reachable`],
+    ['Active', $localize`:@@spn.node.state.active:Active`],
+    ['Trusted', $localize`:@@spn.node.state.trusted:Trusted`],
+    ['UsageDiscouraged', $localize`:@@spn.node.state.usageDiscouraged:Usage discouraged`],
+    ['UsageAsHomeDiscouraged', $localize`:@@spn.node.state.homeDiscouraged:Usage as home node discouraged`],
+    ['UsageAsDestinationDiscouraged', $localize`:@@spn.node.state.exitDiscouraged:Usage as exit node discouraged`],
+    ['IsHomeHub', $localize`:@@spn.node.state.home:Home node`],
+    ['ConnectivityIssues', $localize`:@@spn.node.state.issues:Connectivity issues`],
+    ['AllowUnencrypted', $localize`:@@spn.node.state.unencrypted:Allows unencrypted connections`],
+    ['Unknown', $localize`:@@spn.node.state.unknown:Unknown`],
+  ]);
+
+  formatPinStates(states: readonly string[]): string {
+    return states.map(state => this.pinStateLabels.get(state) ?? state).join(", ");
+  }
+
   private subscription = Subscription.EMPTY;
 
   @Input()

@@ -3,6 +3,7 @@ import { AppProfile, IPScope, NetqueryConnection, Verdict } from "@safing/portma
 import { interval, Subscription } from "rxjs";
 import { share, startWith } from "rxjs/operators";
 import { NetqueryHelper } from "../connection-helper.service";
+import { connectionValueLabel } from "../utils";
 
 interface ProfileAttachedConnection extends NetqueryConnection {
   __profile?: AppProfile;
@@ -19,6 +20,7 @@ interface ProfileAttachedConnection extends NetqueryConnection {
 export class SfngNetqueryConnectionRowComponent implements OnInit, OnDestroy {
   readonly scopes = IPScope;
   readonly verdicts = Verdict;
+  readonly notAvailable = connectionValueLabel('', null);
 
   @Input()
   set conn(c: ProfileAttachedConnection) {

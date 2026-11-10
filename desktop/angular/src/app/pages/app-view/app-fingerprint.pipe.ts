@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppProfile, FingerprintType, FingerpringOperation } from '@safing/portmaster-api';
+import { getFingerprintOperationLabel } from '../../shared/utils';
 
 /**
  * Returns a single-line tooltip describing the process matching rule of a profile.
@@ -12,18 +13,17 @@ export class AppFingerprintPipe implements PipeTransform {
     if (profile?.Fingerprints?.length !== 1) return null;
 
     const { Type, Operation, Value } = profile.Fingerprints[0];
-    const opSuffix = Operation === FingerpringOperation.Equal
-      ? ''
-      : `:${Operation.charAt(0).toUpperCase()}${Operation.slice(1)}`;
+    const operationLabel = getFingerprintOperationLabel(Operation);
+    const opSuffix = Operation === FingerpringOperation.Equal ? '' : `:${operationLabel}`;
 
     if (Type === FingerprintType.Path) {
       return Operation === FingerpringOperation.Equal
         ? Value
-        : `[Path:${Operation.charAt(0).toUpperCase()}${Operation.slice(1)}] ${Value}`;
+        : $localize`:@@ts.appFingerprint.path:[Path:${operationLabel}:OPERATION:] ${Value}:VALUE:`;
     }
 
     if (Type === FingerprintType.Cmdline) {
-      return `[Command${opSuffix}] ${Value}`;
+      return $localize`:@@ts.appFingerprint.command:[Command${opSuffix}:OPERATION:] ${Value}:VALUE:`;
     }
 
     return null;

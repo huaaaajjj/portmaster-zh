@@ -12,7 +12,7 @@ export class ConnectionLocationPipe implements PipeTransform {
     }
     if (!!conn.country) {
       if (conn.country === "__") {
-        return "Anycast"
+        return $localize`:@@netquery.location.anycast:Anycast`
       }
       return conn.country;
     }
@@ -20,15 +20,15 @@ export class ConnectionLocationPipe implements PipeTransform {
     const scope = conn.scope;
 
     if (IsGlobalScope(scope)) {
-      return 'Internet'
+      return $localize`:@@netquery.location.internet:Internet`
     }
 
     if (IsLANScope(scope)) {
-      return 'LAN';
+      return $localize`:@@netquery.location.lan:LAN`;
     }
 
     if (IsLocalhost(scope)) {
-      return 'Device'
+      return $localize`:@@netquery.location.device:Device`
     }
 
     return '';

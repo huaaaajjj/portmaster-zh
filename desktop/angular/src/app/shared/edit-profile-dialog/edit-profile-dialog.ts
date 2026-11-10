@@ -23,6 +23,7 @@ import {
 import { SFNG_DIALOG_REF, SfngDialogRef, SfngDialogService } from '@safing/ui';
 import { Observable, Subject, map, of, switchMap, takeUntil } from 'rxjs';
 import { ActionIndicatorService } from 'src/app/shared/action-indicator';
+import { getFingerprintTypeLabel } from '../utils';
 
 @Component({
   templateUrl: './edit-profile-dialog.html',
@@ -54,6 +55,8 @@ export class EditProfileDialog implements OnInit, OnDestroy {
   copySettingsFrom: AppProfile[] = [];
 
   selectedCopyFrom: AppProfile | null = null;
+
+  readonly fingerprintTypeLabel = getFingerprintTypeLabel;
 
   fingerPrintTypes = FingerprintType;
   fingerPrintOperations = FingerpringOperation;
@@ -188,19 +191,19 @@ export class EditProfileDialog implements OnInit, OnDestroy {
   deleteProfile() {
     this.dialog
       .confirm({
-        caption: 'Caution',
-        header: 'Confirm Profile Deletion',
-        message: 'Do you want to delete this profile?',
+        caption: $localize`:@@ts.common.caution:Caution`,
+        header: $localize`:@@ts.appOverview.confirmDeletion:Confirm Profile Deletion`,
+        message: $localize`:@@ts.editProfile.deleteConfirmation:Do you want to delete this profile?`,
         buttons: [
           {
             id: 'delete',
             class: 'danger',
-            text: 'Delete',
+            text: $localize`:@@ts.common.delete:Delete`,
           },
           {
             id: 'abort',
             class: 'outline',
-            text: 'Cancel',
+            text: $localize`:@@ts.common.cancel:Cancel`,
           },
         ],
       })
@@ -210,7 +213,7 @@ export class EditProfileDialog implements OnInit, OnDestroy {
           .subscribe({
             next: () => this.dialgoRef.close('deleted'),
             error: (err) => {
-              this.actionIndicator.error('Failed to delete profile', err);
+              this.actionIndicator.error($localize`:@@ts.editProfile.deleteFailed:Failed to delete profile`, err);
             },
           });
       });
@@ -292,12 +295,12 @@ export class EditProfileDialog implements OnInit, OnDestroy {
         next: () => {
           this.actionIndicator.success(
             this.profile.Name!,
-            'Profile saved successfully'
+            $localize`:@@ts.editProfile.saved:Profile saved successfully`
           );
           this.dialgoRef.close('saved');
         },
         error: (err) => {
-          this.actionIndicator.error('Failed to save profile', err);
+          this.actionIndicator.error($localize`:@@ts.editProfile.saveFailed:Failed to save profile`, err);
         },
       });
   }
@@ -325,11 +328,11 @@ export class EditProfileDialog implements OnInit, OnDestroy {
       const file: File = fileInput.target.files[0];
 
       if (file.size > max_size) {
-        this.imageError = 'Maximum size allowed is ' + max_size / 1000 + 'KB';
+        this.imageError = $localize`:@@ts.editProfile.maxIconSize:Maximum size allowed is ${max_size / 1000}:SIZE:KB`;
       }
 
       if (!allowed_types.includes(file.type)) {
-        this.imageError = 'Only JPG, PNG, SVG, GIF or Tiff files are allowed';
+        this.imageError = $localize`:@@ts.editProfile.iconTypes:Only JPG, PNG, SVG, GIF or Tiff files are allowed`;
       }
 
       this.iconType = file.type;
@@ -349,11 +352,7 @@ export class EditProfileDialog implements OnInit, OnDestroy {
 
           if (img_height > max_height && img_width > max_width) {
             this.imageError =
-              'Maximum dimentions allowed ' +
-              max_height +
-              '*' +
-              max_width +
-              'px';
+              $localize`:@@ts.editProfile.maxIconDimensions:Maximum dimentions allowed ${max_height}:HEIGHT:*${max_width}:WIDTH:px`;
           } else {
             this.iconData = content;
           }
@@ -363,7 +362,7 @@ export class EditProfileDialog implements OnInit, OnDestroy {
 
         image.onerror = (err: any) => {
           this.actionIndicator.error(
-            'Failed to get image',
+            $localize`:@@ts.editProfile.getImageFailed:Failed to get image`,
             this.actionIndicator.getErrorMessgae(err)
           );
         };
@@ -373,7 +372,7 @@ export class EditProfileDialog implements OnInit, OnDestroy {
 
       reader.onerror = (err: any) => {
         this.actionIndicator.error(
-          'Failed to get image',
+          $localize`:@@ts.editProfile.getImageFailed:Failed to get image`,
           this.actionIndicator.getErrorMessgae(err)
         );
       };

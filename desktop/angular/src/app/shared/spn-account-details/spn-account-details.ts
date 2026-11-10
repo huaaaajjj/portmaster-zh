@@ -4,6 +4,7 @@ import { SPNService, UserProfile } from "@safing/portmaster-api";
 import { SFNG_DIALOG_REF, SfngDialogRef } from "@safing/ui";
 import { catchError, delay, of, tap } from "rxjs";
 import { ActionIndicatorService } from "../action-indicator";
+import { accountStateLabels, localizeSPNAccountResponse, localizeSPNAccountView, subscriptionStateLabels } from "./account-text";
 
 @Component({
   templateUrl: './spn-account-details.html',
@@ -20,6 +21,10 @@ export class SPNAccountDetailsComponent implements OnInit {
   loadingProfile = true;
 
   currentUser: UserProfile | null = null;
+
+  readonly subscriptionStateLabels = subscriptionStateLabels;
+  readonly accountStateLabels = accountStateLabels;
+  readonly localizeAccountView = localizeSPNAccountView;
 
   constructor(
     private spnService: SPNService,
@@ -54,7 +59,10 @@ export class SPNAccountDetailsComponent implements OnInit {
   logout() {
     this.spnService.logout()
       .pipe(tap(() => this.dialogRef?.close()))
-      .subscribe(this.uai.httpObserver('SPN Logout', 'SPN Logout'))
+      .subscribe({
+        next: response => this.uai.success($localize`:@@spn.account.logout:SPN Logout`, localizeSPNAccountResponse(this.uai.getErrorMessage(response))),
+        error: error => this.uai.error($localize`:@@spn.account.logout:SPN Logout`, localizeSPNAccountResponse(this.uai.getErrorMessage(error))),
+      })
   }
 
   ngOnInit(): void {

@@ -10,7 +10,7 @@ import { of } from "rxjs";
 export class Step1WelcomeComponent implements Step {
   validChange = of(true)
 
-  readonly nextButtonLabel = 'Quick Setup';
+  readonly nextButtonLabel = $localize`:@@ts.intro.quickSetup:Quick Setup`;
 
   @ViewChild('buttonTemplate', { static: true })
   buttonTemplate!: TemplateRef<any>;

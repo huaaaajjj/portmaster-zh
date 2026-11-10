@@ -333,6 +333,7 @@ angular-project:
     END
 
     RUN --no-cache ./node_modules/.bin/ng build --configuration ${configuration} --base-href ${baseHref} "${project}"
+    RUN if [ "${project}" = "portmaster" ] || [ "${project}" = "tauri-builtin" ] || [ "${project}" = "portmaster-chrome-extension" ]; then node scripts/flatten-localized-output.mjs "${dist}"; fi
 
     RUN --no-cache cwd=$(pwd) && cd "${dist}" && zip -r "${cwd}/${project}.zip" ./
     SAVE ARTIFACT --keep-ts "${dist}" "./output/${project}"

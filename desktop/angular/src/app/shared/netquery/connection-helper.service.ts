@@ -1,14 +1,18 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, Renderer2, inject } from '@angular/core';
+import { DOCUMENT, formatDate } from '@angular/common';
+import { Inject, Injectable, LOCALE_ID, Renderer2, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppProfile, AppProfileService, ConfigService, IPScope, NetqueryConnection, Pin, PossilbeValue, QueryResult, SPNService, Verdict, deepClone, flattenProfileConfig, getAppSetting, setAppSetting } from '@safing/portmaster-api';
 import { BehaviorSubject, Observable, OperatorFunction, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { ActionIndicatorService } from '../action-indicator';
+import { localizeSettingText } from '../config/setting-text.pipe';
 import { objKeys } from '../utils';
 import { SfngSearchbarFields } from './searchbar';
+import { connectionValueLabel } from './utils';
+import { CountryNameService } from './pipes/country-name.pipe';
 import { INTEGRATION_SERVICE } from 'src/app/integration';
 
+// Stable English query aliases; localized labels are display-only in connectionValueLabel.
 export const IPScopeNames: { [key in IPScope]: string } = {
   [IPScope.Invalid]: "Invalid",
   [IPScope.Undefined]: "Undefined",
@@ -37,6 +41,8 @@ export class NetqueryHelper {
   private appProfiles$ = new BehaviorSubject<LocalAppProfile[]>([]);
   private spnMapPins$ = new BehaviorSubject<Pin[] | null>(null);
   private readonly integration = inject(INTEGRATION_SERVICE);
+  private readonly countryNames = inject(CountryNameService);
+  private readonly localeId = inject(LOCALE_ID);
 
   readonly onShiftKey: Observable<boolean>;
   readonly onCtrlKey: Observable<boolean>;
@@ -86,7 +92,7 @@ export class NetqueryHelper {
     this.configService.query('')
       .subscribe(settings => {
         settings.forEach(setting => {
-          this.settings[setting.Key] = setting.Name;
+          this.settings[setting.Key] = localizeSettingText(setting.Name);
         });
         this.refresh.next();
       });
@@ -112,21 +118,23 @@ export class NetqueryHelper {
 
   decodePrettyValues(field: keyof NetqueryConnection, values: any[]): any[] {
     if (field === 'verdict') {
-      return values.map(val => Verdict[val]).filter(value => value !== undefined);
+      return values.map(val => {
+        if (typeof val !== 'string') return val;
+        const verdict = Verdict[val as keyof typeof Verdict];
+        return typeof verdict === 'number' ? verdict : val;
+      });
     }
 
     if (field === 'scope') {
       return values.map(val => {
-        // check if it's a value of the IPScope enum
-        const scopeValue = IPScope[val];
-        if (!!scopeValue) {
-          return scopeValue;
-        }
+        if (typeof val !== 'string') return val;
+        const scopeValue = IPScope[val as keyof typeof IPScope];
+        if (typeof scopeValue === 'number') return scopeValue;
 
-        // otherwise check if it's pretty name of the scope translation
-        val = `${val}`.toLocaleLowerCase();
-        return objKeys(IPScopeNames).find(scope => IPScopeNames[scope].toLocaleLowerCase() === val)
-      }).filter(value => value !== undefined);
+        // Decode stable English aliases only, never localized display labels.
+        const scope = objKeys(IPScopeNames).find(scope => IPScopeNames[scope].toLowerCase() === val.toLowerCase());
+        return scope === undefined ? val : Number(scope);
+      });
     }
 
     if (field === 'allowed') {
@@ -234,38 +242,6 @@ export class NetqueryHelper {
           })
         }
 
-        // convert verdict identifiers to their pretty name.
-        if (field === 'verdict') {
-          return items.map(item => {
-            if (Verdict[item.verdict!] === undefined) {
-              return null
-            }
-
-            return {
-              Name: Verdict[item.verdict!],
-              Value: item.verdict,
-              Description: '',
-              ...item
-            }
-          })
-        }
-
-        // convert the IP scope identifier to a pretty name
-        if (field === 'scope') {
-          return items.map(item => {
-            if (IPScope[item.scope!] === undefined) {
-              return null
-            }
-
-            return {
-              Name: IPScopeNames[item.scope!],
-              Value: item.scope,
-              Description: '',
-              ...item
-            }
-          })
-        }
-
         if (field === 'allowed') {
           return items
             // we remove any "null" value from allowed here as it may happen for a really short
@@ -275,7 +251,7 @@ export class NetqueryHelper {
             .filter(item => typeof item.allowed === 'boolean')
             .map(item => {
               return {
-                Name: item.allowed ? 'Yes' : 'No',
+                Name: connectionValueLabel(field, item.allowed),
                 Value: item.allowed,
                 Description: '',
                 ...item
@@ -285,32 +261,30 @@ export class NetqueryHelper {
 
         if (field === 'exit_node') {
           const lm = new Map<string, Pin>();
-          pins!.forEach(pin => lm.set(pin.ID, pin));
+          (pins || []).forEach(pin => lm.set(pin.ID, pin));
 
           return items.map(item => {
             const pin = lm.get(item.exit_node!);
             return {
               Name: pin?.Name || item.exit_node,
               Value: item.exit_node,
-              Description: 'Operated by ' + (pin?.VerifiedOwner || 'N/A'),
+              Description: $localize`:@@netquery.operatedBy:Operated by ${pin?.VerifiedOwner || connectionValueLabel('', null)}:OWNER:`,
               ...item
             }
           })
         }
 
-        // the rest is just converted into the {@link PossibleValue} form
-        // by using the value as the "Name".
-        return items.map(item => ({
-          Name: `${item[field]}`,
-          Value: item[field],
-          Description: '',
-          ...item,
-        }))
-      }),
-      // finally, remove any values that have been mapped to null in the above stage.
-      // this may happen for values that are not valid for the given model field (i.e. using "Foobar" for "verdict")
-      map(results => {
-        return results.filter(val => !!val)
+        // Keep the raw Value separate from its display Name, including unknown values.
+        return items.map(item => {
+          const value = item[field];
+          let name = connectionValueLabel(field, value);
+          if (field === 'country' && typeof value === 'string') {
+            name = this.countryNames.resolveName(value) || name;
+          } else if ((field === 'from' || field === 'to') && typeof value === 'string' && !isNaN(Date.parse(value))) {
+            name = formatDate(value, 'medium', this.localeId);
+          }
+          return { Name: name, Value: value, Description: '', ...item };
+        })
       })
     )
   }
@@ -418,9 +392,9 @@ export class NetqueryHelper {
     // Copy to clip-board if supported
     try {
       await this.integration.writeToClipboard(JSON.stringify(conn, undefined, "    "))
-      this.actionIndicator.info("Copied to Clipboard")
+      this.actionIndicator.info($localize`:@@netquery.connectionCopied:Copied to Clipboard`)
     } catch (err: any) {
-      this.actionIndicator.error("Copy to Clipboard Failed", err?.message || JSON.stringify(err))
+      this.actionIndicator.error($localize`:@@netquery.connectionCopyFailed:Copy to Clipboard Failed`, err?.message || JSON.stringify(err))
     }
   }
 
@@ -500,13 +474,13 @@ export class NetqueryHelper {
       .subscribe({
         next: () => {
           if (add) {
-            this.actionIndicator.success('Rules Updated', 'Successfully created a new rule.')
+            this.actionIndicator.success($localize`:@@netquery.rulesUpdated:Rules Updated`, $localize`:@@netquery.ruleCreated:Successfully created a new rule.`)
           } else {
-            this.actionIndicator.success('Rules Updated', 'Successfully removed matching rule.')
+            this.actionIndicator.success($localize`:@@netquery.rulesUpdated:Rules Updated`, $localize`:@@netquery.ruleRemoved:Successfully removed matching rule.`)
           }
         },
         error: err => {
-          this.actionIndicator.error('Failed to update rules', JSON.stringify(err))
+          this.actionIndicator.error($localize`:@@netquery.rulesUpdateFailed:Failed to update rules`, JSON.stringify(err))
         }
       });
   }

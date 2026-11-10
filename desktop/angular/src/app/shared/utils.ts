@@ -74,3 +74,23 @@ export function binaryInsert<T>(array: T[], what: T, sortFunc: (a: T, b: T) => n
 export function objKeys<T extends object>(obj: T): (keyof T)[] {
   return Object.keys(obj) as any;
 }
+
+/** Display labels only; keep unknown fingerprint values unchanged. */
+export function getFingerprintTypeLabel(type: string): string {
+  switch (type) {
+    case 'tag': return $localize`:@@ts.fingerprint.tag:Tag`;
+    case 'cmdline': return $localize`:@@ts.fingerprint.commandLine:Command Line`;
+    case 'env': return $localize`:@@ts.fingerprint.environment:Environment`;
+    case 'path': return $localize`:@@ts.fingerprint.path:Path`;
+    default: return type;
+  }
+}
+
+export function getFingerprintOperationLabel(operation: string): string {
+  switch (operation) {
+    case 'equals': return $localize`:@@ts.fingerprint.equals:Equals`;
+    case 'prefix': return $localize`:@@ts.fingerprint.prefix:Prefix`;
+    case 'regex': return $localize`:@@ts.fingerprint.regex:Regex`;
+    default: return operation;
+  }
+}

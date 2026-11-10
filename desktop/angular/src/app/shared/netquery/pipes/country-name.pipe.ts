@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Pipe, PipeTransform, Injectable, inject } from '@angular/core';
+import { Pipe, PipeTransform, Injectable, LOCALE_ID, inject } from '@angular/core';
 import { GeoCoordinates, SPNService } from '@safing/portmaster-api';
 import { environment } from 'src/environments/environment';
 import { ActionIndicatorService } from '../../action-indicator';
 import { objKeys } from '../../utils';
+import { getCountryName } from './country-name';
 
 export interface CountryListResponse {
   [countryKey: string]: {
@@ -23,6 +24,7 @@ export class CountryNameService {
   private readonly spn = inject(SPNService);
   private readonly http = inject(HttpClient);
   private readonly uai = inject(ActionIndicatorService);
+  private readonly localeId = inject(LOCALE_ID);
 
   private map: Map<string, string> = new Map();
 
@@ -36,13 +38,13 @@ export class CountryNameService {
             });
         },
         error: err => {
-          this.uai.error('Failed to fetch country data', this.uai.getErrorMessage(err));
+          this.uai.error($localize`:@@netquery.countryDataFailed:Failed to fetch country data`, this.uai.getErrorMessage(err));
         }
       })
   }
 
   resolveName(code: string): string {
-    return this.map.get(code) || '';
+    return getCountryName(code, this.map.get(code) || code, this.localeId);
   }
 }
 

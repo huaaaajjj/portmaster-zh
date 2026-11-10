@@ -6,7 +6,7 @@ export class BrowserIntegrationService implements IntegrationService {
       return navigator.clipboard.writeText(text);
     }
 
-    return Promise.reject(new Error(`Clipboard API not supported`))
+    return Promise.reject(new Error($localize`:@@ts.integration.clipboardUnsupported:Clipboard API not supported`))
   }
 
   openExternal(pathOrUrl: string): Promise<void> {
@@ -16,7 +16,7 @@ export class BrowserIntegrationService implements IntegrationService {
   }
 
   openDir(_: PortmasterDir): Promise<void> {
-    return Promise.reject('Not supported in browser')
+    return Promise.reject($localize`:@@ts.integration.browserUnsupported:Not supported in browser`)
   }
 
   getAppIcon(_: ProcessInfo): Promise<string> {

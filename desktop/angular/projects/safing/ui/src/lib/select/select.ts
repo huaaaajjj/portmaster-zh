@@ -1,3 +1,4 @@
+/// <reference types="@angular/localize" />
 import { ListKeyManager, ListKeyManagerOption } from '@angular/cdk/a11y';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, DestroyRef, Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, Output, QueryList, TemplateRef, ViewChild, ViewChildren, forwardRef, inject } from '@angular/core';
@@ -111,7 +112,7 @@ export class SfngSelectComponent<T> implements AfterViewInit, ControlValueAccess
 
   /** The placehodler to show when nothing is selected */
   @Input()
-  placeholder = 'Select'
+  placeholder = $localize`:@@ts.select.placeholder:Select`
 
   /** The type of item to show in multi mode when more than one value is selected */
   @Input()

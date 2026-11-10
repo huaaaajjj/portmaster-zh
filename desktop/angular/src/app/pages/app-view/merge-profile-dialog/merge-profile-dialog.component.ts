@@ -50,12 +50,12 @@ export class MergeProfileDialogComponent implements OnInit {
       .subscribe({
         next: newID => {
           this.router.navigate(['/app/' + newID])
-          this.uai.success('Profiles Merged Successfully', 'All selected profiles have been merged')
+          this.uai.success($localize`:@@ts.mergeProfiles.success:Profiles Merged Successfully`, $localize`:@@ts.mergeProfiles.successMessage:All selected profiles have been merged`)
 
           this.dialogRef.close()
         },
         error: err => {
-          this.uai.error('Failed To Merge Profiles', this.uai.getErrorMessgae(err))
+          this.uai.error($localize`:@@ts.mergeProfiles.failed:Failed To Merge Profiles`, this.uai.getErrorMessgae(err))
         }
       })
   }

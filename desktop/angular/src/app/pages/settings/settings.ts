@@ -125,7 +125,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             event.rejected(err);
           }
 
-          this.actionIndicator.error('Failed to save setting', err);
+          this.actionIndicator.error($localize`:@@ts.appView.saveSettingFailed:Failed to save setting`, err);
           console.error(err);
         }
       })

@@ -18,33 +18,33 @@ export function formatDuration(millis: number, skipDays = false, skipMillis = fa
   if (!skipDays) {
     const days = Math.floor(val / day)
     if (days > 0) {
-      str += days.toString() + 'd ';
+      str += $localize`:@@ts.duration.days:${days}:DAYS:d` + ' ';
       val -= days * day;
     }
   }
 
   const hours = Math.floor(val / hour);
   if (hours > 0) {
-    str += hours.toString() + 'h ';
+    str += $localize`:@@ts.duration.hours:${hours}:HOURS:h` + ' ';
     val -= hours * hour;
   }
 
   const minutes = Math.floor(val / minute);
   if (minutes > 0) {
-    str += minutes.toString() + 'm ';
+    str += $localize`:@@ts.duration.minutes:${minutes}:MINUTES:m` + ' ';
     val -= minutes * minute;
   }
 
   const seconds = Math.floor(val / second);
   if (seconds > 0) {
-    str += seconds.toString() + 's ';
+    str += $localize`:@@ts.duration.seconds:${seconds}:SECONDS:s` + ' ';
     val -= seconds * second;
   }
 
   if (!skipMillis) {
     const ms = Math.floor(val / millisecond)
     if (ms > 0) {
-      str += ms.toString() + 'ms '
+      str += $localize`:@@ts.duration.milliseconds:${ms}:MILLISECONDS:ms` + ' ';
       val -= ms * millisecond
     }
   }
@@ -95,7 +95,7 @@ export class DurationPipe implements PipeTransform {
 
     const result = formatDuration(value);
     if (result === '0') {
-      return '< 1s'
+      return $localize`:@@ts.duration.lessThanSecond:< 1s`
     }
 
     return result

@@ -15,7 +15,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ConfigService, PortmasterAPIModule, StringSetting, getActualValue } from '@safing/portmaster-api';
 import { OverlayStepperModule, SfngAccordionModule, SfngDialogModule, SfngDropDownModule, SfngPaginationModule, SfngSelectModule, SfngTipUpModule, SfngToggleSwitchModule, SfngTooltipModule, TabModule, UiModule } from '@safing/ui';
-import MyYamlFile from 'js-yaml-loader!../i18n/helptexts.yaml';
+import MyYamlFile from 'js-yaml-loader!../i18n/helptexts.zh-CN.yaml';
 import * as i18n from 'ng-zorro-antd/i18n';
 import { MarkdownModule } from 'ngx-markdown';
 import { firstValueFrom } from 'rxjs';
@@ -75,7 +75,6 @@ import { SupportProgressDialogComponent } from './pages/support/progress-dialog'
 function loadAndSetLocaleInitializer(configService: ConfigService) {
   return async function () {
     let angularLocaleID = 'en-GB';
-    let nzLocaleID: string = 'en_GB';
 
     try {
       const setting = await firstValueFrom(configService.get("core/locale"))
@@ -84,11 +83,9 @@ function loadAndSetLocaleInitializer(configService: ConfigService) {
       switch (currentValue) {
         case 'en-US':
           angularLocaleID = 'en-US'
-          nzLocaleID = 'en_US'
           break;
         case 'en-GB':
           angularLocaleID = 'en-GB'
-          nzLocaleID = 'en_GB'
           break;
 
         default:
@@ -112,7 +109,6 @@ function loadAndSetLocaleInitializer(configService: ConfigService) {
           registerLocaleData(locale.default)
 
           localeConfig.localeId = angularLocaleID;
-          localeConfig.nzLocale = (i18n as any)[nzLocaleID];
         })
     } catch (err) {
       console.error(`failed to load locale module for ${angularLocaleID}:`, err)
@@ -121,7 +117,7 @@ function loadAndSetLocaleInitializer(configService: ConfigService) {
 }
 
 const localeConfig = {
-  nzLocale: i18n.en_GB,
+  nzLocale: i18n.zh_CN,
   localeId: 'en-GB'
 }
 

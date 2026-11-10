@@ -32,16 +32,16 @@
 
       <span [ngSwitch]="spnStatus?.Status" [sfng-tooltip]="spnStatus?.Status === 'connected' ? spnTooltipTemplate : null">
         <ng-template ngSwitchCase="disabled">
-          SPN is connecting...<br>
-          Fail-safe blocking enabled
+          <ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.1a9494ddd20b">SPN is connecting...</ng-container><br>
+          <ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.52c916dc304a">Fail-safe blocking enabled</ng-container>
         </ng-template>
         <ng-template ngSwitchCase="failed">
-          <span class="text-red-300">SPN failed to connect</span><br>
-          Fail-safe blocking enabled
+          <span class="text-red-300"><ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.cebe7e9cfb3d">SPN failed to connect</ng-container></span><br>
+          <ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.52c916dc304a">Fail-safe blocking enabled</ng-container>
         </ng-template>
         <ng-template ngSwitchCase="connecting">
-          SPN is connecting...<br>
-          Fail-safe blocking enabled
+          <ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.1a9494ddd20b">SPN is connecting...</ng-container><br>
+          <ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.52c916dc304a">Fail-safe blocking enabled</ng-container>
         </ng-template>
         <ng-template ngSwitchCase="connected">
           <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" fill="currentColor" viewBox="0 0 16 16"
@@ -50,11 +50,12 @@
           </svg>
           {{ spnStatus?.HomeHubName }}
           <span class="text-tertiary">
-            in
+            <ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.984619268bcd">in</ng-container>
           </span>
           <span *ngIf="!!spnStatus?.ConnectedCountry?.Code" [appCountryFlags]="spnStatus!.ConnectedCountry!.Code"></span>
           {{ spnStatus?.ConnectedCountry?.Name }}
         </ng-template>
+        <ng-template ngSwitchDefault>{{ spnStatus?.Status }}</ng-template>
       </span>
 
     </div>
@@ -97,10 +98,10 @@
 </ng-container>
 
 <ng-template #spnTooltipTemplate>
-  SPN Home (Entry) Node
+  <ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.1501093536b6">SPN Home (Entry) Node</ng-container>
   <ul class="pl-4 list-disc">
-    <li>Connected to {{ spnStatus?.ConnectedIP }}</li>
-    <li>Uplink is always encrypted</li>
-    <li>Built with transport/decoy {{ spnStatus?.ConnectedTransport }}</li>
+    <li><ng-container i18n="@@spn.connectedIp">Connected to {{ spnStatus?.ConnectedIP }}</ng-container></li>
+    <li><ng-container i18n="@@ui.src.app.shared.feature.scout.feature.scout.533b82fa295f">Uplink is always encrypted</ng-container></li>
+    <li><ng-container i18n="@@spn.connectedTransport">Built with transport/decoy {{ spnStatus?.ConnectedTransport }}</ng-container></li>
   </ul>
 </ng-template>

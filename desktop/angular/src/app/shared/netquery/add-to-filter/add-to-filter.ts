@@ -37,10 +37,10 @@ export class SfngNetqueryAddToFilterDirective implements OnInit, OnDestroy {
     } else if (evt.ctrlKey) {
       this.integration.writeToClipboard(this._values.join(', '))
         .then(() => {
-          this.uai.success("Copied to clipboard", "Successfully copied " + this._values.join(", ") + " to your clipboard")
+          this.uai.success($localize`:@@netquery.valueCopied:Copied to clipboard`, $localize`:@@netquery.valueCopiedDetail:Successfully copied ${this._values.join(", ")}:VALUES: to your clipboard`)
         })
         .catch(err => {
-          this.uai.error("Failed to copy to clipboard", this.uai.getErrorMessgae(err))
+          this.uai.error($localize`:@@netquery.copyFailed:Failed to copy to clipboard`, this.uai.getErrorMessgae(err))
         })
 
       prevent = true

@@ -16,6 +16,8 @@ export interface LaneModel extends Lane {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpnPinListComponent {
+  readonly notAvailable = $localize`:@@spn.notAvailable:N/A`;
+
   @Input()
   set allowHover(v: any) {
     this._allowHover = coerceBooleanProperty(v);

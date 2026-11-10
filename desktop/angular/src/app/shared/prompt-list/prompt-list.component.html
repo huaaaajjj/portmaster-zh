@@ -6,19 +6,19 @@
       <span class="prompt-count info-circle">{{ profile.prompts.length }}</span>
       <app-menu-trigger [menu]="menu"></app-menu-trigger>
       <app-menu #menu>
-        <app-menu-group>Per Connection</app-menu-group>
-        <app-menu-item (click)="allowAll(profile)">Allow All</app-menu-item>
-        <app-menu-item (click)="denyAll(profile)">Block All</app-menu-item>
+        <app-menu-group><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.6b032d829017">Per Connection</ng-container></app-menu-group>
+        <app-menu-item (click)="allowAll(profile)"><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.48fd29a341e9">Allow All</ng-container></app-menu-item>
+        <app-menu-item (click)="denyAll(profile)"><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.548702a6dba6">Block All</ng-container></app-menu-item>
 
-        <app-menu-group>Default Action</app-menu-group>
-        <app-menu-item (click)="changeDefault(profile, 'permit')">Allow App</app-menu-item>
-        <app-menu-item (click)="changeDefault(profile, 'block')">Block App</app-menu-item>
+        <app-menu-group><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.13955d2ba07b">Default Action</ng-container></app-menu-group>
+        <app-menu-item (click)="changeDefault(profile, 'permit')"><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.d9e864a281b0">Allow App</ng-container></app-menu-item>
+        <app-menu-item (click)="changeDefault(profile, 'block')"><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.f1d8fbf8873d">Block App</ng-container></app-menu-item>
 
         <app-menu-item class="item-seperator" [routerLink]="['/', 'app', profile.Source, profile.ID]"
-          [queryParams]="{setting: 'filter/defaultAction', tab: 'settings'}">Change Default</app-menu-item>
+          [queryParams]="{setting: 'filter/defaultAction', tab: 'settings'}"><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.ba3476206205">Change Default</ng-container></app-menu-item>
 
         <app-menu-item class="item-seperator" [routerLink]="['/', 'app', profile.Source, profile.ID]">
-          App Settings
+          <ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.4fabc1b64fcd">App Settings</ng-container>
         </app-menu-item>
       </app-menu>
     </div>
@@ -31,7 +31,7 @@
           *ngFor="let prompt of (profile.showAll ? profile.prompts : profile.promptsLimited); trackBy: trackPrompts">
           <span class="entity">
             <ng-container *ngIf="!prompt.domain; else: domainView">
-              {{ prompt.EventData?.Entity?.IP || 'N/A' }}
+              {{ prompt.EventData?.Entity?.IP || notAvailable }}
             </ng-container>
             <ng-template #domainView>
               <span *ngIf="!!prompt.subdomain" class="subdomain">{{prompt.subdomain}}.</span>{{prompt.domain}}
@@ -39,18 +39,18 @@
           </span>
 
           <span class="actions">
-            <button (click)="allow(prompt)">Allow</button>
-            <button (click)="block(prompt)">Block</button>
+            <button (click)="allow(prompt)"><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.0a444ba80b3b">Allow</ng-container></button>
+            <button (click)="block(prompt)"><ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.f24091d3fbe1">Block</ng-container></button>
           </span>
         </div>
         <div class="more-available" *ngIf="!profile.showAll" (click)="profile.showAll = true">
-          {{ profile.prompts.length - profile.promptsLimited.length }}
-          more
+          <ng-container i18n="@@prompts.moreCount">{{ profile.prompts.length - profile.promptsLimited.length }}
+          more</ng-container>
         </div>
 
         <div class="more-available" *ngIf="profile.showAll && profile.promptsLimited.length < profile.prompts.length"
           (click)="profile.showAll = false">
-          Show less
+          <ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.7e46ea6b04ee">Show less</ng-container>
         </div>
       </div>
     </div>
@@ -63,6 +63,6 @@
         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 
-    No Prompts
+    <ng-container i18n="@@ui.src.app.shared.prompt.list.prompt.list.component.72b51ad333a7">No Prompts</ng-container>
   </div>
 </div>

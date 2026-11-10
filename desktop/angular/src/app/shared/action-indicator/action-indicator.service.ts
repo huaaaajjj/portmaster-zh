@@ -245,7 +245,6 @@ export class ActionIndicatorService {
         }
 
         if (!!body) {
-          body = body[0].toLocaleUpperCase() + body.slice(1)
           return body
         }
       }
@@ -265,20 +264,18 @@ export class ActionIndicatorService {
           msg = body;
         }
 
-        // Make the first letter uppercase
         if (!!msg) {
-          msg = msg[0].toLocaleUpperCase() + msg.slice(1)
           return msg;
         }
       }
 
       console.error(`Unexpected error type`, resp)
 
-      return `Unknown error: ${resp}`
+      return $localize`:@@ts.actionIndicator.unknownError:Unknown error: ${resp}:ERROR:`
 
     } catch (err: any) {
       console.error(err)
-      return `Unknown error: ${resp}`
+      return $localize`:@@ts.actionIndicator.unknownError:Unknown error: ${resp}:ERROR:`
     }
   }
 }

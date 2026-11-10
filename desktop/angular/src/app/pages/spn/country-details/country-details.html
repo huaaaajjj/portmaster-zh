@@ -11,19 +11,19 @@
 
 <sfng-tab-group linkRouter="false" class="h-full">
   <!-- Tab that displays all nodes in that country -->
-  <sfng-tab id="pins" title="Nodes">
+  <sfng-tab id="pins" i18n-title="@@ui.src.app.pages.spn.country.details.country.details.89cf5bc7cf19" title="Nodes">
     <spn-pin-list *sfngTabContent [pins]="pins" (pinHover)="pinHover.next($event)" (pinClick)="openPinDetails($event)"
       allowClick="true">
     </spn-pin-list>
   </sfng-tab>
 
   <!-- Tab that displays generale statistics about the country -->
-  <sfng-tab id="Statistics" title="Statistics">
+  <sfng-tab id="Statistics" i18n-title="@@ui.src.app.pages.spn.country.details.country.details.e1056f916212" title="Statistics">
     <div *sfngTabContent class="flex flex-col gap-3">
       <table>
         <tr>
           <th>
-            <span class="text-primary">Total Nodes</span>
+            <span class="text-primary"><ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.b1fd2fd9847b">Total Nodes</ng-container></span>
           </th>
           <td>{{ totalAliveCount }}</td>
         </tr>
@@ -31,7 +31,7 @@
           <th>
             <span class="inline-block pl-4">
               <spn-node-icon bySafing="true" isActive="true"></spn-node-icon>
-              by Safing
+              <ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.b836769ec96f">by Safing</ng-container>
             </span>
           </th>
           <td>{{ safingNodeCount }}</td>
@@ -40,14 +40,14 @@
           <th>
             <span class="inline-block pl-4">
               <spn-node-icon bySafing="false" isActive="true"></spn-node-icon>
-              by Community
+              <ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.e46922a9d979">by Community</ng-container>
             </span>
           </th>
           <td>{{ communityNodeCount }}</td>
         </tr>
         <tr>
           <th>
-            <span class="text-primary">Exit Nodes</span>
+            <span class="text-primary"><ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.c8585f8884a5">Exit Nodes</ng-container></span>
           </th>
           <td>{{ exitNodeCount }}</td>
         </tr>
@@ -55,7 +55,7 @@
           <th>
             <span class="inline-block pl-4">
               <spn-node-icon bySafing="true" isExit="true"></spn-node-icon>
-              by Safing
+              <ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.b836769ec96f">by Safing</ng-container>
             </span>
           </th>
           <td>{{ safingExitNodeCount }}</td>
@@ -64,14 +64,14 @@
           <th>
             <span class="inline-block pl-4">
               <spn-node-icon bySafing="false" isExit="true"></spn-node-icon>
-              by Community
+              <ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.e46922a9d979">by Community</ng-container>
             </span>
           </th>
           <td>{{ communityExitNodeCount }}</td>
         </tr>
         <tr>
           <th>
-            <span class="text-primary">Nodes In Use</span>
+            <span class="text-primary"><ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.e0de8f22ac12">Nodes In Use</ng-container></span>
           </th>
           <td>{{ activeNodeCount }}</td>
         </tr>
@@ -79,7 +79,7 @@
           <th>
             <span class="inline-block pl-4">
               <spn-node-icon bySafing="true" isActive="true"></spn-node-icon>
-              by Safing
+              <ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.b836769ec96f">by Safing</ng-container>
             </span>
           </th>
           <td>{{ activeSafingNodeCount }}</td>
@@ -88,7 +88,7 @@
           <th>
             <span class="inline-block pl-4">
               <spn-node-icon bySafing="false" isActive="true"></spn-node-icon>
-              by Community
+              <ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.e46922a9d979">by Community</ng-container>
             </span>
           </th>
           <td>{{ activeCommunityNodeCount }}</td>
@@ -99,11 +99,11 @@
 
 
   <!-- Tab that displays all apps that exit in this country -->
-  <sfng-tab id="profiles" title="Apps">
+  <sfng-tab id="profiles" i18n-title="@@ui.src.app.pages.spn.country.details.country.details.5bfbd92411c8" title="Apps">
     <div *sfngTabContent>
-      <span class="inline-block p-2 mb-2 text-tertiary">The following Apps have connections that are routed through the
+      <span class="inline-block p-2 mb-2 text-tertiary"><ng-container i18n="@@spn.countryApps">The following Apps have connections that are routed through the
         SPN and use an
-        exit node in {{ countryName }} ({{ countryCode }}):</span>
+        exit node in {{ countryName }} ({{ countryCode }}):</ng-container></span>
       <table class="w-full custom ">
         <tbody>
           <tr *ngFor="let app of profiles; trackBy: trackProfile"
@@ -113,7 +113,7 @@
               {{ app.profile.Name }}
             </td>
             <td class="p-2">
-              {{ app.count }} <span class="text-tertiary">connections</span>
+              {{ app.count }} <span class="text-tertiary"><ng-container i18n="@@ui.src.app.pages.spn.country.details.country.details.f0ca2c2ca98a">connections</ng-container></span>
             </td>
             <td class="w-10 p-2">
               <div class="flex flex-row items-center gap-2 ">

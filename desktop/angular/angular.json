@@ -54,7 +54,12 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "localize": [
+              "zh-CN"
+            ],
+            "i18nMissingTranslation": "error",
+            "i18nDuplicateTranslation": "error"
           },
           "configurations": {
             "development": {},
@@ -148,6 +153,15 @@
             ]
           }
         }
+      },
+      "i18n": {
+        "sourceLocale": "en-GB",
+        "locales": {
+          "zh-CN": {
+            "translation": "src/i18n/messages.zh-CN.xlf",
+            "baseHref": ""
+          }
+        }
       }
     },
     "@safing/ui": {
@@ -227,7 +241,12 @@
                 "inlineCritical": false
               }
             },
-            "outputHashing": "none"
+            "outputHashing": "none",
+            "localize": [
+              "zh-CN"
+            ],
+            "i18nMissingTranslation": "error",
+            "i18nDuplicateTranslation": "error"
           },
           "configurations": {
             "production": {
@@ -299,6 +318,15 @@
               "projects/portmaster-chrome-extension/src/styles.scss"
             ],
             "scripts": []
+          }
+        }
+      },
+      "i18n": {
+        "sourceLocale": "en-GB",
+        "locales": {
+          "zh-CN": {
+            "translation": "src/i18n/messages.zh-CN.xlf",
+            "baseHref": ""
           }
         }
       }
@@ -377,6 +405,7 @@
             "index": "projects/tauri-builtin/src/index.html",
             "main": "projects/tauri-builtin/src/main.ts",
             "polyfills": [
+              "@angular/localize/init",
               "zone.js"
             ],
             "tsConfig": "projects/tauri-builtin/tsconfig.app.json",
@@ -393,7 +422,12 @@
                 "dist-lib/"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "localize": [
+              "zh-CN"
+            ],
+            "i18nMissingTranslation": "error",
+            "i18nDuplicateTranslation": "error"
           },
           "configurations": {
             "production": {
@@ -438,6 +472,15 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "tauri-builtin:build"
+          }
+        }
+      },
+      "i18n": {
+        "sourceLocale": "en-GB",
+        "locales": {
+          "zh-CN": {
+            "translation": "src/i18n/messages.zh-CN.xlf",
+            "baseHref": ""
           }
         }
       }

@@ -5,16 +5,16 @@
     class="w-8 h-8 rounded-full border border-gray-400"
   />
 
-  {{ isEditMode ? 'Edit App Profile' : 'Create New App Profile' }}
+  <ng-container i18n="@@profile.editOrCreate">{isEditMode, select, true {Edit App Profile} other {Create New App Profile}}</ng-container>
 </h1>
 
 <form #profileForm="ngForm">
   <sfng-tab-group customHeader="false" linkRouter="false">
-    <sfng-tab title="General">
+    <sfng-tab i18n-title="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.c0b893a0f2b1" title="General">
       <div *sfngTabContent class="tab-content">
         <span class="py-2 text-secondary">
-          Configure basic profile information like the profile name, it's
-          description and optionally the profile icon.
+          <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.ea4b1f167fb3">Configure basic profile information like the profile name, it's
+          description and optionally the profile icon.</ng-container>
         </span>
 
         <div class="input" *appExpertiseLevel="'developer'">
@@ -24,41 +24,41 @@
             name="id"
             pattern="[a-zA-Z0-9\-\._]*"
             [(ngModel)]="profile.ID"
-            placeholder="A unique identifier for profile. Leave empty to generate a random one."
+            i18n-placeholder="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.b73c6af24070" placeholder="A unique identifier for profile. Leave empty to generate a random one."
           />
         </div>
 
         <div class="input">
-          <label>Name *</label>
+          <label><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.925cf9f4da12">Name *</ng-container></label>
           <input
             type="text"
             required
             name="name"
             [(ngModel)]="profile.Name"
-            placeholder="A name for labele profile"
+            i18n-placeholder="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.cc2ed059c7d2" placeholder="A name for labele profile"
           />
         </div>
 
         <div class="input">
-          <label>Description</label>
+          <label><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.f7b54255ecf3">Description</ng-container></label>
           <input
             type="text"
             name="description"
             [(ngModel)]="profile.Description"
-            placeholder="An optional description of the profile"
+            i18n-placeholder="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.1b39d326a07e" placeholder="An optional description of the profile"
           />
         </div>
 
         <div class="flex flex-row justify-between">
           <div class="input">
-            <label>Icon</label>
+            <label><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.eb81965d7735">Icon</ng-container></label>
             <div class="flex flex-col gap-2 justify-start">
               <div class="flex flex-row gap-3">
                 <label
                   for="icon-upload"
                   class="inline-block p-1 px-4 font-medium whitespace-nowrap bg-opacity-80 rounded-sm cursor-pointer outline-none bg-blue hover:bg-blue text-xxs w-fit"
                 >
-                  Choose Icon
+                  <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.6fa75852205b">Choose Icon</ng-container>
                 </label>
                 <button
                   type="button"
@@ -66,12 +66,12 @@
                   (click)="resetIcon()"
                   class="bg-red-300"
                 >
-                  Reset Icon
+                  <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.df96892a92b0">Reset Icon</ng-container>
                 </button>
               </div>
               <span class="pl-2 break-normal text-tertiary"
-                >The icon must be smaller than 10kB and it's dimensions must not
-                exceed 512x512 px. Only JPG and PNG files are supported.</span
+                ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.4b41ba18dad3">The icon must be smaller than 10kB and it's dimensions must not
+                exceed 512x512 px. Only JPG and PNG files are supported.</ng-container></span
               >
             </div>
             <input
@@ -94,15 +94,15 @@
       </div>
     </sfng-tab>
 
-    <sfng-tab title="Process Matching">
+    <sfng-tab i18n-title="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.8ce363c2947f" title="Process Matching">
       <div *sfngTabContent class="flex flex-col tab-content text-xxs">
         <span class="text-xs text-secondary"
-          >This profile will be applied to processes that match one of the
-          following fingerprints:</span
+          ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.9b809ec97484">This profile will be applied to processes that match one of the
+          following fingerprints:</ng-container></span
         >
 
         <div *ngIf="!profile.Fingerprints?.length">
-          No fingerprints configured. Please press "Add New" to get started.
+          <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.a73a925dfbc2">No fingerprints configured. Please press "Add New" to get started.</ng-container>
         </div>
         <div class="flex overflow-auto flex-col flex-grow gap-2 px-1">
           <div
@@ -128,36 +128,36 @@
               [ngModelOptions]="{standalone: true}"
             >
               <sfng-select-item
-                *sfngSelectValue="fingerPrintTypes.Tag; label: 'Tag'"
+                *sfngSelectValue="fingerPrintTypes.Tag; label: fingerprintTypeLabel(fingerPrintTypes.Tag)"
               >
-                Tag
+                <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.4127e27124cd">Tag</ng-container>
                 <sfng-tipup key="process-tags"></sfng-tipup>
               </sfng-select-item>
               <sfng-select-item
-                *sfngSelectValue="fingerPrintTypes.Cmdline; label: 'Command Line'"
-                >Command Line
+                *sfngSelectValue="fingerPrintTypes.Cmdline; label: fingerprintTypeLabel(fingerPrintTypes.Cmdline)"
+                ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.c3f0fd80070b">Command Line</ng-container>
               </sfng-select-item>
               <sfng-select-item
-                *sfngSelectValue="fingerPrintTypes.Env; label: 'Environment'"
-                >Environment
+                *sfngSelectValue="fingerPrintTypes.Env; label: fingerprintTypeLabel(fingerPrintTypes.Env)"
+                ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.699d07e69f1e">Environment</ng-container>
               </sfng-select-item>
               <sfng-select-item
-                *sfngSelectValue="fingerPrintTypes.Path; label: 'Path'"
-                >Path</sfng-select-item
+                *sfngSelectValue="fingerPrintTypes.Path; label: fingerprintTypeLabel(fingerPrintTypes.Path)"
+                ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.72724dfb0e6d">Path</ng-container></sfng-select-item
               >
             </sfng-select>
 
             <input
               type="text"
               [(ngModel)]="fp.Key"
-              placeholder="Key"
+              i18n-placeholder="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.8c3adcac7303" placeholder="Key"
               [ngModelOptions]="{standalone: true}"
               *ngIf="fp.Type === 'env'"
             />
 
             <sfng-select
               [(ngModel)]="fp.Key"
-              placeholder="Key"
+              i18n-placeholder="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.8c3adcac7303" placeholder="Key"
               [ngModelOptions]="{standalone: true}"
               *ngIf="fp.Type === 'tag'"
             >
@@ -173,20 +173,20 @@
               [ngModelOptions]="{standalone: true}"
             >
               <sfng-select-item *sfngSelectValue="fingerPrintOperations.Equal"
-                >Equals</sfng-select-item
+                ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.c326386f56e9">Equals</ng-container></sfng-select-item
               >
               <sfng-select-item *sfngSelectValue="fingerPrintOperations.Prefix"
-                >Prefix</sfng-select-item
+                ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.2cbbe67974d7">Prefix</ng-container></sfng-select-item
               >
               <sfng-select-item *sfngSelectValue="fingerPrintOperations.Regex"
-                >Regex</sfng-select-item
+                ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.450abe700925">Regex</ng-container></sfng-select-item
               >
             </sfng-select>
 
             <input
               type="text"
               [(ngModel)]="fp.Value"
-              placeholder="Value"
+              i18n-placeholder="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.0f46d3e31fa2" placeholder="Value"
               [ngModelOptions]="{standalone: true}"
             />
 
@@ -213,15 +213,15 @@
           </div>
         </div>
 
-        <button type="button" (click)="addFingerprint()">Add New</button>
+        <button type="button" (click)="addFingerprint()"><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.0aa40a33cedf">Add New</ng-container></button>
       </div>
     </sfng-tab>
 
-    <sfng-tab title="Copy Settings">
+    <sfng-tab i18n-title="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.90e5ddb0d37b" title="Copy Settings">
       <div *sfngTabContent class="flex flex-col gap-2 tab-content">
         <div class="flex flex-row gap-2 items-center p-2 bg-gray-200">
           <span class="text-secondary"
-            >Select a Profile to copy settings from:</span
+            ><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.1a6353c05a39">Select a Profile to copy settings from:</ng-container></span
           >
           <div class="flex-grow"></div>
           <sfng-select
@@ -229,7 +229,7 @@
             [ngModelOptions]="{standalone: true}"
             class="flex-grow"
             [allowSearch]="true"
-            searchPlaceholder="Search Profiles"
+            i18n-searchPlaceholder="@@general.profile.searchProfiles" searchPlaceholder="Search Profiles"
           >
             <ng-container *ngFor="let p of allProfiles">
               <sfng-select-item
@@ -246,7 +246,7 @@
             [disabled]="selectedCopyFrom === null"
             (click)="addCopyFrom()"
           >
-            Add
+            <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.39624aa9f1de">Add</ng-container>
           </button>
         </div>
 
@@ -301,9 +301,9 @@
           </div>
         </div>
         <span class="block text-center break-normal text-secondary text-xxs">
-          Settings will be copied from all specified profiles in order with
-          settings from higher profiles taking precedence. <br />
-          Existing settings may be overwritten.
+          <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.1832dd0047de">Settings will be copied from all specified profiles in order with
+          settings from higher profiles taking precedence.</ng-container> <br />
+          <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.097d0aef75b2">Existing settings may be overwritten.</ng-container>
         </span>
       </div>
     </sfng-tab>
@@ -312,15 +312,15 @@
 
 <div class="flex flex-row gap-2 justify-end items-center">
   <button *ngIf="isEditMode" (click)="deleteProfile()" class="bg-red">
-    Delete
+    <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.03096c3a7b42">Delete</ng-container>
   </button>
   <div class="flex-grow"></div>
-  <button (click)="abort()" class="">Cancel</button>
+  <button (click)="abort()" class=""><ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.d4fe38f56aca">Cancel</ng-container></button>
   <button
     (click)="save()"
     [disabled]="!profileForm.valid"
     class="bg-opacity-80 bg-blue hover:bg-blue"
   >
-    Save
+    <ng-container i18n="@@ui.src.app.shared.edit.profile.dialog.edit.profile.dialog.29ccf96390de">Save</ng-container>
   </button>
 </div>

@@ -1,10 +1,10 @@
-<h1>Trackers Are Blocked System-Wide</h1>
+<h1><ng-container i18n="@@ui.src.app.intro.step.2.trackers.step.2.trackers.b9af08933845">Trackers Are Blocked System-Wide</ng-container></h1>
 
-<p>Portmaster automatically blocks ads, trackers and malware hosts on your whole device. Portmaster knows what to block
+<p><ng-container i18n="@@ui.src.app.intro.step.2.trackers.step.2.trackers.3d4fc8379f72">Portmaster automatically blocks ads, trackers and malware hosts on your whole device. Portmaster knows what to block
   through trusted domain lists, which are also used by Ad-Blockers in browsers, etc. You can always customize this in
-  the settings.</p>
+  the settings.</ng-container></p>
 
-<sfng-dropdown label="Customize" class="w-full" maxHeight="300px" maxWidth="600px" offsetY="0">
+<sfng-dropdown i18n-label="@@ui.src.app.intro.step.2.trackers.step.2.trackers.60962ebca85d" label="Customize" class="w-full" maxHeight="300px" maxWidth="600px" offsetY="0">
   <app-generic-setting class="h-full" [setting]="setting" [attr.id]="setting?.Key" (save)="saveSetting($event)"
     enableActiveBorder="false" showHeader="false">
   </app-generic-setting>

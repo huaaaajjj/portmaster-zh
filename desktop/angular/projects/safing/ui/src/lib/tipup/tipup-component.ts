@@ -1,3 +1,4 @@
+/// <reference types="@angular/localize" />
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from "@angular/core";
 import { SfngDialogRef, SFNG_DIALOG_REF } from "../dialog";
 import { SfngTipUpService } from "./tipup";
@@ -10,12 +11,12 @@ import { TIPUP_TOKEN } from "./utils";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SfngTipUpComponent implements OnInit, TipUp<any> {
-  title: string = 'N/A';
-  content: string = 'N/A';
+  title: string = $localize`:@@ts.common.notAvailable:N/A`;
+  content: string = $localize`:@@ts.common.notAvailable:N/A`;
   nextKey?: string;
   buttons?: Button<any>[];
   url?: string;
-  urlText: string = 'Read More';
+  urlText: string = $localize`:@@ts.tipup.readMore:Read More`;
 
   constructor(
     @Inject(TIPUP_TOKEN) public readonly token: string,
@@ -28,7 +29,7 @@ export class SfngTipUpComponent implements OnInit, TipUp<any> {
     const doc = this.tipupService.getTipUp(this.token);
     if (!!doc) {
       Object.assign(this, doc);
-      this.urlText = doc.urlText || 'Read More';
+      this.urlText = doc.urlText || $localize`:@@ts.tipup.readMore:Read More`;
     }
   }
 

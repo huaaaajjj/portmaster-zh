@@ -61,7 +61,7 @@ export class ExportDialogComponent implements OnInit {
 
   copyToClipboard() {
     this.integration.writeToClipboard(this.dialogRef.data.content)
-      .then(() => this.uai.success('Copied to Clipboard'))
-      .catch(() => this.uai.error('Failed to Copy to Clipboard'));
+      .then(() => this.uai.success($localize`:@@settings.ts.dfbfeebc9a00:Copied to Clipboard`))
+      .catch(() => this.uai.error($localize`:@@settings.ts.0a6c823918fe:Failed to Copy to Clipboard`));
   }
 }

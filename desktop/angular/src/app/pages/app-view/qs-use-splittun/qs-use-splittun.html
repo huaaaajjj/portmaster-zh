@@ -3,7 +3,7 @@
   snfgTooltipPosition="right"
   [sfng-tooltip]="(interferingSettings.length > 0 || spnEnabled) ? tooltipTemplate : null">
   <span class="text-primary" [class.cursor-pointer]="interferingSettings.length > 0 || spnEnabled">
-    Split Tunnel
+    <ng-container i18n="@@ui.src.app.pages.app.view.qs.use.splittun.qs.use.splittun.e3f12e7b1a5f">Split Tunnel</ng-container>
   </span>
 
   <sfng-toggle *ngIf="splitTunModuleEnabled === true"
@@ -12,8 +12,8 @@
 
   <span *ngIf="splitTunModuleEnabled === false"
     routerLink="/settings" [queryParams]="{setting: 'splittun/enable'}" class="cursor-pointer text-tertiary hover:underline"
-    sfng-tooltip="Enable Split Tunneling to use.">
-      Disabled
+    i18n-sfng-tooltip="@@ui.src.app.pages.app.view.qs.use.splittun.qs.use.splittun.60d2977d8179" sfng-tooltip="Enable Split Tunneling to use.">
+      <ng-container i18n="@@ui.src.app.pages.app.view.qs.use.splittun.qs.use.splittun.427a72688c45">Disabled</ng-container>
   </span>
 
   <ng-template *ngIf="splitTunModuleEnabled === null">
@@ -26,10 +26,10 @@
 </div>
 
 <ng-template #tooltipTemplate>
-  Settings that may interfere with Split Tunnel:
+  <ng-container i18n="@@ui.src.app.pages.app.view.qs.use.splittun.qs.use.splittun.b2b9d036d169">Settings that may interfere with Split Tunnel:</ng-container>
   <ul class="pl-4 list-disc">
-    <li *ngIf="spnEnabled && spnFullOverride">SPN is routing all traffic, fully bypassing Split Tunnel</li>
-    <li *ngIf="spnEnabled && !spnFullOverride">SPN is routing non-excluded connections, partially bypassing Split Tunnel</li>
+    <li *ngIf="spnEnabled && spnFullOverride"><ng-container i18n="@@ui.src.app.pages.app.view.qs.use.splittun.qs.use.splittun.de7535f59d48">SPN is routing all traffic, fully bypassing Split Tunnel</ng-container></li>
+    <li *ngIf="spnEnabled && !spnFullOverride"><ng-container i18n="@@ui.src.app.pages.app.view.qs.use.splittun.qs.use.splittun.00c675f8a892">SPN is routing non-excluded connections, partially bypassing Split Tunnel</ng-container></li>
     <ng-container *ngFor="let setting of interferingSettings">
       <li class="cursor-pointer hover:underline" [routerLink]="[]"
         [queryParams]="{setting: setting.Key, tab: 'settings'}">

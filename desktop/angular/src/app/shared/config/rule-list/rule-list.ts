@@ -167,19 +167,19 @@ export class RuleListComponent implements ControlValueAccessor {
       buttons: [
         {
           id: 'abort',
-          text: 'Cancel',
+          text: $localize`:@@settings.ts.19766ed6ccb2:Cancel`,
           class: 'outline'
         },
         {
           id: 'delete',
-          text: 'Delete Rules',
+          text: $localize`:@@settings.ts.6f130610426e:Delete Rules`,
           class: 'danger'
         }
       ],
       canCancel: true,
-      caption: 'Caution',
-      header: 'Rule Deletion',
-      message: 'Do you want to delete the selected rules'
+      caption: $localize`:@@settings.ts.2e178e6c65f9:Caution`,
+      header: $localize`:@@settings.ts.2bd5eaaa3271:Rule Deletion`,
+      message: $localize`:@@settings.ts.368698e52506:Do you want to delete the selected rules`
     })
       .onAction('delete', () => {
         this.entries = this.entries.filter((_, idx: number) => !this.selectedItems.includes(idx))

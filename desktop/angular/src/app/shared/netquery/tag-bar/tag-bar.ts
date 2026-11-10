@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PossilbeValue } from '@safing/portmaster-api';
 import { fadeInListAnimation } from '../../animations';
 import { NetqueryHelper } from '../connection-helper.service';
+import { connectionValueLabel } from '../utils';
 
 export interface SfngTagbarValue {
   key: string;
@@ -40,6 +41,7 @@ export class SfngNetqueryTagbarComponent implements ControlValueAccessor {
 
   /** @private the current tag bar values */
   values: SfngTagbarValue[] = [];
+  readonly valueLabel = connectionValueLabel;
 
   /** Whether or not the user can interact with the component */
   @Input()

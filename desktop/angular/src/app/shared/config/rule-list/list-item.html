@@ -1,13 +1,13 @@
 <div class="flex items-center action justify-evenly" [class.text-green-300]="isAllow" [class.text-red]="isBlock">
   <ng-container *ngIf="!edit; else: selectAction">
-    <span *ngIf="isAllow">{{ symbolMap["+"] }}</span>
-    <span *ngIf="isBlock">{{ symbolMap["-"] }}</span>
+    <span *ngIf="isAllow">{{ symbolMap["+"] | settingText }}</span>
+    <span *ngIf="isBlock">{{ symbolMap["-"] | settingText }}</span>
   </ng-container>
 
   <ng-template #selectAction>
     <sfng-select [ngModel]="currentAction" (ngModelChange)="setAction($event)" mode="single" dynamicValues="false">
-      <sfng-select-item *sfngSelectValue="'+'">{{ symbolMap["+"] }}</sfng-select-item>
-      <sfng-select-item *sfngSelectValue="'-'">{{ symbolMap["-"] }}</sfng-select-item>
+      <sfng-select-item *sfngSelectValue="'+'">{{ symbolMap["+"] | settingText }}</sfng-select-item>
+      <sfng-select-item *sfngSelectValue="'-'">{{ symbolMap["-"] | settingText }}</sfng-select-item>
     </sfng-select>
   </ng-template>
 </div>

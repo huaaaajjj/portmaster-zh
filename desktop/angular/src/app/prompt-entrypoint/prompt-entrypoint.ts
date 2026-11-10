@@ -23,7 +23,8 @@ interface Prompt {
   ]
 })
 export class PromptEntryPointComponent implements OnInit {
-  private readonly notificationService = inject(NotificationsService);
+  readonly notificationService = inject(NotificationsService);
+  readonly notAvailable = $localize`:@@ts.common.notAvailable:N/A`;
   private readonly portapi = inject(PortapiService);
   private readonly profileService = inject(AppProfileService);
 

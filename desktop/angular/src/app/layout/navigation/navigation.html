@@ -89,7 +89,7 @@
 
 <div class="nav-list">
   <!-- Network Activity -->
-  <div sfng-tooltip="Network Activity" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLinkActive="active"
+  <div i18n-sfng-tooltip="@@nav.networkActivity" sfng-tooltip="Network Activity" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLinkActive="active"
     routerLink="monitor" class="link" sfngTipUpTrigger="navMonitor" sfngTipUpPassive>
     <svg viewBox="0 0 24 24" class="monitor">
       <g fill="none">
@@ -102,7 +102,7 @@
   </div>
 
   <!-- App View -->
-  <div sfng-tooltip="Apps and Profiles" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLinkActive="active"
+  <div i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.4ffd41ff8ad7" sfng-tooltip="Apps and Profiles" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLinkActive="active"
     routerLink="app" class="link" sfngTipUpTrigger="navApps" sfngTipUpPassive>
     <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" class="app" fill="none">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" fill="currentColor"
@@ -113,7 +113,7 @@
   </div>
 
   <!-- SPN -->
-  <div sfng-tooltip="Safing Privacy Network" sfngTooltipDelay="1000" snfgTooltipPosition="right"
+  <div i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.a3c534f1aada" sfng-tooltip="Safing Privacy Network" sfngTooltipDelay="1000" snfgTooltipPosition="right"
     routerLinkActive="active" routerLink="spn" class="link" sfngTipUpTrigger="navMap" sfngTipUpPassive>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="spn" stroke="currentColor">
       <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -126,7 +126,7 @@
   </div>
 
   <!-- Global Settings -->
-  <div sfng-tooltip="Global Settings" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLinkActive="active"
+  <div i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.444c90b35af0" sfng-tooltip="Global Settings" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLinkActive="active"
     routerLink="settings" class="link" sfngTipUpTrigger="navSettings" sfngTipUpPassive>
     <svg viewBox="0 0 24 24" class="settings">
       <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -140,7 +140,7 @@
 
   <div class="w-full border-t border-gray-400"></div>
 
-  <div sfng-tooltip="Get Help" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLink="support"
+  <div i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.465717b05040" sfng-tooltip="Get Help" sfngTooltipDelay="1000" snfgTooltipPosition="right" routerLink="support"
     routerLinkActive="active" class="link" sfngTipUpTrigger="navSupport" sfngTipUpPassive>
     <svg viewBox="0 0 24 24" class="help">
       <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -153,7 +153,7 @@
   </div>
 </div>
 <div class="nav-lower-list">
-  <div class="relative link" sfngTipUpTrigger="navTools" sfngTipUpPassive sfng-tooltip="Version and Tools"
+  <div class="relative link" sfngTipUpTrigger="navTools" sfngTipUpPassive i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.e7612ba07279" sfng-tooltip="Version and Tools"
     sfngTooltipDelay="1000" snfgTooltipPosition="right" (click)="settingsMenu.dropdown.toggle(settingsMenuTrigger)"
     cdkOverlayOrigin #settingsMenuTrigger="cdkOverlayOrigin" [class.active]="settingsMenu.dropdown.isOpen">
 
@@ -178,36 +178,36 @@
   <app-menu #settingsMenu offsetY="0" offsetX="10" overlayClass="rounded-t">
     <div class="flex flex-col p-4 text-xxs">
       <span class="text-secondary">
-        Version: <span class="text-primary">{{ versions?.Core?.Version }} </span>
+        <ng-container i18n="@@ui.src.app.layout.navigation.navigation.24916f01e65c">Version:</ng-container> <span class="text-primary">{{ versions?.Core?.Version }} </span>
       </span>
       <span class="text-secondary">
-        Release Channel:
+        <ng-container i18n="@@ui.src.app.layout.navigation.navigation.f48e6e1c13f0">Release Channel:</ng-container>
         <span class="uppercase text-primary"
           [class.text-yellow-300]="versions?.Channel !== 'stable'">{{ versions?.Channel }}</span>
       </span>
     </div>
 
-    <app-menu-item (click)="downloadUpdates($event)" sfng-tooltip="Trigger a check for available Portmaster and intelligence updates">Check for Updates</app-menu-item>
-    <app-menu-item (click)="openChangeLog()" sfng-tooltip="Browse all Portmaster release notes on GitHub">View Changelog</app-menu-item>
+    <app-menu-item (click)="downloadUpdates($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.122894ede7c4" sfng-tooltip="Trigger a check for available Portmaster and intelligence updates"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.ee4dbada5586">Check for Updates</ng-container></app-menu-item>
+    <app-menu-item (click)="openChangeLog()" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.9f32c3b1ff02" sfng-tooltip="Browse all Portmaster release notes on GitHub"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.8fe16688ec9b">View Changelog</ng-container></app-menu-item>
     <hr/>
-    <app-menu-item (click)="reloadUI($event)" sfng-tooltip="Reload the Portmaster UI without restarting the service">Reload UI</app-menu-item>
-    <app-menu-item *appExpertiseLevel="'developer'" (click)="showIntro()" sfng-tooltip="Replay the welcome introduction screens">
-      Show Intro Screen
+    <app-menu-item (click)="reloadUI($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.5eb58ff75ced" sfng-tooltip="Reload the Portmaster UI without restarting the service"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.017f7ece58bc">Reload UI</ng-container></app-menu-item>
+    <app-menu-item *appExpertiseLevel="'developer'" (click)="showIntro()" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.c686e38cc4c8" sfng-tooltip="Replay the welcome introduction screens">
+      <ng-container i18n="@@ui.src.app.layout.navigation.navigation.aa42c6eb00f9">Show Intro Screen</ng-container>
     </app-menu-item>
     <hr/>
-    <app-menu-item (click)="reinitSPN($event)" sfng-tooltip="Stop the SPN, clear all caches, and restart it; account and settings are unchanged">Re-Initialize SPN</app-menu-item>
-    <app-menu-item (click)="logoutCompletely($event)" sfng-tooltip="Sign out and purge all local SPN account data from this device">Logout Completely</app-menu-item>
+    <app-menu-item (click)="reinitSPN($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.6e5490a76774" sfng-tooltip="Stop the SPN, clear all caches, and restart it; account and settings are unchanged"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.0fbdc26c2402">Re-Initialize SPN</ng-container></app-menu-item>
+    <app-menu-item (click)="logoutCompletely($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.487178246196" sfng-tooltip="Sign out and purge all local SPN account data from this device"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.7b005287c86d">Logout Completely</ng-container></app-menu-item>
     <hr/>
-    <app-menu-item (click)="resetBroadcastState()" sfng-tooltip="Clear the dismissed state so all notifications appear again">Reset Notifications State</app-menu-item>
-    <app-menu-item (click)="clearDNSCache($event)" sfng-tooltip="Flush the local DNS resolver cache">Clear DNS Cache</app-menu-item>
-    <app-menu-item (click)="cleanupHistory($event)" sfng-tooltip="Apply the history retention settings to remove outdated connection records">Cleanup Network History</app-menu-item>
+    <app-menu-item (click)="resetBroadcastState()" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.fdd9b220f54f" sfng-tooltip="Clear the dismissed state so all notifications appear again"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.ce1f63aa91d2">Reset Notifications State</ng-container></app-menu-item>
+    <app-menu-item (click)="clearDNSCache($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.783cee30d0ba" sfng-tooltip="Flush the local DNS resolver cache"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.c78ae58d7af7">Clear DNS Cache</ng-container></app-menu-item>
+    <app-menu-item (click)="cleanupHistory($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.8f643323c6ee" sfng-tooltip="Apply the history retention settings to remove outdated connection records"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.d90c36d5f3dc">Cleanup Network History</ng-container></app-menu-item>
     <hr/>
-    <app-menu-item (click)="openDataDir($event)" sfng-tooltip="Open the folder where Portmaster stores its data">Open Data Directory</app-menu-item>
-    <app-menu-item (click)="copyDebugInfo($event)" sfng-tooltip="Copy diagnostic information to the clipboard for support">Copy Debug Info</app-menu-item>
+    <app-menu-item (click)="openDataDir($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.245c16d9fb16" sfng-tooltip="Open the folder where Portmaster stores its data"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.9f0f3ce3b3ab">Open Data Directory</ng-container></app-menu-item>
+    <app-menu-item (click)="copyDebugInfo($event)" i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.13bc2eaefc30" sfng-tooltip="Copy diagnostic information to the clipboard for support"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.07e6fe7c3a7f">Copy Debug Info</ng-container></app-menu-item>
   </app-menu>
 
   <!-- Pause Menu -->
-  <div sfngTipUpTrigger="navPause" sfngTipUpPassive sfng-tooltip="Pause and Resume" sfngTooltipDelay="1000"
+  <div sfngTipUpTrigger="navPause" sfngTipUpPassive i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.afc559f2fe37" sfng-tooltip="Pause and Resume" sfngTooltipDelay="1000"
     snfgTooltipPosition="right" class="link" (click)="pauseMenu.dropdown.toggle(pauseMenuTrigger)" cdkOverlayOrigin
     #pauseMenuTrigger="cdkOverlayOrigin" [class.active]="pauseMenu.dropdown.isOpen">
 
@@ -234,19 +234,19 @@
       </div>
 
       <!-- we show 'Pause SPN...' items even when isPausedSPN to allow pause time modification-->
-      <app-menu-item (click)="pauseSPN($event, 60*5)" *ngIf="spnEnabled || isPausedSPN" [disabled]="isPausedInterception">Pause SPN for 5 minutes</app-menu-item>
-      <app-menu-item (click)="pauseSPN($event, 60*15)" *ngIf="spnEnabled || isPausedSPN" [disabled]="isPausedInterception">Pause SPN for 15 minutes</app-menu-item>
-      <app-menu-item (click)="pauseSPN($event, 60*60)" *ngIf="spnEnabled || isPausedSPN" [disabled]="isPausedInterception">Pause SPN for 1 hour</app-menu-item>
+      <app-menu-item (click)="pauseSPN($event, 60*5)" *ngIf="spnEnabled || isPausedSPN" [disabled]="isPausedInterception"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.1ae6dad70f8b">Pause SPN for 5 minutes</ng-container></app-menu-item>
+      <app-menu-item (click)="pauseSPN($event, 60*15)" *ngIf="spnEnabled || isPausedSPN" [disabled]="isPausedInterception"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.5852813ab860">Pause SPN for 15 minutes</ng-container></app-menu-item>
+      <app-menu-item (click)="pauseSPN($event, 60*60)" *ngIf="spnEnabled || isPausedSPN" [disabled]="isPausedInterception"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.3d229b8d93fd">Pause SPN for 1 hour</ng-container></app-menu-item>
       <hr/>
-      <app-menu-item (click)="pause($event, 60*5)">Pause for 5 minutes</app-menu-item>
-      <app-menu-item (click)="pause($event, 60*15)">Pause for 15 minutes</app-menu-item>
-      <app-menu-item (click)="pause($event, 60*60)">Pause for 1 hour</app-menu-item>
+      <app-menu-item (click)="pause($event, 60*5)"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.3ebcaff08791">Pause for 5 minutes</ng-container></app-menu-item>
+      <app-menu-item (click)="pause($event, 60*15)"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.bd58ccb0596d">Pause for 15 minutes</ng-container></app-menu-item>
+      <app-menu-item (click)="pause($event, 60*60)"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.af5898aef8b5">Pause for 1 hour</ng-container></app-menu-item>
       <hr/>
-      <app-menu-item (click)="resume($event)" [disabled]="!isPaused">Resume now</app-menu-item>
+      <app-menu-item (click)="resume($event)" [disabled]="!isPaused"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.c1c31f6a93f1">Resume now</ng-container></app-menu-item>
   </app-menu>
 
   <!-- Power Menu -->
-  <div sfngTipUpTrigger="navPower" sfngTipUpPassive sfng-tooltip="Shutdown and Restart" sfngTooltipDelay="1000"
+  <div sfngTipUpTrigger="navPower" sfngTipUpPassive i18n-sfng-tooltip="@@ui.src.app.layout.navigation.navigation.7e88cfa7e07a" sfng-tooltip="Shutdown and Restart" sfngTooltipDelay="1000"
     snfgTooltipPosition="right" class="link" (click)="powerMenu.dropdown.toggle(powerMenuTrigger)" cdkOverlayOrigin
     #powerMenuTrigger="cdkOverlayOrigin" [class.active]="powerMenu.dropdown.isOpen">
 
@@ -266,8 +266,8 @@
 
   </div>
   <app-menu #powerMenu offsetY="0" offsetX="10" overlayClass="rounded-t">
-    <app-menu-item (click)="shutdown($event)">Shutdown</app-menu-item>
-    <app-menu-item (click)="restart($event)">Restart</app-menu-item>
+    <app-menu-item (click)="shutdown($event)"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.b7762350bee7">Shutdown</ng-container></app-menu-item>
+    <app-menu-item (click)="restart($event)"><ng-container i18n="@@ui.src.app.layout.navigation.navigation.a6fa67ffac2a">Restart</ng-container></app-menu-item>
   </app-menu>
 
 </div>

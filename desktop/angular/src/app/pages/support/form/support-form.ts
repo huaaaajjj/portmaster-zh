@@ -119,7 +119,7 @@ export class SupportFormComponent implements OnInit {
           this.debugapi.getCoreDebugInfo('github')
             .subscribe({
               next: data => this.debugData = data,
-              error: err => this.uai.error('Failed to get Debug Data', this.uai.getErrorMessgae(err))
+              error: err => this.uai.error($localize`:@@settings.ts.a9f6507d9d92:Failed to get Debug Data`, this.uai.getErrorMessgae(err))
             })
         }
       })
@@ -144,8 +144,8 @@ export class SupportFormComponent implements OnInit {
 
   copyToClipboard(what: string) {
     this.integration.writeToClipboard(what)
-      .then(() => this.uai.success("Copied to Clipboard"))
-      .catch(() => this.uai.error('Failed to Copy to Clipboard'));
+      .then(() => this.uai.success($localize`:@@settings.ts.dfbfeebc9a00:Copied to Clipboard`))
+      .catch(() => this.uai.error($localize`:@@settings.ts.0a6c823918fe:Failed to Copy to Clipboard`));
   }
 
   validate(): boolean {
@@ -209,12 +209,12 @@ export class SupportFormComponent implements OnInit {
     if (genUrl === undefined) {
       this.dialog.confirm({
         canCancel: true,
-        caption: 'Caution',
-        header: 'Create Issue on GitHub',
-        message: 'You can easily create the issue with your own GitHub account. Or create the GitHub issue privately, but then we will have no way to communicate with you for further information.',
+        caption: $localize`:@@settings.ts.2e178e6c65f9:Caution`,
+        header: $localize`:@@settings.ts.a904aff160e4:Create Issue on GitHub`,
+        message: $localize`:@@settings.ts.9516d4acca5c:You can easily create the issue with your own GitHub account. Or create the GitHub issue privately, but then we will have no way to communicate with you for further information.`,
         buttons: [
-          { id: 'createWithout', text: 'Create Without Account', class: 'outline' },
-          { id: 'openGithub', text: 'Use My Account' },
+          { id: 'createWithout', text: $localize`:@@settings.ts.8c0aba94921b:Create Without Account`, class: 'outline' },
+          { id: 'openGithub', text: $localize`:@@settings.ts.ca1e93621935:Use My Account` },
         ]
       })
         .onAction('openGithub', () => {
@@ -237,16 +237,16 @@ export class SupportFormComponent implements OnInit {
     }
 
     const opts: ConfirmDialogConfig = {
-      caption: 'Info',
+      caption: $localize`:@@settings.ts.170322a32f3c:Info`,
       canCancel: true,
-      header: 'How should we stay in touch?',
-      message: 'Please enter your email address so we can write back and forth until the issue is concluded.',
+      header: $localize`:@@settings.ts.f2e6bcbffa0c:How should we stay in touch?`,
+      message: $localize`:@@settings.ts.3e275ba3c6c9:Please enter your email address so we can write back and forth until the issue is concluded.`,
       inputModel: '',
-      inputPlaceholder: 'Optional Email',
+      inputPlaceholder: $localize`:@@settings.ts.129e222bb418:Optional Email`,
       inputType: 'text',
       buttons: [
-        { id: '', class: 'outline', text: 'Cancel' },
-        { id: 'create', text: 'Create Ticket' },
+        { id: '', class: 'outline', text: $localize`:@@settings.ts.19766ed6ccb2:Cancel` },
+        { id: 'create', text: $localize`:@@settings.ts.853e0ee0bd63:Create Ticket` },
       ],
     }
     this.dialog.confirm(opts)

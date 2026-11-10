@@ -45,6 +45,7 @@ import {
 } from './import-dialog/import-dialog.component';
 
 import { subsystems, SubsystemWithExpertise } from './subsystems'
+import { localizeSettingText } from './setting-text.pipe';
 
 interface Category {
   name: string;
@@ -77,7 +78,7 @@ export class ConfigSettingsViewComponent
   loading = true;
 
   @Input()
-  resetLabelText = 'Reset to system default';
+  resetLabelText = $localize`:@@settings.ts.7b357a128006:Reset to system default`;
 
   @Input()
   set compactView(v: any) {
@@ -223,8 +224,8 @@ export class ConfigSettingsViewComponent
 
     if (this.exportMode) {
       this.actionIndicator.info(
-        'Settings Export',
-        'Please select all settings you want to export and press "Save" to generate the export. Note that settings with system defaults cannot be exported and are hidden.'
+        $localize`:@@settings.ts.a0ebde48b3b1:Settings Export`,
+        $localize`:@@settings.ts.a61c723fa8eb:Please select all settings you want to export and press "Save" to generate the export. Note that settings with system defaults cannot be exported and are hidden.`
       );
     }
   }
@@ -272,7 +273,7 @@ export class ConfigSettingsViewComponent
       },
       error: (err) => {
         const msg = this.actionIndicator.getErrorMessgae(err);
-        this.actionIndicator.error('Failed To Generate Export', msg);
+        this.actionIndicator.error($localize`:@@settings.ts.6d697bea927a:Failed To Generate Export`, msg);
       },
     });
   }
@@ -305,6 +306,8 @@ export class ConfigSettingsViewComponent
       .pipe(debounceTime(10))
       .subscribe(
         ([settings, searchTerm, currentReleaseLevelSetting]) => {
+          // Rebuild from the complete definitions, not the previous search's filtered list.
+          this.subsystems = subsystems.map(subsystem => ({ ...subsystem }));
           this.others = [];
           this.settings = new Map();
 
@@ -318,12 +321,20 @@ export class ConfigSettingsViewComponent
             (setting) => setting.ReleaseLevel <= currentReleaseLevel
           );
 
+          // Localize a display copy before highlighting; raw settings and category IDs stay unchanged.
+          settings = settings.map(setting => ({
+            ...setting,
+            Name: localizeSettingText(setting.Name),
+            Description: localizeSettingText(setting.Description),
+          }));
+
           // Use fuzzy-search to limit the number of settings shown.
           const filtered = this.searchService.searchList(settings, searchTerm, {
             ignoreLocation: true,
             ignoreFieldNorm: true,
             threshold: 0.1,
-            minMatchCharLength: 3,
+            minSearchTermLength: 1,
+            minMatchCharLength: 1,
             keys: [
               { name: 'Name', weight: 3 },
               { name: 'Description', weight: 2 },

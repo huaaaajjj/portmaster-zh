@@ -46,6 +46,11 @@ export interface PinOverlayHoverEvent {
   ]
 })
 export class PinOverlayComponent implements OnInit {
+  readonly notAvailable = $localize`:@@spn.notAvailable:N/A`;
+  readonly homeNodeHelp = $localize`:@@spn.node.homeHelp:This node does not know the destinations of your connections but may know where you are`;
+  readonly exitNodeHelp = $localize`:@@spn.node.exitHelp:This node does not know who you are but knows the destination of connections for which it is used as an exit node`;
+  readonly transitNodeHelp = $localize`:@@spn.node.transitHelp:This node does not know who you are and where you are connecting to`;
+
   private readonly integration = inject(INTEGRATION_SERVICE);
 
   @Input()
@@ -185,6 +190,6 @@ export class PinOverlayComponent implements OnInit {
 
   async copyNodeID() {
     await this.integration.writeToClipboard(this.mapPin?.pin.ID)
-    this.actionIndicator.success("Copied to Clipboard")
+    this.actionIndicator.success($localize`:@@spn.node.copied:Copied to Clipboard`)
   }
 }

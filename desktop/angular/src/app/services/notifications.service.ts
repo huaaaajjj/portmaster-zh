@@ -70,7 +70,7 @@ export class NotificationsService {
             queryParams,
           })
         }
-        return Promise.reject('not yet supported');
+        return Promise.reject($localize`:@@ts.notifications.pageUnsupported:not yet supported`);
       },
       "ui": (a: ActionHandler<any>) => {
         return a.Run(a);
@@ -279,9 +279,23 @@ export class NotificationsService {
         }
       } catch (err: any) {
         const msg = this.actionIndicator.getErrorMessgae(err);
-        this.actionIndicator.error('Internal Error', 'Failed to perform action: ' + msg)
+        this.actionIndicator.error($localize`:@@ts.notifications.internalError:Internal Error`,
+          $localize`:@@ts.notifications.performFailed:Failed to perform action: ${msg}:ERROR:`)
       }
     })
+  }
+
+  /** Localize only canonical firewall prompt labels; never rewrite an action payload. */
+  getActionText(notification: Notification<any>, action: Action): string {
+    if (notification.Type === NotificationType.Prompt && notification.EventID.startsWith('filter:prompt') && !action.Type) {
+      if (['allow-domain-all', 'allow-serving-ip', 'allow-ip'].includes(action.ID) && action.Text === 'Allow') {
+        return $localize`:@@ts.notifications.promptAllow:Allow`;
+      }
+      if (['block-domain-all', 'block-serving-ip', 'block-ip'].includes(action.ID) && action.Text === 'Block') {
+        return $localize`:@@ts.notifications.promptBlock:Block`;
+      }
+    }
+    return action.Text;
   }
 
   async performAction(action: Action) {
@@ -292,7 +306,8 @@ export class NotificationsService {
         console.log(action);
         await handler(action);
       } else {
-        this.actionIndicator.error('Internal Error', 'Cannot handle action type ' + action.Type)
+        this.actionIndicator.error($localize`:@@ts.notifications.internalError:Internal Error`,
+          $localize`:@@ts.notifications.unsupportedAction:Cannot handle action type ${action.Type}:TYPE:`)
       }
     }
   }

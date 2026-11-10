@@ -115,18 +115,18 @@ export class ImportDialogComponent {
         if (result.restartRequired) {
           if (this.triggerRestart) {
             this.portapi.restartPortmaster().subscribe();
-            msg = 'Portmaster will be restarted now.';
+            msg = $localize`:@@settings.ts.8620f5d13e90:Portmaster will be restarted now.`;
           } else {
-            msg = 'Please restart Portmaster to apply the new settings.';
+            msg = $localize`:@@settings.ts.21da22db85f5:Please restart Portmaster to apply the new settings.`;
           }
         }
 
-        this.uai.success('Settings Imported Successfully', msg);
+        this.uai.success($localize`:@@settings.ts.c21c668d4994:Settings Imported Successfully`, msg);
         this.dialogRef.close();
       },
       error: (err) => {
         this.uai.error(
-          'Failed To Import Settings',
+          $localize`:@@settings.ts.64a11e5d38c5:Failed To Import Settings`,
           this.uai.getErrorMessgae(err)
         );
       },

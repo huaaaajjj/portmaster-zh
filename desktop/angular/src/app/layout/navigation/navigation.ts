@@ -42,11 +42,11 @@ export class NavigationComponent implements OnInit {
   get isPausedSPN(): boolean { return this.pauseState?.SPN===true; }
   get pauseInfo(): string {
     if (this.pauseState?.Interception===true && this.pauseState?.SPN===true) 
-      return 'Portmaster and SPN are paused';
+      return $localize`:@@ts.navigation.pausedAll:Portmaster and SPN are paused`;
     else if (this.pauseState?.Interception===true)
-      return 'Portmaster is paused';
+      return $localize`:@@ts.navigation.pausedPortmaster:Portmaster is paused`;
     else if (this.pauseState?.SPN===true)
-      return 'SPN is paused';
+      return $localize`:@@ts.navigation.pausedSpn:SPN is paused`;
     return '';
   }
   get pauseInfoTillTime(): string {
@@ -54,7 +54,7 @@ export class NavigationComponent implements OnInit {
       const date = new Date(this.pauseState.TillTime);
       if (isNaN(date.getTime()) || date.getTime() < Date.now())
         return '';    
-      return `Auto-resume at ${date.toLocaleTimeString(undefined, { hour12: false })}`;
+      return $localize`:@@pause.autoResume:Auto-resume at ${date.toLocaleTimeString(undefined, { hour12: false })}:time:`;
     }
     return '';
   }
@@ -202,8 +202,8 @@ export class NavigationComponent implements OnInit {
         })
       )
       .subscribe(this.actionIndicator.httpObserver(
-        'Reloading UI ...',
-        'Failed to Reload UI',
+        $localize`:@@ts.navigation.reloadingUi:Reloading UI ...`,
+        $localize`:@@ts.navigation.reloadUiFailed:Failed to Reload UI`,
       ))
   }
 
@@ -211,8 +211,8 @@ export class NavigationComponent implements OnInit {
   reinitSPN(_: Event) {
     this.portapi.reinitSPN()
       .subscribe(this.actionIndicator.httpObserver(
-        'Re-initialized SPN',
-        'Failed to re-initialize the SPN'
+        $localize`:@@ts.navigation.reinitializedSpn:Re-initialized SPN`,
+        $localize`:@@ts.navigation.reinitializeSpnFailed:Failed to re-initialize the SPN`
       ))
   }
 
@@ -220,8 +220,8 @@ export class NavigationComponent implements OnInit {
   logoutCompletely(_: Event) {
     this.spnService.logout(true)
       .subscribe(this.actionIndicator.httpObserver(
-        'Logout',
-        'You have been logged out of the SPN completely.'
+        $localize`:@@ts.navigation.logout:Logout`,
+        $localize`:@@ts.navigation.loggedOutCompletely:You have been logged out of the SPN completely.`
       ))
   }
 
@@ -232,16 +232,16 @@ export class NavigationComponent implements OnInit {
   clearDNSCache(_: Event) {
     this.portapi.clearDNSCache()
       .subscribe(this.actionIndicator.httpObserver(
-        'DNS Cache Cleared',
-        'Failed to Clear DNS Cache.',
+        $localize`:@@ts.navigation.dnsCacheCleared:DNS Cache Cleared`,
+        $localize`:@@ts.navigation.clearDnsCacheFailed:Failed to Clear DNS Cache.`,
       ))
   }
 
   cleanupHistory(_: Event) {
     this.portapi.cleanupHistory()
       .subscribe(this.actionIndicator.httpObserver(
-        'Network History Cleaned Up',
-        'Failed to Cleanup Network History.'
+        $localize`:@@ts.navigation.historyCleaned:Network History Cleaned Up`,
+        $localize`:@@ts.navigation.cleanupHistoryFailed:Failed to Cleanup Network History.`
       ))
   }
 
@@ -254,8 +254,8 @@ export class NavigationComponent implements OnInit {
   downloadUpdates(event: Event) {
     this.portapi.checkForUpdates()
       .subscribe(this.actionIndicator.httpObserver(
-        'Downloading Updates ...',
-        'Failed to Check for Updates',
+        $localize`:@@ts.navigation.downloadingUpdates:Downloading Updates ...`,
+        $localize`:@@ts.navigation.checkUpdatesFailed:Failed to Check for Updates`,
       ))
   }
 
@@ -282,8 +282,8 @@ export class NavigationComponent implements OnInit {
 
     this.portapi.restartPortmaster()
       .subscribe(this.actionIndicator.httpObserver(
-        'Restarting ...',
-        'Failed to Restart',
+        $localize`:@@ts.navigation.restarting:Restarting ...`,
+        $localize`:@@ts.navigation.restartFailed:Failed to Restart`,
       ))
   }
 
@@ -295,8 +295,8 @@ export class NavigationComponent implements OnInit {
 
     this.portapi.pause(duration, false)
       .subscribe(this.actionIndicator.httpObserver(
-        'Pausing ...',
-        'Failed to Pause',
+        $localize`:@@ts.navigation.pausing:Pausing ...`,
+        $localize`:@@ts.navigation.pauseFailed:Failed to Pause`,
       ))
   }
   pauseSPN(event: Event, duration: number) {
@@ -307,8 +307,8 @@ export class NavigationComponent implements OnInit {
 
     this.portapi.pause(duration, true)
       .subscribe(this.actionIndicator.httpObserver(
-        'Pausing SPN...',
-        'Failed to Pause SPN',
+        $localize`:@@ts.navigation.pausingSpn:Pausing SPN...`,
+        $localize`:@@ts.navigation.pauseSpnFailed:Failed to Pause SPN`,
       ))
   }
   resume(event: Event) {
@@ -317,18 +317,18 @@ export class NavigationComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
 
-    let msg = 'Resuming ...';
+    let msg = $localize`:@@ts.navigation.resuming:Resuming ...`;
     if (this.pauseState?.Interception===true && this.pauseState?.SPN===true) 
-      msg = 'Resuming Portmaster and SPN ...';
+      msg = $localize`:@@ts.navigation.resumingAll:Resuming Portmaster and SPN ...`;
     else if (this.pauseState?.Interception===true)
-      msg = 'Resuming Portmaster ...';
+      msg = $localize`:@@ts.navigation.resumingPortmaster:Resuming Portmaster ...`;
     else if (this.pauseState?.SPN===true)
-      msg = 'Resuming SPN ...';
+      msg = $localize`:@@ts.navigation.resumingSpn:Resuming SPN ...`;
 
     this.portapi.resume()
       .subscribe(this.actionIndicator.httpObserver(
         msg,
-        'Failed to Resume',
+        $localize`:@@ts.navigation.resumeFailed:Failed to Resume`,
       ))
   }
     
@@ -339,7 +339,7 @@ export class NavigationComponent implements OnInit {
    */
   openDataDir(event: Event) {
     this.integration.openDir('data')
-      .catch(err => this.actionIndicator.error('Failed to open data directory', err));
+      .catch(err => this.actionIndicator.error($localize`:@@ts.navigation.openDataDirectoryFailed:Failed to open data directory`, err));
   }
 
   openChangeLog() {
@@ -354,8 +354,8 @@ export class NavigationComponent implements OnInit {
   resetBroadcastState() {
     this.portapi.resetBroadcastState()
       .subscribe(this.actionIndicator.httpObserver(
-        'Notifications State Cleared',
-        'Failed to Reset Notifications State.',
+        $localize`:@@ts.navigation.notificationsStateCleared:Notifications State Cleared`,
+        $localize`:@@ts.navigation.resetNotificationsStateFailed:Failed to Reset Notifications State.`,
       ))
   }
 
@@ -372,7 +372,7 @@ export class NavigationComponent implements OnInit {
         },
         err => {
           console.error(err);
-          this.actionIndicator.error('Failed loading debug data', err);
+          this.actionIndicator.error($localize`:@@ts.navigation.loadDebugDataFailed:Failed loading debug data`, err);
         }
       )
   }

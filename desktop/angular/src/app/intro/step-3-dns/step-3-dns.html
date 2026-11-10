@@ -1,9 +1,9 @@
-<h1>Secure DNS for All Connections</h1>
+<h1><ng-container i18n="@@ui.src.app.intro.step.3.dns.step.3.dns.69aad3376fa0">Secure DNS for All Connections</ng-container></h1>
 
-<p>Portmaster automatically encrypts all your DNS queries to safeguard them from prying eyes. Portmaster sets a default
-  provider, but you can always switch to a custom DNS-over-TLS provider in the global settings.</p>
+<p><ng-container i18n="@@ui.src.app.intro.step.3.dns.step.3.dns.50ee8c37686a">Portmaster automatically encrypts all your DNS queries to safeguard them from prying eyes. Portmaster sets a default
+  provider, but you can always switch to a custom DNS-over-TLS provider in the global settings.</ng-container></p>
 
-<sfng-dropdown label="Customize" class="w-full" maxHeight="300px" maxWidth="600px" offsetY="0">
+<sfng-dropdown i18n-label="@@ui.src.app.intro.step.3.dns.step.3.dns.60962ebca85d" label="Customize" class="w-full" maxHeight="300px" maxWidth="600px" offsetY="0">
   <div class="flex flex-wrap items-center justify-center w-full gap-6 px-8 py-8">
     <button *ngFor="let button of quickSettings" [style.minWidth]="'6rem'" (click)="applyQuickSetting(button)"
       [disabled]="isCustomValue" [class.bg-blue]="button.active" class="px-4 py-3">
@@ -11,7 +11,7 @@
     </button>
 
     <button class="w-24 px-4 py-3 bg-blue" *ngIf="isCustomValue">
-      Custom
+      <ng-container i18n="@@ui.src.app.intro.step.3.dns.step.3.dns.f6a4dbb85879">Custom</ng-container>
     </button>
   </div>
 </sfng-dropdown>
