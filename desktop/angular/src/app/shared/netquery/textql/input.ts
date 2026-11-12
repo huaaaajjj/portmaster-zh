@@ -36,6 +36,6 @@ export class InputStream {
 
   /** Throws an error with the current line and column */
   croak(msg: string): never {
-    throw new Error(`${msg} at ${this._line}:${this.pos}`);
+    throw new Error($localize`:@@netquery.parse.errorPosition:${msg}:MESSAGE: at ${this._line}:LINE::${this.pos}:POSITION:`);
   }
 }

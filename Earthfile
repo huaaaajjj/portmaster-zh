@@ -426,6 +426,7 @@ tauri-src:
     # --keep-ts is necessary to ensure that the timestamps of the source files
     # are preserved such that Rust's incremental compilation works correctly.
     COPY --keep-ts ./desktop/tauri/ .
+    COPY --keep-ts ./desktop/angular/src/i18n/notifications.zh-CN.json ./../angular/src/i18n/notifications.zh-CN.json
     COPY assets/data ./../../assets/data
     COPY packaging ./../../packaging
     COPY (+angular-project/output/tauri-builtin --project=tauri-builtin --dist=./dist/tauri-builtin --configuration=production --baseHref="/") ./../angular/dist/tauri-builtin
@@ -494,6 +495,7 @@ tauri-lint:
 
     # Copy all the rust code
     COPY --keep-ts ./desktop/tauri ./desktop/tauri
+    COPY --keep-ts ./desktop/angular/src/i18n/notifications.zh-CN.json ./desktop/angular/src/i18n/notifications.zh-CN.json
 
     # Create a empty ui dir so it will satisfy the build.
     RUN mkdir -p ./desktop/angular/dist/tauri-builtin

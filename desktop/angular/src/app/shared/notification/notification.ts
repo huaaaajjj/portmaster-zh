@@ -50,7 +50,7 @@ export class NotificationComponent implements OnInit {
   @Output()
   actionExecuted: EventEmitter<Action> = new EventEmitter();
 
-  constructor(private notifService: NotificationsService) { }
+  constructor(public notifService: NotificationsService) { }
 
   execute(n: _Notification<any>, action: Action) {
     this.notifService.execute(n, action)

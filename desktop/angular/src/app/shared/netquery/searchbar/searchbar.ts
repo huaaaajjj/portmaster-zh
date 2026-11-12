@@ -8,6 +8,7 @@ import { Condition, ExpertiseLevel, Netquery, NetqueryConnection } from "@safing
 import { SfngDropdownComponent } from "@safing/ui";
 import { combineLatest, Observable, of, Subject } from "rxjs";
 import { catchError, debounceTime, map, switchMap } from "rxjs/operators";
+import { ActionIndicatorService } from "../../action-indicator";
 import { fadeInAnimation, fadeInListAnimation } from "../../animations";
 import { ExpertiseService } from "../../expertise";
 import { objKeys } from "../../utils";
@@ -129,8 +130,11 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
 
   writeValue(val: string): void {
     if (typeof val === 'string') {
-      const result = Parser.parse(val);
-      this.textSearch = result.textQuery;
+      try {
+        this.textSearch = Parser.parse(val).textQuery;
+      } catch {
+        this.textSearch = val;
+      }
     } else {
       this.textSearch = '';
     }
@@ -181,7 +185,12 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
           let limit = 3;
 
           const parser = new Parser(this.textSearch);
-          const parseResult = parser.process();
+          let parseResult: ParseResult;
+          try {
+            parseResult = parser.process();
+          } catch {
+            return of([]);
+          }
 
           const queries: Observable<SfngSearchbarSuggestion<any>>[] = [];
           const queryKeys: (keyof Partial<NetqueryConnection>)[] = [];
@@ -345,8 +354,20 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
     this._onTouched();
   }
 
+  private parseSearchText(): ParseResult | null {
+    try {
+      return Parser.parse(this.textSearch);
+    } catch (err: any) {
+      this.actionIndicator.error($localize`:@@netquery.invalidQuery:Invalid search query`, this.actionIndicator.getErrorMessage(err));
+      return null;
+    }
+  }
+
   private parseAndEmit() {
-    const result = Parser.parse(this.textSearch);
+    const result = this.parseSearchText();
+    if (!result) {
+      return;
+    }
     this.textSearch = result.textQuery;
 
     const keys = objKeys(result.conditions)
@@ -374,6 +395,7 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
       return
     }
 
+    const originalTextSearch = this.textSearch;
     if (start !== undefined) {
       this.textSearch = this.textSearch.slice(0, start)
     } else if (!event.shiftKey) {
@@ -381,7 +403,10 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
     } else {
       // the user pressed shift-key and used free-text search so we remove
       // the remaining part
-      const parseRes = Parser.parse(this.textSearch);
+      const parseRes = this.parseSearchText();
+      if (!parseRes) {
+        return;
+      }
       let query = "";
       objKeys(parseRes.conditions).forEach(field => {
         parseRes.conditions[field]?.forEach(value => {
@@ -389,6 +414,11 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
         })
       })
       this.textSearch = query;
+    }
+
+    if (!this.parseSearchText()) {
+      this.textSearch = originalTextSearch;
+      return;
     }
 
     if (event.shiftKey) {
@@ -436,5 +466,6 @@ export class SfngNetquerySearchbarComponent implements ControlValueAccessor, OnI
     private expertiseService: ExpertiseService,
     private netquery: Netquery,
     private helper: NetqueryHelper,
+    private actionIndicator: ActionIndicatorService,
   ) { }
 }

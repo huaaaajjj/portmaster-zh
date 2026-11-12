@@ -9,6 +9,7 @@ import { ActionIndicatorService } from '../shared/action-indicator';
 import { Action, ActionHandler, NetqueryAction, Notification, NotificationState, NotificationType, OpenPageAction, OpenProfileAction, OpenSettingAction, OpenURLAction, PageIDs, WebhookAction } from './notifications.types';
 import { VirtualNotification } from './virtual-notification';
 import { INTEGRATION_SERVICE } from '../integration';
+import { localizeNotificationAction, localizeNotificationText } from './notification-text';
 
 @Injectable({
   providedIn: 'root'
@@ -285,8 +286,16 @@ export class NotificationsService {
     })
   }
 
-  /** Localize only canonical firewall prompt labels; never rewrite an action payload. */
+  getText(notification: Notification<any>, markdown = false) {
+    return localizeNotificationText(notification, markdown);
+  }
+
+  /** Localize only canonical action labels; never rewrite an action payload. */
   getActionText(notification: Notification<any>, action: Action): string {
+    if (notification.EventID.startsWith('broadcasts:')) {
+      return action.Text;
+    }
+
     if (notification.Type === NotificationType.Prompt && notification.EventID.startsWith('filter:prompt') && !action.Type) {
       if (['allow-domain-all', 'allow-serving-ip', 'allow-ip'].includes(action.ID) && action.Text === 'Allow') {
         return $localize`:@@ts.notifications.promptAllow:Allow`;
@@ -295,7 +304,44 @@ export class NotificationsService {
         return $localize`:@@ts.notifications.promptBlock:Block`;
       }
     }
-    return action.Text;
+
+    if (action.ID === 'ack' && action.Type === '' && action.Visibility === '' && action.Text === 'OK') {
+      return $localize`:@@ts.notifications.action.ok:OK`;
+    }
+    if (
+      ['resolver:suggest-using-stale-cache', 'access:end-of-package-near'].includes(notification.EventID)
+      && action.ID === 'ack' && action.Type === '' && action.Visibility === '' && action.Text === 'Got it!'
+    ) {
+      return $localize`:@@ts.notifications.action.gotIt:Got it!`;
+    }
+    if (
+      ['resolver:suggest-using-stale-cache', 'interop:ivpn'].includes(notification.EventID)
+      && action.ID === 'suppress' && action.Type === '' && action.Visibility === 'detailed' && action.Text === "Don't show again"
+    ) {
+      return $localize`:@@ts.notifications.action.dontShowAgain:Don't show again`;
+    }
+    if (
+      notification.EventID === 'resolver:suggest-using-stale-cache'
+      && action.ID === '' && action.Type === 'open-setting' && action.Visibility === 'in-app-only'
+      && action.Text === 'Open Setting' && action.Payload?.Key === 'dns/useStaleCache' && action.Payload.Profile === ''
+    ) {
+      return $localize`:@@ts.notifications.action.openSetting:Open Setting`;
+    }
+    if (
+      action.ID === '' && action.Type === 'open-url' && action.Visibility === ''
+      && action.Text === 'Get Help' && action.Payload === 'https://safing.io/support/'
+    ) {
+      return $localize`:@@ts.notifications.action.getHelp:Get Help`;
+    }
+    if (
+      ['spn:package-not-eligible', 'spn:subscription-inactive', 'access:end-of-package-near'].includes(notification.EventID)
+      && action.ID === '' && action.Type === 'open-url' && action.Visibility === ''
+      && action.Text === 'Open Account Page' && action.Payload === 'https://account.safing.io'
+    ) {
+      return $localize`:@@ts.notifications.action.openAccountPage:Open Account Page`;
+    }
+
+    return localizeNotificationAction(notification, action);
   }
 
   async performAction(action: Action) {

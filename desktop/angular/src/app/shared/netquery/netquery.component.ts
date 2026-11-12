@@ -14,7 +14,7 @@ import { fadeInAnimation } from './../animations';
 import { IPScopeNames, LocalAppProfile, NetqueryHelper } from "./connection-helper.service";
 import { SfngSearchbarFields } from "./searchbar";
 import { SfngTagbarValue } from "./tag-bar";
-import { Parser } from "./textql";
+import { Parser, ParseResult } from "./textql";
 import { connectionFieldTranslation, connectionValueLabel, mergeConditions } from "./utils";
 import { DefaultBandwidthChartConfig } from "./line-chart/line-chart";
 import { INTEGRATION_SERVICE } from "src/app/integration";
@@ -760,11 +760,19 @@ export class SfngNetqueryViewer implements OnInit, OnDestroy, AfterViewInit {
         const query = params.get("q")
 
         if (query !== null) {
+          let result: ParseResult;
+          try {
+            result = Parser.parse(query);
+          } catch (err: any) {
+            this.actionIndicator.error($localize`:@@netquery.invalidQuery:Invalid search query`, this.actionIndicator.getErrorMessage(err));
+            this.skipUrlUpdate = true;
+            this.performSearch();
+            return;
+          }
+
           objKeys(this.models).forEach(key => {
             this.models[key]!.searchValues = [];
           })
-
-          const result = Parser.parse(query!)
 
           this.onFieldsParsed({
             ...result.conditions,

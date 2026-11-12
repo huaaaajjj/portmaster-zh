@@ -28,7 +28,7 @@ pub struct Notification {
     #[serde(rename = "State")]
     pub state: String,
 
-    #[serde(rename = "AvailableActions")]
+    #[serde(rename = "AvailableActions", default, deserialize_with = "deserialize_actions")]
     pub actions: Vec<Action>,
 
     #[serde(rename = "SelectedActionID")]
@@ -36,6 +36,11 @@ pub struct Notification {
 
     #[serde(rename = "ShowOnSystem")]
     pub show_on_system: bool,
+}
+
+// Go encodes a nil action slice as null; neither null nor a missing field means an invalid notification.
+fn deserialize_actions<'de, D: Deserializer<'de>>(deserializer: D) -> Result<Vec<Action>, D::Error> {
+    Ok(Option::<Vec<Action>>::deserialize(deserializer)?.unwrap_or_default())
 }
 
 #[derive(Serialize, Deserialize, Debug, PartialEq)]

@@ -5,6 +5,7 @@ import ts from 'typescript';
 import * as rxjs from 'rxjs';
 import '@angular/compiler';
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { loadNotificationText, notificationCases } from './check-notifications.mjs';
 
 const source = file => readFileSync(new URL('../' + file, import.meta.url), 'utf8');
 const plain = value => JSON.parse(JSON.stringify(value));
@@ -81,12 +82,17 @@ export async function checkDynamicGeneralLocalization(localize) {
   const { NotificationsService } = load('src/app/services/notifications.service.ts', {
     '@angular/core': { ...core, inject: () => integration },
     './notifications.types': types, './virtual-notification': {}, '../integration': {},
+    './notification-text': loadNotificationText(),
     'src/environments/environment': { environment: { httpAPI: 'http://test.invalid' } },
   });
   const notifications = new NotificationsService(api, { navigate: async (...args) => { routes.push(plain(args)); return true; } }, {}, {
     getErrorMessgae: error => indicator.getErrorMessage(error),
     error: (...args) => toasts.push(args),
   });
+  for (const { name, n, expected, labels } of notificationCases()) {
+    assert.deepEqual(plain(notifications.getText(n)), expected, name + ': service display');
+    if (labels) assert.deepEqual(n.AvailableActions.map(action => notifications.getActionText(n, action)), labels, name + ': service actions');
+  }
   const prompt = Object.freeze({ EventID: 'filter:prompt-local/raw-id', Type: types.NotificationType.Prompt, Message: raw, Title: raw });
   for (const [prefix, Text, expected] of [['allow', 'Allow', '允许'], ['block', 'Block', '阻止']]) {
     for (const suffix of ['domain-all', 'serving-ip', 'ip']) {
@@ -102,6 +108,64 @@ export async function checkDynamicGeneralLocalization(localize) {
     }
   }
   assert.equal(notifications.getActionText(prompt, { ID: 'future-action', Text: raw, Type: '' }), raw);
+
+  const actionCases = [
+    ['interop:ivpn-old-version', { ID: 'ack', Text: 'OK', Type: '', Visibility: '' }, '确定'],
+    ['resolver:suggest-using-stale-cache', { ID: 'ack', Text: 'Got it!', Type: '', Visibility: '' }, '知道了'],
+    ['access:end-of-package-near', { ID: 'ack', Text: 'Got it!', Type: '', Visibility: '' }, '知道了'],
+    ['resolver:suggest-using-stale-cache', { ID: 'suppress', Text: "Don't show again", Type: '', Visibility: 'detailed' }, '不再显示'],
+    ['interop:ivpn', { ID: 'suppress', Text: "Don't show again", Type: '', Visibility: 'detailed' }, '不再显示'],
+    ['resolver:suggest-using-stale-cache', { ID: '', Text: 'Open Setting', Type: 'open-setting', Visibility: 'in-app-only', Payload: { Key: 'dns/useStaleCache', Profile: '' } }, '打开设置'],
+    ['status:example', { ID: '', Text: 'Get Help', Type: 'open-url', Visibility: '', Payload: 'https://safing.io/support/' }, '获取帮助'],
+    ['spn:package-not-eligible', { ID: '', Text: 'Open Account Page', Type: 'open-url', Visibility: '', Payload: 'https://account.safing.io' }, '打开账户页面'],
+    ['spn:subscription-inactive', { ID: '', Text: 'Open Account Page', Type: 'open-url', Visibility: '', Payload: 'https://account.safing.io' }, '打开账户页面'],
+    ['access:end-of-package-near', { ID: '', Text: 'Open Account Page', Type: 'open-url', Visibility: '', Payload: 'https://account.safing.io' }, '打开账户页面'],
+  ];
+  const eventSpecificActions = new Set(['Got it!', "Don't show again", 'Open Setting', 'Open Account Page']);
+  const openedURLs = [];
+  const failingOpenExternal = integration.openExternal;
+  integration.openExternal = async url => { openedURLs.push(url); };
+  for (const [EventID, input, expected] of actionCases) {
+    const action = Object.freeze({ ...input, ...(typeof input.Payload === 'object' ? { Payload: Object.freeze({ ...input.Payload }) } : {}) });
+    const notification = Object.freeze({ EventID, Type: types.NotificationType.Info });
+    const before = JSON.stringify(action);
+    assert.equal(notifications.getActionText(notification, action), expected);
+    assert.equal(JSON.stringify(action), before, `Display localization mutated ${input.Text}`);
+    assert.equal(notifications.getActionText({ ...notification, EventID: 'broadcasts:remote' }, action), input.Text, `Remote broadcast action ${input.Text} must remain raw`);
+    assert.equal(notifications.getActionText(notification, { ...action, ID: 'future-id' }), input.Text);
+    assert.equal(notifications.getActionText(notification, { ...action, Type: undefined }), input.Text);
+    assert.equal(notifications.getActionText(notification, { ...action, Visibility: undefined }), input.Text);
+    assert.equal(notifications.getActionText(notification, { ...action, Text: input.Text + ' changed' }), input.Text + ' changed');
+    if (eventSpecificActions.has(input.Text)) {
+      assert.equal(notifications.getActionText({ ...notification, EventID: 'future:event' }, action), input.Text);
+    }
+    if (input.Type === 'open-url') {
+      assert.equal(notifications.getActionText(notification, { ...action, Payload: input.Payload + '/' }), input.Text);
+    }
+    if (input.Type === 'open-setting') {
+      for (const Payload of [null, undefined, {}, '', 0]) {
+        assert.equal(notifications.getActionText(notification, { ...action, Payload }), input.Text, 'Incomplete action payload must fall back without breaking notification rendering');
+      }
+      assert.equal(notifications.getActionText(notification, { ...action, Payload: { Key: 'dns/useStaleCache', Profile: undefined } }), input.Text);
+      assert.equal(notifications.getActionText(notification, { ...action, Payload: { Key: 'future/setting', Profile: '' } }), input.Text);
+    }
+    const updateCount = updates.length;
+    await rxjs.lastValueFrom(notifications.execute(notification, action));
+    assert.equal(updates.length, updateCount + (action.ID ? 1 : 0));
+    if (action.ID) {
+      assert.deepEqual(updates.at(-1), ['notifications:all/' + EventID, { EventID, SelectedActionID: action.ID }]);
+    }
+    if (action.Type === 'open-url') assert.equal(openedURLs.at(-1), input.Payload);
+    if (action.Type === 'open-setting') {
+      assert.deepEqual(routes.at(-1), [['/settings'], { queryParams: { setting: 'dns/useStaleCache' } }]);
+    }
+    assert.equal(JSON.stringify(action), before, 'Action execution must retain the original action');
+  }
+  assert.equal(toasts.length, 0, 'Canonical actions must execute without errors');
+  integration.openExternal = failingOpenExternal;
+  assert(source('src/app/shared/notification-list/notification-list.component.html').includes('notifsService.getActionText(notif, action)'));
+  assert(source('src/app/shared/notification/notification.html').includes('notifService.getActionText(notification, action)'));
+
   await rxjs.lastValueFrom(notifications.create(prompt));
   assert.equal(creates[0][1], prompt, 'Notification creation must retain the caller payload');
   const query = 'country:CN verdict:3 profile:local/raw-id';

@@ -44,6 +44,125 @@ export async function checkDynamicNetquery(localize) {
     Database: { Live: 'main', History: 'history' }, FeatureID: {}, ExpertiseLevel: { Developer: 'developer' },
   };
   const labels = load('src/app/shared/netquery/utils.ts', { '@safing/portmaster-api': api, '../utils': shared });
+
+  const reasonText = labels.localizeConnectionReason;
+  const reason = (Msg, Context = null, OptionKey = '') => Object.freeze({ Msg, Context, OptionKey, Profile: 'local/raw-profile' });
+  let reasonChecks = 0;
+  function checkReason(value, expected) {
+    const before = JSON.stringify(value);
+    assert.equal(reasonText(value), expected);
+    assert.equal(JSON.stringify(value), before, 'Reason records must not be rewritten');
+    reasonChecks++;
+  }
+  const backend = ['master', 'dns', 'prompt', 'packet_handler', 'tunnel', 'split-tunnel', 'bypassing']
+    .map(file => source('../../service/firewall/' + file + '.go')).join('\n');
+  const fixedReasons = [
+    ["unknownProcess", "unknown process or profile", "未知进程或配置文件"],
+    ["allowDNS", "allowing dns request", "允许 DNS 请求"],
+    ["defaultAllow", "allowed by default action", "默认网络操作允许此连接"],
+    ["defaultBlock", "blocked by default action", "默认网络操作阻止此连接"],
+    ["portmaster", "connection by Portmaster", "Portmaster 自身的连接"],
+    ["inboundBlocked", "inbound connections blocked", "已阻止传入连接"],
+    ["p2pList", "P2P assistive infrastructure blocked based on filter list", "根据过滤列表阻止 P2P 辅助基础设施"],
+    ["p2pPort", "P2P assistive infrastructure blocked based on port", "根据端口阻止 P2P 辅助基础设施"],
+    ["p2pDirect", "direct connections (P2P) blocked", "已阻止直接连接（P2P）"],
+    ["bootstrap", "special grant for connectivity domain during network bootstrap", "网络初始化期间特别允许连通性检测域名"],
+    ["internetLAN", "Internet and LAN access blocked", "已阻止互联网和局域网访问"],
+    ["internet", "Internet access blocked", "已阻止互联网访问"],
+    ["lan", "LAN access blocked", "已阻止局域网访问"],
+    ["localhost", "Localhost access blocked", "已阻止本机访问"],
+    ["invalidIP", "invalid IP", "无效的 IP 地址"],
+    ["dnsSplit", "DNS global/private split-view violation", "DNS 响应违反公网与私网隔离要求"],
+    ["dnsBlockedIPs", "DNS response only contained to-be-blocked IPs", "DNS 响应只包含将被阻止的 IP 地址"],
+    ["dnsGlobalHorizon", "DNS server horizon violation: global DNS server returned local IP address", "DNS 服务器范围越界：公网 DNS 服务器返回了本地 IP 地址"],
+    ["dnsLANHorizon", "DNS server horizon violation: LAN DNS server returned localhost IP address", "DNS 服务器范围越界：局域网 DNS 服务器返回了本机 IP 地址"],
+    ["dga", "possible DGA domain commonly used by malware", "可能是恶意软件常用的 DGA 域名"],
+    ["dataTunnel", "possible data tunnel for covert communication and protection bypassing", "可能是用于隐蔽通信和绕过防护的数据隧道"],
+    ["customIP", "IP address is in the custom filter list", "IP 地址在自定义过滤列表中"],
+    ["customAS", "AS is in the custom filter list", "自治系统（AS）在自定义过滤列表中"],
+    ["customCountry", "country is in the custom filter list", "国家/地区在自定义过滤列表中"],
+    ["fastTracked", "fast-tracked", "已通过快速处理"],
+    ["splitProxy", "split tunnel connection proxied by Portmaster", "由 Portmaster 代理的分流连接"],
+    ["rogueDNS", "redirecting rogue dns query", "正在重定向绕过设置的 DNS 查询"],
+    ["disabled", "privacy filter disabled", "隐私过滤器已禁用"],
+    ["notDNS", "none DNS data on DNS port", "DNS 端口上出现非 DNS 数据"],
+    ["promptAllow", "allowed via prompt", "已通过连接提示允许"],
+    ["promptBlock", "blocked via prompt", "已通过连接提示阻止"],
+    ["promptCanceled", "prompting canceled, waiting for new decision", "连接提示已取消，正在等待新的决定"],
+    ["promptPending", "prompting in progress, please respond to prompt", "正在等待连接决定，请回应连接提示"],
+    ["shutdown", "shutting down", "正在关闭"],
+    ["noProfile", "no profile set", "未设置配置文件"],
+    ["splitRules", "failed to check Split Tunnel rules", "检查分流规则失败"],
+    ["spnRules", "failed to check SPN rules", "检查 SPN 规则失败"],
+    ["spnNotReady", "SPN not ready for tunneling", "SPN 尚未准备好建立隧道"],
+    ["bypassCanary", "bypass prevention: blocked canary domain to prevent enabling of DNS-over-HTTPs", "防绕过：已阻止探测域名，以防启用 DNS-over-HTTPS"],
+    ["bypassDNS", "bypass prevention: blocked DNS query, manual dns setup required", "防绕过：已阻止 DNS 查询，需要手动配置 DNS"],
+    ["bypassResolver", "bypass prevention: blocked rogue connection to DNS resolver", "防绕过：已阻止绕过设置连接 DNS 解析器"]
+  ];
+  for (const [id, text, translated] of fixedReasons) {
+    assert(backend.includes(JSON.stringify(text.startsWith('bypass prevention: ') ? text.slice('bypass prevention: '.length) : text)), id + ': backend source changed');
+    checkReason(reason(text), translated);
+    for (const changed of ['changed ' + text, text + '\n', ' ' + text]) checkReason(reason(changed), changed);
+  }
+  assert(backend.includes('"bypass prevention: "'));
+  const ruleSource = source('../../service/profile/endpoints/reason.go');
+  assert(ruleSource.includes('prefix + r.description + " " + r.Filter[2:]'));
+  const endpointSource = ['any', 'asn', 'country', 'continent', 'domain', 'ip', 'iprange', 'lists', 'scopes']
+    .map(file => source('../../service/profile/endpoints/endpoint-' + file + '.go')).join('\n');
+  const descriptions = [
+    ["matches", "matches", "匹配"],
+    ["asnMissing", "ASN data not available to match", "缺少用于匹配的 ASN 数据"],
+    ["as", "IP is part of AS", "IP 属于自治系统"],
+    ["countryMissing", "country data not available to match", "缺少用于匹配的国家/地区数据"],
+    ["location", "IP is located in", "IP 位于"],
+    ["domain", "domain matches", "域名匹配"],
+    ["ip", "IP matches", "IP 匹配"],
+    ["range", "IP is in", "IP 位于地址范围"],
+    ["list", "filterlist contains", "过滤列表包含"],
+    ["scope", "scope matches", "范围匹配"]
+  ];
+  for (const [id, description, translated] of descriptions) {
+    assert(endpointSource.includes(JSON.stringify(description)), id + ': endpoint description changed');
+    for (const permitted of [true, false]) {
+      const rule = '*.example.invalid TCP/443 {{RULE}} <literal> 中文';
+      const context = Object.freeze({ Filter: (permitted ? '+ ' : '- ') + rule, Permitted: permitted, Value: 'raw', Extra: {} });
+      const message = (permitted ? 'allowed' : 'denied') + ' by rule: ' + description + ' ' + rule;
+      checkReason(reason(message, context), (permitted ? '规则允许：' : '规则拒绝：') + rule + '（' + translated + '）');
+      for (const invalid of [null, {}, [], { ...context, Filter: null }, { ...context, Permitted: !permitted },
+        { ...context, Permitted: 'true' }, { ...context, Filter: context.Filter + 'changed' }]) checkReason(reason(message, invalid), message);
+      checkReason(reason(message + '\n', context), message + '\n');
+    }
+  }
+  const rawDetails = 'unknown process or profile\n<&> **raw** {$ERROR} {{TOKEN}}';
+  for (const [template, translated] of [
+    ['failed to request tunneling: %s', '请求建立隧道失败：'],
+    ['failed to request split-tunneling: %s', '请求建立分流隧道失败：'],
+  ]) {
+    assert(backend.includes(JSON.stringify(template)), 'Tunneling producer changed');
+    checkReason(reason(template.replace('%s', rawDetails)), translated + rawDetails);
+    const incomplete = template.replace('%s', '');
+    checkReason(reason(incomplete), incomplete);
+  }
+  for (const [template, text, expected] of [
+    ['response to multi/broadcast query to %s/%s', 'response to multi/broadcast query to UDP/[2001:db8::1]:5353', '响应发送到 UDP/[2001:db8::1]:5353 的组播/广播查询'],
+    ['auto allowed: domain is related to process: %s is related to %s', 'auto allowed: domain is related to process: 原始 is related to 进程 <&> {{PROCESS}}', '自动允许：域名与进程相关：原始 与 进程 <&> {{PROCESS}} 相关'],
+    ['domain %s matches %s in custom filter list', 'domain 原始.test matches *.test in custom filter list', '域名 原始.test 匹配自定义过滤列表中的 *.test'],
+    ['domain alias (CNAME) %s matches %s in custom filter list', 'domain alias (CNAME) alias.test matches *.test in custom filter list', '域名别名（CNAME）alias.test 匹配自定义过滤列表中的 *.test'],
+  ]) {
+    assert(backend.includes(JSON.stringify(template)), 'Formatted producer changed');
+    checkReason(reason(text, null, 'filter/customListFile'), expected);
+    checkReason(reason('changed ' + text, null, 'filter/customListFile'), 'changed ' + text);
+    checkReason(reason(text + '\n', null, 'filter/customListFile'), text.startsWith('auto allowed:') ? expected.replace(/ 相关$/, '\n 相关') : text + '\n');
+    if (text.includes('custom filter list')) checkReason(reason(text), text);
+  }
+  for (const text of ['', '__proto__', 'constructor', 'backend future response',
+    'denied by rule: new description *.test',
+    'auto allowed: domain is related to process: app is related to name is related to another',
+    'domain a matches b matches c in custom filter list',
+    'domain alias (CNAME) a matches b matches c in custom filter list']) checkReason(reason(text, null, 'filter/customListFile'), text);
+  for (const value of [null, undefined, {}, { Msg: null }, { Msg: 7 }, { Msg: {} }]) checkReason(value, '');
+  console.log(`Connection reasons: ${fixedReasons.length} fixed messages, ${descriptions.length} rule descriptions, ${reasonChecks} regression checks.`);
+
   const settings = load('src/app/shared/config/setting-text.pipe.ts');
   const copied = [], toasts = [], routes = [], saved = [];
   const rawError = 'backend error: + *.example.invalid TCP/443 ?key=Allow';
@@ -124,6 +243,13 @@ export async function checkDynamicNetquery(localize) {
     { navigate: (...args) => { routes.push(plain(args)); } }, profileService, { query: () => rxjs.of([setting]) }, indicator,
     { listen: () => () => {} }, { watchPins: () => rxjs.of([{ ID: 'raw-node', Name: 'Allow node', VerifiedOwner: 'User-controlled owner' }]) }, {},
   );
+  const displayedReason = Object.freeze({ Msg: 'Internet access blocked', Context: null, OptionKey: 'filter/blockInternet', Profile: 'core:profiles/local/raw-id' });
+  const displayedConnection = Object.freeze({ profile: 'local/raw-id', verdict: 3, extra_data: Object.freeze({ reason: displayedReason }) });
+  assert.equal(helper.reasonText(displayedReason), '已阻止互联网访问');
+  await helper.dumpConnection(displayedConnection);
+  assert.deepEqual(JSON.parse(copied.at(-1)), displayedConnection, 'Copied JSON must contain the original English reason');
+  helper.redirectToSetting('', displayedConnection);
+  assert.deepEqual(routes.at(-1), [['/', 'app', 'local', 'raw-id'], { queryParams: { tab: 'settings', setting: 'filter/blockInternet' } }]);
   assert.equal(helper.settings[setting.Key], settings.localizeSettingText(setting.Name));
   assert.notEqual(helper.settings[setting.Key], setting.Name);
   assert.equal(setting.Name, 'Force Block Internet Access');
@@ -157,6 +283,29 @@ export async function checkDynamicNetquery(localize) {
   const input = load('src/app/shared/netquery/textql/input.ts');
   const lexer = load('src/app/shared/netquery/textql/lexer.ts', { './helper': parserHelpers, './input': input, './token': token });
   const parser = load('src/app/shared/netquery/textql/parser.ts', { './helper': parserHelpers, './lexer': lexer, './token': token });
+  for (const [query, character, position] of [['?', '?', 0], ['(', '(', 0], ['country:CN ?', '?', 11], ['country:CN\n?', '?', 11], ['\r\n中', '中', 2]]) {
+    assert.throws(() => parser.Parser.parse(query), { name: 'Error', message: `无法处理字符：${character}，位置 0:${position}` });
+  }
+  const stream = new input.InputStream('a\nb');
+  stream.next(); stream.next();
+  assert.throws(() => stream.croak('raw token COLON ?'), { name: 'Error', message: 'raw token COLON ?，位置 0:2' });
+  assert.equal(stream.pos, 2);
+  assert.equal(stream.left, 'b');
+  assert.deepEqual(plain(parser.Parser.parse('app:"local/raw-id" provider:"Example Owner" ip:192.0.2.1 port:443 allowed:yes encrypted:no verdict:!3 bytes_sent:12.5 domain:"中文?.example.invalid" groupby:country orderby:started hello')), {
+    groupBy: ['country'], orderBy: ['started'], textQuery: 'hello',
+    conditions: { profile: ['local/raw-id'], as_owner: ['Example Owner'], remote_ip: ['192.0.2.1'], remote_port: [443], allowed: [true], encrypted: [false], verdict: [{ $ne: 3 }], bytes_sent: [12.5], domain: ['中文?.example.invalid'] },
+  });
+  for (const field of ['country', 'verdict', 'groupby', 'orderby']) {
+    const partial = new parser.Parser(field + ':');
+    assert.deepEqual(plain(partial.process()), { conditions: {}, textQuery: field });
+    assert.deepEqual(plain(partial.lastUnterminatedCondition), { start: 0, type: field, value: '' });
+  }
+  assert.deepEqual(plain(parser.Parser.parse('verdict:!')), { conditions: {}, textQuery: 'verdict' });
+  assert.deepEqual(plain(parser.Parser.parse('domain:"unterminated')), { conditions: { domain: ['unterminated'] }, textQuery: '' });
+  assert.deepEqual(plain(parser.Parser.parse('country: CN')), { conditions: {}, textQuery: 'country CN' });
+  const completion = new parser.Parser('country:CN domain:');
+  assert.deepEqual(plain(completion.process()), { conditions: { country: ['CN'] }, textQuery: 'domain' });
+  assert.deepEqual(plain(completion.lastUnterminatedCondition), { start: 11, type: 'domain', value: '' });
   const duration = load('src/app/shared/pipes/duration.pipe.ts');
   const bytes = load('src/app/shared/pipes/bytes.pipe.ts');
   const chart = load('src/app/shared/netquery/line-chart/line-chart.ts', { d3, '../../utils': shared, '../../pipes': duration, '../../pipes/bytes.pipe': bytes });
@@ -218,8 +367,9 @@ export async function checkDynamicNetquery(localize) {
     '@angular/core/rxjs-interop': { takeUntilDestroyed: () => stream => stream }, '@angular/forms': {},
     '../../animations': {}, '@safing/ui': {}, '@safing/portmaster-api': api, '../../utils': shared,
     '../connection-helper.service': helperModule, '../textql': parser, '../utils': labels,
+    '../../action-indicator': { ActionIndicatorService: IndicatorToken },
   });
-  const searchbar = new searchbarModule.SfngNetquerySearchbarComponent(cdr, {}, {}, helper);
+  const searchbar = new searchbarModule.SfngNetquerySearchbarComponent(cdr, {}, {}, helper, indicator);
   const emitted = [];
   searchbar.fieldsParsed.subscribe(fields => emitted.push(plain(fields)));
   searchbar.applySuggestion('verdict', 3, { shiftKey: true });
@@ -228,6 +378,54 @@ export async function checkDynamicNetquery(localize) {
   assert.equal(emitted[0].verdict[0], 3, 'Shift suggestion -> textql -> decoder must keep the numeric verdict');
   searchbar.applySuggestion('country', 'CN', { shiftKey: false });
   assert.equal(emitted.at(-1).country[0], 'CN');
+  const changedSearch = [];
+  searchbar.registerOnChange(value => changedSearch.push(value));
+  const emittedBeforeError = emitted.length;
+  searchbar.textSearch = '?';
+  assert.doesNotThrow(() => searchbar.parseAndEmit());
+  assert.equal(searchbar.textSearch, '?');
+  assert.equal(emitted.length, emittedBeforeError);
+  assert.equal(changedSearch.length, 0);
+  assert.deepEqual(toasts.at(-1), ['error', '搜索查询无效', '无法处理字符：?，位置 0:0']);
+  assert.doesNotThrow(() => searchbar.applySuggestion('country', 'CN', { shiftKey: true }));
+  assert.equal(searchbar.textSearch, '?');
+  assert.equal(emitted.length, emittedBeforeError);
+  const toastsBeforeWrite = toasts.length;
+  assert.doesNotThrow(() => searchbar.writeValue('?'));
+  assert.equal(searchbar.textSearch, '?');
+  assert.equal(toasts.length, toastsBeforeWrite);
+  searchbar.textSearch = 'country:? domain:old';
+  assert.doesNotThrow(() => searchbar.applySuggestion('domain', 'chosen.invalid', { shiftKey: false }, 10));
+  assert.equal(searchbar.textSearch, 'country:? domain:old');
+  assert.equal(emitted.length, emittedBeforeError, 'An invalid stale suggestion prefix must not partially emit a new filter');
+  searchbar.textSearch = 'country:CN';
+  searchbar.parseAndEmit();
+  assert.deepEqual(emitted.at(-1).country, ['CN']);
+  assert.equal(changedSearch.at(-1), '');
+
+  const settledSuggestions = new rxjs.Subject();
+  const suggestionRequests = [];
+  const suggestions = new searchbarModule.SfngNetquerySearchbarComponent(
+    { markForCheck: () => settledSuggestions.next() }, { currentLevel: 'expert' },
+    { query: (query, origin) => { suggestionRequests.push({ query: plain(query), origin }); return rxjs.of([]); } }, helper, indicator,
+  );
+  suggestions.keyManager = { setActiveItem() {} };
+  suggestions.suggestionDropDown = { show() {}, close() {} };
+  suggestions.ngOnInit();
+  for (const value of ['country:?', 'country:CN']) {
+    suggestions.textSearch = value;
+    const settled = rxjs.firstValueFrom(settledSuggestions.pipe(rxjs.take(1), rxjs.timeout(5000)));
+    suggestions.loadSuggestions();
+    await settled;
+    assert.equal(suggestions.loading, false);
+    assert.deepEqual(plain(suggestions.suggestions), []);
+    if (value === 'country:?') assert.equal(suggestionRequests.length, 0);
+  }
+  assert.equal(suggestionRequests.length, 1, 'A bad query must not terminate the suggestion stream');
+  assert.equal(suggestionRequests[0].origin, 'netquery-searchbar-get-counts');
+  assert.deepEqual(suggestionRequests[0].query.query.country, { $like: '%CN%' });
+  suggestions.ngOnDestroy();
+  settledSuggestions.complete();
   const add = load('src/app/shared/netquery/add-to-filter/add-to-filter.ts', {
     '@angular/core': injectedCore, 'src/app/integration': { INTEGRATION_SERVICE: 'integration' },
   });
@@ -283,7 +481,7 @@ export async function checkDynamicNetquery(localize) {
     const html = source('src/app/shared/netquery/' + file);
     assert(html.includes('helper.blockAll(conn.domain || conn.remote_ip, conn)'));
     assert(html.includes('helper.unblockAll(conn.domain || conn.remote_ip, conn)'));
-    assert(html.includes('conn.extra_data?.reason?.Msg') || html.includes('conn.extra_data?.reason as reason'));
+    assert(html.includes('helper.reasonText(conn.extra_data?.reason)'), 'List and detail must share the reason display function');
   }
   subscription.unsubscribe(); searchbar.ngOnDestroy(); helper.dispose();
 }

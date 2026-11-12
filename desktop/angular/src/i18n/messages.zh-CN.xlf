@@ -10476,6 +10476,590 @@ DNS 服务器采用 URL 格式配置，以便为解析器指定特殊设置。�
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="netquery.searchHelp.quickSearchShortcut" datatype="html">
+        <source>CTRL + Space</source>
+        <target>CTRL + 空格</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/netquery.component.html</context>
+          <context context-type="linenumber">401</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.searchHelp.enterShortcut" datatype="html">
+        <source>ENTER</source>
+        <target>回车</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/netquery.component.html</context>
+          <context context-type="linenumber">407</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.searchHelp.shiftEnterShortcut" datatype="html">
+        <source>Shift + Enter</source>
+        <target>Shift + 回车</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/netquery.component.html</context>
+          <context context-type="linenumber">408</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.searchHelp.suggestionsShortcut" datatype="html">
+        <source>Ctrl + Space</source>
+        <target>Ctrl + 空格</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/netquery.component.html</context>
+          <context context-type="linenumber">413</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.searchHelp.shiftClickShortcut" datatype="html">
+        <source>Shift + Click</source>
+        <target>Shift + 点击</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/netquery.component.html</context>
+          <context context-type="linenumber">418</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.searchHelp.enterKey" datatype="html">
+        <source>Enter</source>
+        <target>回车</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/searchbar/searchbar.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.parse.errorPosition" datatype="html">
+        <source><x id="MESSAGE" equiv-text="msg" /> at <x id="LINE" equiv-text="this._line" />:<x id="POSITION" equiv-text="this.pos" /></source>
+        <target><x id="MESSAGE" equiv-text="msg" />，位置 <x id="LINE" equiv-text="this._line" />:<x id="POSITION" equiv-text="this.pos" /></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/textql/input.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.parse.unsupportedCharacter" datatype="html">
+        <source>Can't handle character: <x id="CHARACTER" equiv-text="ch" /></source>
+        <target>无法处理字符：<x id="CHARACTER" equiv-text="ch" /></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/textql/lexer.ts</context>
+          <context context-type="linenumber">245</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ts.notifications.action.ok" datatype="html">
+        <source>OK</source>
+        <target>确定</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/notifications.service.ts</context>
+          <context context-type="linenumber">304</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ts.notifications.action.gotIt" datatype="html">
+        <source>Got it!</source>
+        <target>知道了</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/notifications.service.ts</context>
+          <context context-type="linenumber">310</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ts.notifications.action.dontShowAgain" datatype="html">
+        <source>Don't show again</source>
+        <target>不再显示</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/notifications.service.ts</context>
+          <context context-type="linenumber">316</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ts.notifications.action.openSetting" datatype="html">
+        <source>Open Setting</source>
+        <target>打开设置</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/notifications.service.ts</context>
+          <context context-type="linenumber">323</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ts.notifications.action.getHelp" datatype="html">
+        <source>Get Help</source>
+        <target>获取帮助</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/notifications.service.ts</context>
+          <context context-type="linenumber">329</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ts.notifications.action.openAccountPage" datatype="html">
+        <source>Open Account Page</source>
+        <target>打开账户页面</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/services/notifications.service.ts</context>
+          <context context-type="linenumber">336</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.allowDNS" datatype="html">
+        <source>allowing dns request</source>
+        <target>允许 DNS 请求</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.autoRelation" datatype="html">
+        <source>auto allowed: domain is related to process: <x id="DOMAIN" equiv-text="domain"/> is related to <x id="PROCESS" equiv-text="process"/></source>
+        <target>自动允许：域名与进程相关：<x id="DOMAIN"/> 与 <x id="PROCESS"/> 相关</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">171</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.bootstrap" datatype="html">
+        <source>special grant for connectivity domain during network bootstrap</source>
+        <target>网络初始化期间特别允许连通性检测域名</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.bypassCanary" datatype="html">
+        <source>bypass prevention: blocked canary domain to prevent enabling of DNS-over-HTTPs</source>
+        <target>防绕过：已阻止探测域名，以防启用 DNS-over-HTTPS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.bypassDNS" datatype="html">
+        <source>bypass prevention: blocked DNS query, manual dns setup required</source>
+        <target>防绕过：已阻止 DNS 查询，需要手动配置 DNS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.bypassResolver" datatype="html">
+        <source>bypass prevention: blocked rogue connection to DNS resolver</source>
+        <target>防绕过：已阻止绕过设置连接 DNS 解析器</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.customAS" datatype="html">
+        <source>AS is in the custom filter list</source>
+        <target>自治系统（AS）在自定义过滤列表中</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.customCNAME" datatype="html">
+        <source>domain alias (CNAME) <x id="DOMAIN" equiv-text="domain"/> matches <x id="ENTRY" equiv-text="entry"/> in custom filter list</source>
+        <target>域名别名（CNAME）<x id="DOMAIN"/> 匹配自定义过滤列表中的 <x id="ENTRY"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">183</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.customCountry" datatype="html">
+        <source>country is in the custom filter list</source>
+        <target>国家/地区在自定义过滤列表中</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.customDomain" datatype="html">
+        <source>domain <x id="DOMAIN" equiv-text="domain"/> matches <x id="ENTRY" equiv-text="entry"/> in custom filter list</source>
+        <target>域名 <x id="DOMAIN"/> 匹配自定义过滤列表中的 <x id="ENTRY"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.customIP" datatype="html">
+        <source>IP address is in the custom filter list</source>
+        <target>IP 地址在自定义过滤列表中</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.dataTunnel" datatype="html">
+        <source>possible data tunnel for covert communication and protection bypassing</source>
+        <target>可能是用于隐蔽通信和绕过防护的数据隧道</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.defaultAllow" datatype="html">
+        <source>allowed by default action</source>
+        <target>默认网络操作允许此连接</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.defaultBlock" datatype="html">
+        <source>blocked by default action</source>
+        <target>默认网络操作阻止此连接</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.dga" datatype="html">
+        <source>possible DGA domain commonly used by malware</source>
+        <target>可能是恶意软件常用的 DGA 域名</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.disabled" datatype="html">
+        <source>privacy filter disabled</source>
+        <target>隐私过滤器已禁用</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.dnsBlockedIPs" datatype="html">
+        <source>DNS response only contained to-be-blocked IPs</source>
+        <target>DNS 响应只包含将被阻止的 IP 地址</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.dnsGlobalHorizon" datatype="html">
+        <source>DNS server horizon violation: global DNS server returned local IP address</source>
+        <target>DNS 服务器范围越界：公网 DNS 服务器返回了本地 IP 地址</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.dnsLANHorizon" datatype="html">
+        <source>DNS server horizon violation: LAN DNS server returned localhost IP address</source>
+        <target>DNS 服务器范围越界：局域网 DNS 服务器返回了本机 IP 地址</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.dnsSplit" datatype="html">
+        <source>DNS global/private split-view violation</source>
+        <target>DNS 响应违反公网与私网隔离要求</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.fastTracked" datatype="html">
+        <source>fast-tracked</source>
+        <target>已通过快速处理</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.inboundBlocked" datatype="html">
+        <source>inbound connections blocked</source>
+        <target>已阻止传入连接</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.internet" datatype="html">
+        <source>Internet access blocked</source>
+        <target>已阻止互联网访问</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.internetLAN" datatype="html">
+        <source>Internet and LAN access blocked</source>
+        <target>已阻止互联网和局域网访问</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.invalidIP" datatype="html">
+        <source>invalid IP</source>
+        <target>无效的 IP 地址</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.lan" datatype="html">
+        <source>LAN access blocked</source>
+        <target>已阻止局域网访问</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.localhost" datatype="html">
+        <source>Localhost access blocked</source>
+        <target>已阻止本机访问</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.multicast" datatype="html">
+        <source>response to multi/broadcast query to <x id="PROTOCOL" equiv-text="protocol"/>/<x id="ADDRESS" equiv-text="address"/></source>
+        <target>响应发送到 <x id="PROTOCOL"/>/<x id="ADDRESS"/> 的组播/广播查询</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.noProfile" datatype="html">
+        <source>no profile set</source>
+        <target>未设置配置文件</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.notDNS" datatype="html">
+        <source>none DNS data on DNS port</source>
+        <target>DNS 端口上出现非 DNS 数据</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.p2pDirect" datatype="html">
+        <source>direct connections (P2P) blocked</source>
+        <target>已阻止直接连接（P2P）</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.p2pList" datatype="html">
+        <source>P2P assistive infrastructure blocked based on filter list</source>
+        <target>根据过滤列表阻止 P2P 辅助基础设施</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.p2pPort" datatype="html">
+        <source>P2P assistive infrastructure blocked based on port</source>
+        <target>根据端口阻止 P2P 辅助基础设施</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.portmaster" datatype="html">
+        <source>connection by Portmaster</source>
+        <target>Portmaster 自身的连接</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.promptAllow" datatype="html">
+        <source>allowed via prompt</source>
+        <target>已通过连接提示允许</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.promptBlock" datatype="html">
+        <source>blocked via prompt</source>
+        <target>已通过连接提示阻止</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.promptCanceled" datatype="html">
+        <source>prompting canceled, waiting for new decision</source>
+        <target>连接提示已取消，正在等待新的决定</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.promptPending" datatype="html">
+        <source>prompting in progress, please respond to prompt</source>
+        <target>正在等待连接决定，请回应连接提示</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.rogueDNS" datatype="html">
+        <source>redirecting rogue dns query</source>
+        <target>正在重定向绕过设置的 DNS 查询</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleAllow" datatype="html">
+        <source>allowed by rule: <x id="DESCRIPTION" equiv-text="label"/> <x id="RULE" equiv-text="rule"/></source>
+        <target>规则允许：<x id="RULE"/>（<x id="DESCRIPTION"/>）</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDeny" datatype="html">
+        <source>denied by rule: <x id="DESCRIPTION" equiv-text="label"/> <x id="RULE" equiv-text="rule"/></source>
+        <target>规则拒绝：<x id="RULE"/>（<x id="DESCRIPTION"/>）</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.as" datatype="html">
+        <source>IP is part of AS</source>
+        <target>IP 属于自治系统</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.asnMissing" datatype="html">
+        <source>ASN data not available to match</source>
+        <target>缺少用于匹配的 ASN 数据</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.countryMissing" datatype="html">
+        <source>country data not available to match</source>
+        <target>缺少用于匹配的国家/地区数据</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.domain" datatype="html">
+        <source>domain matches</source>
+        <target>域名匹配</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">129</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.ip" datatype="html">
+        <source>IP matches</source>
+        <target>IP 匹配</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.list" datatype="html">
+        <source>filterlist contains</source>
+        <target>过滤列表包含</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.location" datatype="html">
+        <source>IP is located in</source>
+        <target>IP 位于</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.matches" datatype="html">
+        <source>matches</source>
+        <target>匹配</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.range" datatype="html">
+        <source>IP is in</source>
+        <target>IP 位于地址范围</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.ruleDescription.scope" datatype="html">
+        <source>scope matches</source>
+        <target>范围匹配</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.shutdown" datatype="html">
+        <source>shutting down</source>
+        <target>正在关闭</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.splitError" datatype="html">
+        <source>failed to request split-tunneling: <x id="ERROR" equiv-text="error"/></source>
+        <target>请求建立分流隧道失败：<x id="ERROR"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.splitProxy" datatype="html">
+        <source>split tunnel connection proxied by Portmaster</source>
+        <target>由 Portmaster 代理的分流连接</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.splitRules" datatype="html">
+        <source>failed to check Split Tunnel rules</source>
+        <target>检查分流规则失败</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.spnNotReady" datatype="html">
+        <source>SPN not ready for tunneling</source>
+        <target>SPN 尚未准备好建立隧道</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">117</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.spnRules" datatype="html">
+        <source>failed to check SPN rules</source>
+        <target>检查 SPN 规则失败</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.tunnelError" datatype="html">
+        <source>failed to request tunneling: <x id="ERROR" equiv-text="error"/></source>
+        <target>请求建立隧道失败：<x id="ERROR"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">157</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="netquery.reason.unknownProcess" datatype="html">
+        <source>unknown process or profile</source>
+        <target>未知进程或配置文件</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/netquery/utils.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

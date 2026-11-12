@@ -12,12 +12,12 @@
     </div>
     <div class="preview">
       <span>
-        {{notif.Title || notif.Message}}
+        {{notifsService.getText(notif).title || notifsService.getText(notif).message}}
       </span>
       <div class="buttons">
         <ng-container *ngFor="let action of notif!.AvailableActions">
           <button *ngIf="!action.Visibility || action.Visibility === 'in-app-only'" (click)="execute(notif!, action, $event)">
-            {{action.Text}}
+            {{notifsService.getActionText(notif, action)}}
           </button>
         </ng-container>
       </div>

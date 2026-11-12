@@ -21,6 +21,7 @@ pub mod commands;
 pub mod websocket;
 
 // The notification module manages system notifications from portmaster.
+mod notification_text;
 mod notifications;
 
 use crate::portapi::{

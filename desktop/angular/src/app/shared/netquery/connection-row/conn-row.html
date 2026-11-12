@@ -1,6 +1,6 @@
 <div class="flex flex-row items-center gap-2" name="first">
   <span class="flex-shrink-0 verdict" [ngClass]="helper.getVerdictClass(conn)"
-    [sfng-tooltip]="conn.extra_data?.reason?.Msg || null"></span>
+    [sfng-tooltip]="helper.reasonText(conn.extra_data?.reason) || null"></span>
 
   <ng-container *ngIf="conn.domain as domain; else scopeTranslation">
     <sfng-netquery-scope-label name="domain" [scope]="conn.domain"

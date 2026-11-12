@@ -172,6 +172,19 @@ export function checkDynamicSpn(localize) {
     assert.equal([...html.matchAll(/ngSwitchDefault/g)].length, 1, 'Scout statuses must have exactly one unknown-state fallback');
     assert(html.includes('{{ spnStatus?.Status }}'), 'Unknown scout statuses must pass through');
   }
+  const country = evaluate(source('src/app/shared/netquery/pipes/country-name.ts'), { $localize: localize, Intl });
+  const featureScout = instance('src/app/shared/feature-scout/feature-scout.ts', ['countryName'], { getCountryName: country.getCountryName });
+  const rawCountry = Object.freeze({ Code: 'CN', Name: 'China' });
+  const previousLocale = localize.locale;
+  try {
+    localize.locale = 'zh-CN';
+    assert.equal(featureScout.countryName(rawCountry.Code, rawCountry.Name, 'en-GB'), '中国');
+    for (const code of ['', 'AA', 'ZZ', 'cn']) assert.equal(featureScout.countryName(code, 'Raw Country'), 'Raw Country');
+    localize.locale = 'en-GB';
+    assert.equal(featureScout.countryName(rawCountry.Code, rawCountry.Name), 'China');
+  } finally { localize.locale = previousLocale; }
+  assert.equal(rawCountry.Name, 'China');
+  assert(source('src/app/shared/feature-scout/feature-scout.html').includes("countryName(spnStatus?.ConnectedCountry?.Code || '', spnStatus?.ConnectedCountry?.Name || '')"));
   const map = source('src/app/pages/spn/map.service.ts');
   for (const state of ['Offline', 'Reachable', 'ConnectivityIssues']) assert(map.includes(`pin.States.includes('${state}')`));
 }

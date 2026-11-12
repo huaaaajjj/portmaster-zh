@@ -14,6 +14,7 @@ import { checkSettingsLocalization } from './check-settings-localization.mjs';
 import { checkDynamicSpn } from './check-dynamic-spn.mjs';
 import { checkDynamicNetquery } from './check-dynamic-netquery.mjs';
 import { checkDynamicGeneralLocalization } from './check-dynamic-general.mjs';
+import { checkNotifications } from './check-notifications.mjs';
 
 const workspace = fileURLToPath(new URL('../', import.meta.url));
 function* elements(nodes, name) {
@@ -99,6 +100,7 @@ try {
   checkDynamicSpn(globalThis.$localize);
   await checkDynamicNetquery(globalThis.$localize);
   await checkDynamicGeneralLocalization(globalThis.$localize);
+  checkNotifications(globalThis.$localize);
   const clock = Date.parse('2026-11-09T12:00:00Z');
   class FixedDate extends Date {
     constructor(...args) { super(...(args.length ? args : [clock])); }
@@ -154,7 +156,7 @@ const args = process.argv.slice(2);
 assert(args.length === 0 || (args.length === 1 && args[0] === '--built'), 'Only --built is supported');
 if (args.includes('--built')) {
   for (const [folder, baseHref, samples] of [
-    ['dist', '/ui/modules/portmaster/', ['网络活动', '上一页', '有应用请求建立网络连接：', '允许域名', '允许 IP', '阻止域名', '阻止 IP', '传入', '传出', '默认网络操作', '导入设置', '发生了什么？', '先前合并的配置文件']],
+    ['dist', '/ui/modules/portmaster/', ['网络活动', '上一页', '有应用请求建立网络连接：', '允许域名', '允许 IP', '阻止域名', '阻止 IP', '传入', '传出', '默认网络操作', '导入设置', '发生了什么？', '先前合并的配置文件', '无法处理字符：', '，位置 ', 'CTRL + 空格', 'Ctrl + 空格', 'Shift + 回车', 'Shift + 点击', '知道了', '不再显示', '打开设置', '加快网站加载速度', '安装文件损坏', '无法启用 SPN：', '已阻止互联网访问', '规则拒绝：', '请求建立隧道失败：']],
     ['dist/tauri-builtin', '/', ['正在连接系统服务', '未知错误：']],
     ['dist-extension', '/', ['Portmaster 浏览器扩展', '授权', '重试']]
   ]) {

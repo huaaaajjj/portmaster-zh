@@ -13,15 +13,15 @@
       clip-rule="evenodd" />
   </svg>
 
-  <h1>{{notification.Title}}</h1>
+  <h1>{{notifService.getText(notification).title}}</h1>
 
-  <markdown emoji [data]="notification.Message" class="message"></markdown>
+  <markdown emoji [data]="notifService.getText(notification, true).message" class="message"></markdown>
 
   <div class="buttons">
     <button *ngFor="let action of notification!.AvailableActions"
       [class.selected]="action.ID === notification!.SelectedActionID" [disabled]="state === 'invalid'"
       (click)="execute(notification!, action)">
-      {{action.Text}}
+      {{notifService.getActionText(notification, action)}}
     </button>
   </div>
 </div>

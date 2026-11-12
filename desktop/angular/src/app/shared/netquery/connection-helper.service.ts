@@ -8,7 +8,7 @@ import { ActionIndicatorService } from '../action-indicator';
 import { localizeSettingText } from '../config/setting-text.pipe';
 import { objKeys } from '../utils';
 import { SfngSearchbarFields } from './searchbar';
-import { connectionValueLabel } from './utils';
+import { connectionValueLabel, localizeConnectionReason } from './utils';
 import { CountryNameService } from './pipes/country-name.pipe';
 import { INTEGRATION_SERVICE } from 'src/app/integration';
 
@@ -30,6 +30,7 @@ export interface LocalAppProfile extends AppProfile {
 
 @Injectable()
 export class NetqueryHelper {
+  readonly reasonText = localizeConnectionReason;
   readonly settings: { [key: string]: string } = {};
 
   refresh = new Subject<void>();

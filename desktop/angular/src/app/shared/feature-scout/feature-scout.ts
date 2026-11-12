@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { BoolSetting, ConfigService, FeatureID, Netquery, SPNService, SPNStatus, UserProfile } from "@safing/portmaster-api";
 import { catchError, of } from "rxjs";
 import { fadeInAnimation, fadeOutAnimation } from "../animations";
-import { CountryFlagModule } from 'src/app/shared/country-flag';
+import { getCountryName } from '../netquery/pipes/country-name';
 
 @Component({
   selector: 'app-feature-scout',
@@ -19,6 +19,7 @@ import { CountryFlagModule } from 'src/app/shared/country-flag';
 })
 export class FeatureScoutComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
+  readonly countryName = getCountryName;
 
   /** The current SPN user profile */
   profile: UserProfile | null = null;

@@ -207,7 +207,7 @@
     <span>
       <span><ng-container i18n="@@ui.src.app.shared.netquery.connection.details.conn.details.df39baa32318">Reason:</ng-container></span>
       <span class="break-normal whitespace-normal">
-        {{conn.extra_data?.reason?.Msg}}
+        {{ helper.reasonText(conn.extra_data?.reason) }}
       </span>
     </span>
     <span *ngIf="conn.extra_data?.reason?.OptionKey as option">

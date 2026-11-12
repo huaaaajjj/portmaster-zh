@@ -1,3 +1,4 @@
+use super::notification_text::{localize_notification, system_actions};
 use crate::portapi::client::*;
 use crate::portapi::message::*;
 use crate::portapi::models::notification::*;
@@ -50,17 +51,15 @@ pub async fn notification_handler(cli: PortAPI) {
 
 #[cfg(target_os = "linux")]
 pub async fn show_notification(cli: &PortAPI, key: String, n: Notification) {
+    let (title, message) = localize_notification(&n);
     let mut notif = notify_rust::Notification::new();
-    notif.body(&n.message);
+    notif.body(&message);
     notif.timeout(notify_rust::Timeout::Never); // TODO(ppacher): use n.expires to calculate the timeout.
-    notif.summary(&n.title);
+    notif.summary(&title);
     notif.icon("portmaster");
 
-    for action in n.actions {
-        if !action.visibility.is_empty() {
-            continue
-        }
-        notif.action(&action.id, &action.text);
+    for (id, label) in system_actions(&n) {
+        notif.action(id, &label);
     }
 
     {
@@ -109,17 +108,15 @@ pub async fn show_notification(cli: &PortAPI, key: String, n: Notification) {
 pub async fn show_notification(cli: &PortAPI, key: String, n: Notification) {
     use tauri_winrt_notification::{Duration, Sound, Toast};
 
+    let (title, message) = localize_notification(&n);
     let mut toast = Toast::new("io.safing.portmaster")
-        .title(&n.title)
-        .text1(&n.message)
+        .title(&title)
+        .text1(&message)
         .sound(Some(Sound::Default))
         .duration(Duration::Long);
 
-    for action in n.actions {
-        if !action.visibility.is_empty() {
-            continue
-        }
-        toast = toast.add_button(&action.text, &action.id);
+    for (id, label) in system_actions(&n) {
+        toast = toast.add_button(&label, id);
     }
     {
         let cli = cli.clone();

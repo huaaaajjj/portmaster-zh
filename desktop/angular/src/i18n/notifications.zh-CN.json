@@ -1,0 +1,1676 @@
+{
+  "version": 1,
+  "messages": [
+    {
+      "id": "config-invalid",
+      "events": [
+        "config:validation-errors-on-load"
+      ],
+      "title": [
+        "Invalid Settings",
+        "设置无效"
+      ],
+      "message": [
+        "Some current settings are invalid. Please update them and restart the Portmaster.",
+        "部分当前设置无效。请修改这些设置并重启 Portmaster。"
+      ],
+      "origin": "base/notifications/module.go"
+    },
+    {
+      "id": "config-invalid-option",
+      "events": [
+        "config:validation-error:*"
+      ],
+      "title": [
+        "Invalid Setting for {{NAME}}",
+        "{{NAME}} 的设置无效"
+      ],
+      "message": [
+        "Your current setting for {{NAME}} is invalid: {{ERROR}}\n\nPlease update the setting and restart the Portmaster, until then the default value is used.",
+        "{{NAME}} 的当前设置无效：{{ERROR}}\n\n请修改此设置并重启 Portmaster；在此之前将使用默认值。"
+      ],
+      "origin": "base/notifications/module.go"
+    },
+    {
+      "id": "paused-all",
+      "events": [
+        "control:paused"
+      ],
+      "title": [
+        "Portmaster and SPN paused",
+        "Portmaster 和 SPN 已暂停"
+      ],
+      "message": [
+        "Portmaster and SPN paused until {{TIME}}",
+        "Portmaster 和 SPN 已暂停，将于 {{TIME}} 恢复"
+      ],
+      "origin": "service/control/pause.go"
+    },
+    {
+      "id": "paused-portmaster",
+      "events": [
+        "control:paused"
+      ],
+      "title": [
+        "Portmaster paused",
+        "Portmaster 已暂停"
+      ],
+      "message": [
+        "Portmaster paused until {{TIME}}",
+        "Portmaster 已暂停，将于 {{TIME}} 恢复"
+      ],
+      "origin": "service/control/pause.go"
+    },
+    {
+      "id": "paused-spn",
+      "events": [
+        "control:paused"
+      ],
+      "title": [
+        "SPN paused",
+        "SPN 已暂停"
+      ],
+      "message": [
+        "SPN paused until {{TIME}}",
+        "SPN 已暂停，将于 {{TIME}} 恢复"
+      ],
+      "origin": "service/control/pause.go"
+    },
+    {
+      "id": "resumed",
+      "events": [
+        "control:resumed"
+      ],
+      "title": [
+        "Resumed",
+        "已恢复"
+      ],
+      "message": [
+        "Automatically resumed from pause state",
+        "已自动从暂停状态恢复"
+      ],
+      "origin": "service/control/pause.go"
+    },
+    {
+      "id": "resume-error",
+      "events": [
+        "control:error"
+      ],
+      "title": [
+        "Resume operation failed",
+        "恢复操作失败"
+      ],
+      "message": [
+        "{{ERROR}}",
+        "{{ERROR}}"
+      ],
+      "origin": "service/control/pause.go"
+    },
+    {
+      "id": "control-error",
+      "events": [
+        "control:error"
+      ],
+      "title": [
+        "Error",
+        "错误"
+      ],
+      "message": [
+        "{{ERROR}}",
+        "{{ERROR}}"
+      ],
+      "origin": "service/control/pause.go"
+    },
+    {
+      "id": "waiting-spn",
+      "events": [
+        "control:status_info"
+      ],
+      "title": [
+        "Waiting for SPN to stop...",
+        "正在等待 SPN 停止…"
+      ],
+      "message": [
+        "",
+        ""
+      ],
+      "origin": "service/control/pause.go"
+    },
+    {
+      "id": "authorize-app",
+      "events": [
+        "core:authorize-app-*"
+      ],
+      "title": [
+        "An app requests access to the Portmaster",
+        "有应用请求访问 Portmaster"
+      ],
+      "message": [
+        "Allow {{APP}} ({{PROFILE}}) to query and modify the Portmaster?\n\nBinary: {{PATH}}",
+        "是否允许 {{APP}}（{{PROFILE}}）查询和修改 Portmaster？\n\n可执行文件：{{PATH}}"
+      ],
+      "origin": "service/core/api.go"
+    },
+    {
+      "id": "system-integration",
+      "events": [
+        "compat:system-integration-issue"
+      ],
+      "title": [
+        "Detected System Integration Issue",
+        "检测到系统集成问题"
+      ],
+      "message": [
+        "Portmaster detected a problem with its system integration. You can try to restart or reinstall the Portmaster. If that does not help, [get support here](https://safing.io/support/).",
+        "Portmaster 检测到系统集成问题。可以尝试重启或重新安装 Portmaster。如果问题仍未解决，请[在此获取支持](https://safing.io/support/)。"
+      ],
+      "origin": "service/compat/notify.go"
+    },
+    {
+      "id": "system-compatibility",
+      "events": [
+        "compat:compatibility-issue"
+      ],
+      "title": [
+        "Detected Compatibility Issue",
+        "检测到兼容性问题"
+      ],
+      "message": [
+        "Portmaster detected that something is interfering with its operation. This could be a VPN, an Anti-Virus or another network protection software. Please check if you are running an incompatible [VPN client](https://docs.safing.io/portmaster/install/status/vpn-compatibility) or [software](https://docs.safing.io/portmaster/install/status/software-compatibility) and disable it. If that does not help, [get support here](https://safing.io/support/).",
+        "Portmaster 检测到其他程序正在干扰其运行，可能是 VPN、杀毒软件或其他网络防护软件。请检查是否运行了不兼容的 [VPN 客户端](https://docs.safing.io/portmaster/install/status/vpn-compatibility)或[软件](https://docs.safing.io/portmaster/install/status/software-compatibility)，并将其停用。如果问题仍未解决，请[在此获取支持](https://safing.io/support/)。"
+      ],
+      "origin": "service/compat/notify.go"
+    },
+    {
+      "id": "manual-dns",
+      "events": [
+        "compat:manual-dns-setup-required"
+      ],
+      "title": [
+        "Manual DNS Setup Required",
+        "需要手动配置 DNS"
+      ],
+      "message": [
+        "You have disabled Seamless DNS Integration. As a result, Portmaster can no longer protect you or filter connections reliably. To fix this, you have to manually configure {{IP}} as the DNS Server in your system and in any conflicting application. This message will disappear some time after correct configuration.",
+        "你已禁用无缝 DNS 集成，因此 Portmaster 无法再可靠地保护你或过滤连接。要解决此问题，需要在系统和所有存在冲突的应用中手动将 {{IP}} 配置为 DNS 服务器。正确配置一段时间后，此提示会消失。"
+      ],
+      "origin": "service/compat/notify.go"
+    },
+    {
+      "id": "secure-dns-bypass",
+      "events": [
+        "compat:secure-dns-bypass-*"
+      ],
+      "title": [
+        "Blocked Bypass Attempt by {{APP}}",
+        "已阻止 {{APP}} 的绕过尝试"
+      ],
+      "message": [
+        "{{APP}} is using its own Secure DNS resolver, which would bypass Portmaster's firewall protections. If {{APP}} experiences problems, disable Secure DNS within {{APP}} to restore functionality. Rest assured that Portmaster handles Secure DNS for your whole device, including {{APP}}.",
+        "{{APP}} 正在使用自己的安全 DNS 解析器，这会绕过 Portmaster 的防火墙保护。如果 {{APP}} 出现问题，请在 {{APP}} 内禁用安全 DNS 以恢复正常功能。Portmaster 会为整台设备（包括 {{APP}}）处理安全 DNS，请放心。"
+      ],
+      "origin": "service/compat/notify.go"
+    },
+    {
+      "id": "udp-tunnel",
+      "events": [
+        "compat:multi-peer-udp-tunnel-*"
+      ],
+      "title": [
+        "Detected SPN Incompatibility in {{APP}}",
+        "检测到 {{APP}} 与 SPN 不兼容"
+      ],
+      "message": [
+        "Portmaster detected that {{APP}} is trying to connect to multiple servers via the SPN using a single UDP connection. This is common for technologies such as torrents. Unfortunately, the SPN does not support this feature currently. You can try to change this behavior within the affected app or you could exempt it from using the SPN.",
+        "Portmaster 检测到 {{APP}} 正尝试通过单个 UDP 连接经由 SPN 连接多个服务器。这常见于 BT 下载等技术。目前 SPN 尚不支持此功能。可以尝试在该应用中更改此行为，或将其排除在 SPN 之外。"
+      ],
+      "origin": "service/compat/notify.go"
+    },
+    {
+      "id": "prompt-incoming",
+      "events": [
+        "filter:prompt-*"
+      ],
+      "title": [
+        "Connection Prompt",
+        "连接请求"
+      ],
+      "message": [
+        "{{APP}} wants to accept connections from {{IP}} ({{PROTOCOL}}/{{PORT}})",
+        "{{APP}} 请求接受来自 {{IP}} 的连接（{{PROTOCOL}}/{{PORT}}）"
+      ],
+      "origin": "service/firewall/prompt.go",
+      "numbers": [
+        "PROTOCOL",
+        "PORT"
+      ],
+      "requiredAction": "allow-serving-ip"
+    },
+    {
+      "id": "prompt-ip",
+      "events": [
+        "filter:prompt-*"
+      ],
+      "title": [
+        "Connection Prompt",
+        "连接请求"
+      ],
+      "message": [
+        "{{APP}} wants to connect to {{IP}} ({{PROTOCOL}}/{{PORT}})",
+        "{{APP}} 请求连接到 {{IP}}（{{PROTOCOL}}/{{PORT}}）"
+      ],
+      "origin": "service/firewall/prompt.go",
+      "numbers": [
+        "PROTOCOL",
+        "PORT"
+      ],
+      "requiredAction": "allow-ip"
+    },
+    {
+      "id": "prompt-domain",
+      "events": [
+        "filter:prompt-*"
+      ],
+      "title": [
+        "Connection Prompt",
+        "连接请求"
+      ],
+      "message": [
+        "{{APP}} wants to connect to {{DOMAIN}}",
+        "{{APP}} 请求连接到 {{DOMAIN}}"
+      ],
+      "origin": "service/firewall/prompt.go",
+      "requiredAction": "allow-domain-all"
+    },
+    {
+      "id": "conflicting-dns",
+      "events": [
+        "nameserver:conflicting-service",
+        "nameserver:conflicting-service-secondary"
+      ],
+      "title": [
+        "Conflicting DNS Software",
+        "DNS 软件冲突"
+      ],
+      "message": [
+        "Restart Portmaster after you have deactivated or properly configured the conflicting software: {{PROCESS}}",
+        "请先停用或正确配置存在冲突的软件，再重启 Portmaster：{{PROCESS}}"
+      ],
+      "origin": "service/nameserver/module.go"
+    },
+    {
+      "id": "dns-error",
+      "events": [
+        "nameserver:listener-failed",
+        "nameserver:listener-failed-secondary"
+      ],
+      "title": [
+        "Secure DNS Error",
+        "安全 DNS 错误"
+      ],
+      "message": [
+        "The internal DNS server failed. Restart Portmaster to try again. Error: {{ERROR}}",
+        "内部 DNS 服务器发生故障。请重启 Portmaster 后重试。错误：{{ERROR}}"
+      ],
+      "origin": "service/nameserver/module.go"
+    },
+    {
+      "id": "offline",
+      "events": [
+        "netenv:online-status:offline"
+      ],
+      "title": [
+        "Device is Offline",
+        "设备已离线"
+      ],
+      "message": [
+        "Portmaster did not detect any network connectivity.",
+        "Portmaster 未检测到任何网络连接。"
+      ],
+      "origin": "service/netenv/online-status.go"
+    },
+    {
+      "id": "limited",
+      "events": [
+        "netenv:online-status:limited"
+      ],
+      "title": [
+        "Limited network connectivity.",
+        "网络连接受限"
+      ],
+      "message": [
+        "Portmaster did detect local network connectivity, but could not detect connectivity to the Internet.",
+        "Portmaster 检测到本地网络连接，但未检测到互联网连接。"
+      ],
+      "origin": "service/netenv/online-status.go"
+    },
+    {
+      "id": "portal",
+      "events": [
+        "netenv:captive-portal"
+      ],
+      "title": [
+        "Captive Portal Detected",
+        "检测到网络认证门户"
+      ],
+      "message": [
+        "The Portmaster detected a captive portal. You might experience limited network connectivity until the portal is handled.",
+        "Portmaster 检测到网络认证门户。在完成门户认证之前，网络连接可能受限。"
+      ],
+      "origin": "service/netenv/online-status.go"
+    },
+    {
+      "id": "slow-dns",
+      "events": [
+        "resolver:suggest-using-stale-cache"
+      ],
+      "title": [
+        "Speed Up Website Loading",
+        "加快网站加载速度"
+      ],
+      "message": [
+        "Portmaster has detected that websites may load slower because DNS queries are currently slower than expected. You may want to switch your DNS provider or enable using expired DNS cache entries for better performance.",
+        "Portmaster 检测到当前 DNS 查询速度低于预期，可能导致网站加载缓慢。可以更换 DNS 提供商，或启用使用已过期的 DNS 缓存条目以改善性能。"
+      ],
+      "origin": "service/resolver/metrics.go"
+    },
+    {
+      "id": "failed-resolvers",
+      "events": [
+        "resolver:all-configured-resolvers-failed"
+      ],
+      "title": [
+        "Configured DNS Servers Failing",
+        "已配置的 DNS 服务器不可用"
+      ],
+      "message": [
+        "All configured DNS servers in Portmaster are failing.\n\nYou might not be able to connect to these servers, or all of these servers are offline.  \nChoosing different DNS servers might fix this problem.\n\nWhile the issue persists, Portmaster will use the DNS servers from your system or network, if permitted by configuration.\n\nAlternatively, there might be something on your device that is interfering with Portmaster. This could be a firewall or another secure DNS resolver software. If that is your suspicion, please [check if you are running incompatible software here](https://docs.safing.io/portmaster/install/status/software-compatibility).\n\nThis notification will go away when Portmaster detects a working configured DNS server.",
+        "Portmaster 中配置的所有 DNS 服务器均不可用。\n\n你可能无法连接到这些服务器，或者这些服务器全部离线。  \n选择其他 DNS 服务器可能解决此问题。\n\n在问题解决之前，如果配置允许，Portmaster 会使用系统或网络提供的 DNS 服务器。\n\n也可能是设备上的其他程序正在干扰 Portmaster，例如防火墙或其他安全 DNS 解析软件。如果你怀疑存在这种情况，请[在此检查是否运行了不兼容的软件](https://docs.safing.io/portmaster/install/status/software-compatibility)。\n\n当 Portmaster 检测到某个已配置的 DNS 服务器恢复正常后，此通知会消失。"
+      ],
+      "origin": "service/resolver/main.go"
+    },
+    {
+      "id": "default-resolvers",
+      "events": [
+        "missing-resolvers"
+      ],
+      "title": [
+        "Using Factory Default DNS Servers",
+        "正在使用出厂默认 DNS 服务器"
+      ],
+      "message": [
+        "The Portmaster could not find any (valid) DNS servers in the settings or system. In order to prevent being disconnected, the factory defaults are being used instead. If you just switched your network, this should be resolved shortly.",
+        "Portmaster 未在设置或系统中找到有效的 DNS 服务器。为避免网络中断，现改用出厂默认服务器。如果你刚刚切换了网络，此问题通常会很快自行解决。"
+      ],
+      "origin": "service/resolver/resolvers.go"
+    },
+    {
+      "id": "no-resolvers",
+      "events": [
+        "missing-resolvers"
+      ],
+      "title": [
+        "No DNS Servers Configured",
+        "未配置 DNS 服务器"
+      ],
+      "message": [
+        "The Portmaster could not find any (valid) DNS servers in the settings or system. You will experience severe connectivity problems until resolved. If you just switched your network, this should be resolved shortly.",
+        "Portmaster 未在设置或系统中找到有效的 DNS 服务器。在解决之前，你可能遇到严重的网络连接问题。如果你刚刚切换了网络，此问题通常会很快自行解决。"
+      ],
+      "origin": "service/resolver/resolvers.go"
+    },
+    {
+      "id": "up-to-date",
+      "events": [
+        "updates:no-new-update"
+      ],
+      "title": [
+        "Portmaster Is Up-To-Date",
+        "Portmaster 已是最新版本"
+      ],
+      "message": [
+        "Portmaster v{{VERSION}} is the newest version.",
+        "Portmaster v{{VERSION}} 是最新版本。"
+      ],
+      "origin": "service/updates/module.go"
+    },
+    {
+      "id": "up-to-date-error",
+      "events": [
+        "updates:no-new-update"
+      ],
+      "title": [
+        "Portmaster Is Up-To-Date*",
+        "Portmaster 已是最新版本*"
+      ],
+      "message": [
+        "While Portmaster v{{VERSION}} is the newest version, there is an internal issue with checking for updates: {{ERROR}}",
+        "Portmaster v{{VERSION}} 已是最新版本，但检查更新时发生了内部问题：{{ERROR}}"
+      ],
+      "origin": "service/updates/module.go"
+    },
+    {
+      "id": "update-available",
+      "events": [
+        "updates:update-available"
+      ],
+      "title": [
+        "New Update Available",
+        "有新更新可用"
+      ],
+      "message": [
+        "Portmaster v{{VERSION}} is available. Click Upgrade to download and upgrade now.",
+        "Portmaster v{{VERSION}} 已可用。点击“立即升级”以下载并升级。"
+      ],
+      "origin": "service/updates/module.go"
+    },
+    {
+      "id": "update-ready",
+      "events": [
+        "updates:update-available"
+      ],
+      "title": [
+        "New Update Ready",
+        "新更新已准备就绪"
+      ],
+      "message": [
+        "Portmaster v{{VERSION}} is available. Click Upgrade to upgrade now.",
+        "Portmaster v{{VERSION}} 已可用。点击“立即升级”开始升级。"
+      ],
+      "origin": "service/updates/module.go"
+    },
+    {
+      "id": "restart-required",
+      "events": [
+        "updates:restart-required"
+      ],
+      "title": [
+        "Restart Required",
+        "需要重启"
+      ],
+      "message": [
+        "Portmaster v{{VERSION}} is installed. Restart to use new version.",
+        "Portmaster v{{VERSION}} 已安装。重启后即可使用新版本。"
+      ],
+      "origin": "service/updates/module.go"
+    },
+    {
+      "id": "corrupt-install",
+      "events": [
+        "updates:corrupt-installation"
+      ],
+      "title": [
+        "Install Corruption",
+        "安装文件损坏"
+      ],
+      "message": [
+        "Portmaster has detected that one or more of its own files have been corrupted. Please re-install the software. Error: {{ERROR}}",
+        "Portmaster 检测到一个或多个自身文件已损坏。请重新安装软件。错误：{{ERROR}}"
+      ],
+      "origin": "service/updates/module.go"
+    },
+    {
+      "id": "filterlists-initializing",
+      "events": [
+        "filterlists:disabled"
+      ],
+      "title": [
+        "Filter Lists Are Initializing",
+        "过滤列表正在初始化"
+      ],
+      "message": [
+        "Filter lists are being downloaded and set up in the background. They will be activated as configured when finished.",
+        "正在后台下载并设置过滤列表，完成后会按配置启用。"
+      ],
+      "origin": "service/intel/filterlists/module.go"
+    },
+    {
+      "id": "filterlists-failed",
+      "events": [
+        "filterlists:update-failed"
+      ],
+      "title": [
+        "Filter Lists Update Failed",
+        "过滤列表更新失败"
+      ],
+      "message": [
+        "The Portmaster failed to process a filter lists update. Filtering capabilities are currently either impaired or not available at all. Error: {{ERROR}}",
+        "Portmaster 无法处理过滤列表更新。目前过滤功能可能受影响或完全不可用。错误：{{ERROR}}"
+      ],
+      "origin": "service/intel/filterlists/updater.go"
+    },
+    {
+      "id": "filterlists-stale",
+      "events": [
+        "filterlists:staledata"
+      ],
+      "title": [
+        "Filter Lists May Overblock",
+        "过滤列表可能误拦截"
+      ],
+      "message": [
+        "The Portmaster failed to delete outdated filter list data. Filtering capabilities are fully available, but overblocking may occur. Error: {{ERROR}}",
+        "Portmaster 无法删除过时的过滤列表数据。过滤功能仍完全可用，但可能发生误拦截。错误：{{ERROR}}"
+      ],
+      "origin": "service/intel/filterlists/updater.go"
+    },
+    {
+      "id": "customlist-open",
+      "events": [
+        "customlists:parse-warning"
+      ],
+      "title": [
+        "Failed to open custom filter list",
+        "无法打开自定义过滤列表"
+      ],
+      "message": [
+        "{{ERROR}}",
+        "{{ERROR}}"
+      ],
+      "origin": "service/intel/customlists/lists.go"
+    },
+    {
+      "id": "customlist-invalid",
+      "events": [
+        "customlists:too-many-zero-ips"
+      ],
+      "title": [
+        "Custom filter list has many invalid lines",
+        "自定义过滤列表包含大量无效行"
+      ],
+      "message": [
+        "{{INVALID}} out of {{TOTAL}} lines are invalid.\n\t\t\t Check if you are using the correct file format and if the path to the custom filter list is correct.",
+        "共 {{TOTAL}} 行，其中 {{INVALID}} 行无效。\n请检查文件格式以及自定义过滤列表的路径是否正确。"
+      ],
+      "origin": "service/intel/customlists/lists.go",
+      "numbers": [
+        "INVALID",
+        "TOTAL"
+      ]
+    },
+    {
+      "id": "customlist-loaded",
+      "events": [
+        "customlists:parse-status"
+      ],
+      "title": [
+        "Custom filter list loaded successfully.",
+        "自定义过滤列表加载成功"
+      ],
+      "message": [
+        "Custom filter list loaded from file {{PATH}}:  \n{{DOMAINS}} Domains  \n{{IPS}} IPs  \n{{ASNS}} Autonomous Systems  \n{{COUNTRIES}} Countries",
+        "已从文件 {{PATH}} 加载自定义过滤列表：  \n{{DOMAINS}} 个域名  \n{{IPS}} 个 IP 地址  \n{{ASNS}} 个自治系统  \n{{COUNTRIES}} 个国家/地区"
+      ],
+      "origin": "service/intel/customlists/lists.go",
+      "numbers": [
+        "DOMAINS",
+        "IPS",
+        "ASNS",
+        "COUNTRIES"
+      ]
+    },
+    {
+      "id": "global-profile",
+      "events": [
+        "profile:global-profile-error"
+      ],
+      "title": [
+        "Internal Settings Failure",
+        "内部设置错误"
+      ],
+      "message": [
+        "Some global settings might not be applied correctly. You can try restarting the Portmaster to resolve this problem. Error: {{ERROR}}",
+        "部分全局设置可能未正确应用。可以尝试重启 Portmaster 以解决此问题。错误：{{ERROR}}"
+      ],
+      "origin": "service/profile/config-update.go"
+    },
+    {
+      "id": "migration-icons",
+      "events": [
+        "migration-failed-icons"
+      ],
+      "title": [
+        "Profile Migration Failed",
+        "配置文件迁移失败"
+      ],
+      "message": [
+        "Failed to migrate icons of {{FAILED}} profiles (out of {{TOTAL}} pending). The last error was: {{ERROR}}\n\nPlease restart Portmaster to try the migration again.",
+        "待迁移的 {{TOTAL}} 个配置文件中，有 {{FAILED}} 个的图标迁移失败。最后一个错误：{{ERROR}}\n\n请重启 Portmaster 后重试迁移。"
+      ],
+      "origin": "service/profile/migrations.go",
+      "numbers": [
+        "FAILED",
+        "TOTAL"
+      ]
+    },
+    {
+      "id": "migration-ids",
+      "events": [
+        "migration-failed-derived-IDs"
+      ],
+      "title": [
+        "Profile Migration Failed",
+        "配置文件迁移失败"
+      ],
+      "message": [
+        "Failed to migrate profile IDs of {{FAILED}} profiles (out of {{TOTAL}} pending). The last error was: {{ERROR}}\n\nPlease restart Portmaster to try the migration again.",
+        "待迁移的 {{TOTAL}} 个配置文件中，有 {{FAILED}} 个的配置文件 ID迁移失败。最后一个错误：{{ERROR}}\n\n请重启 Portmaster 后重试迁移。"
+      ],
+      "origin": "service/profile/migrations.go",
+      "numbers": [
+        "FAILED",
+        "TOTAL"
+      ]
+    },
+    {
+      "id": "profile-conflict",
+      "events": [
+        "profiles:match-conflict:*"
+      ],
+      "title": [
+        "App Settings Match Conflict",
+        "应用设置匹配冲突"
+      ],
+      "message": [
+        "Multiple app settings match the app at {{PATH}} with the same priority, please change one of them: {{FIRST}} or {{SECOND}}",
+        "多个应用设置以相同优先级匹配了位于 {{PATH}} 的应用。请修改其中一个：{{FIRST}} 或 {{SECOND}}"
+      ],
+      "origin": "service/profile/get.go"
+    },
+    {
+      "id": "ivpn-old",
+      "events": [
+        "interop:ivpn-old-version"
+      ],
+      "title": [
+        "IVPN Client Compatibility Notice",
+        "IVPN 客户端兼容性提示"
+      ],
+      "message": [
+        "Portmaster has detected the IVPN Client, but the installed version may not be fully compatible when running alongside Portmaster. Some features may not work as expected. Please consider updating to the latest version of the IVPN Client.",
+        "Portmaster 检测到 IVPN 客户端，但当前安装的版本可能无法与 Portmaster 完全兼容地同时运行。部分功能可能无法正常工作。建议更新到最新版本的 IVPN 客户端。"
+      ],
+      "origin": "service/interop/ivpn/notification.go"
+    },
+    {
+      "id": "ivpn",
+      "events": [
+        "interop:ivpn"
+      ],
+      "title": [
+        "IVPN Client detected",
+        "检测到 IVPN 客户端"
+      ],
+      "message": [
+        "Portmaster has detected the IVPN Client and will allow its VPN and service connections.",
+        "Portmaster 已检测到 IVPN 客户端，将允许其 VPN 和服务连接。"
+      ],
+      "origin": "service/interop/ivpn/notification.go"
+    },
+    {
+      "id": "spn-connecting",
+      "events": [
+        "spn:establishing-home-hub"
+      ],
+      "title": [
+        "Connecting to SPN...",
+        "正在连接 SPN…"
+      ],
+      "message": [
+        "Connecting to the SPN network is in progress.",
+        "正在连接 SPN 网络。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-user-error",
+      "events": [
+        "spn:failed-to-get-user"
+      ],
+      "title": [
+        "SPN Internal Error",
+        "SPN 内部错误"
+      ],
+      "message": [
+        "Please restart Portmaster.",
+        "请重启 Portmaster。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-login",
+      "events": [
+        "spn:not-logged-in"
+      ],
+      "title": [
+        "SPN Login Required",
+        "需要登录 SPN"
+      ],
+      "message": [
+        "Please log in to access the SPN.",
+        "请登录以访问 SPN。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-ineligible",
+      "events": [
+        "spn:package-not-eligible"
+      ],
+      "title": [
+        "SPN Not Included In Package",
+        "套餐不包含 SPN"
+      ],
+      "message": [
+        "Your current Portmaster Package does not include access to the SPN. Please upgrade your package on the Account Page.",
+        "当前 Portmaster 套餐不包含 SPN 访问权限。请前往账户页面升级套餐。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-tokens",
+      "events": [
+        "spn:tokens-exhausted"
+      ],
+      "title": [
+        "SPN Access Tokens Exhausted",
+        "SPN 访问令牌已用尽"
+      ],
+      "message": [
+        "The Portmaster failed to get new access tokens to access the SPN. The Portmaster will automatically retry to get new access tokens.",
+        "Portmaster 无法获取用于访问 SPN 的新访问令牌，将自动重试。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-excluded",
+      "events": [
+        "spn:all-home-hubs-excluded"
+      ],
+      "title": [
+        "All Home Nodes Excluded",
+        "所有入口节点均被排除"
+      ],
+      "message": [
+        "Your current Home Node Rules exclude all available and eligible SPN Nodes. Please change your rules to allow for at least one available and eligible Home Node.",
+        "当前入口节点规则排除了所有可用且符合条件的 SPN 节点。请修改规则，至少允许一个可用且符合条件的入口节点。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-bootstrap",
+      "events": [
+        "spn:cannot-bootstrap"
+      ],
+      "title": [
+        "SPN Cannot Bootstrap",
+        "SPN 无法初始化连接"
+      ],
+      "message": [
+        "The local state of the SPN network is likely outdated. Portmaster was not able to identify a server to connect to. Please re-initialize the SPN using the tools menu or the button on the notification.",
+        "本地 SPN 网络状态可能已过时，Portmaster 无法找到可连接的服务器。请使用工具菜单或通知中的按钮重新初始化 SPN。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-update-user",
+      "events": [
+        "spn:failed-to-update-user"
+      ],
+      "title": [
+        "SPN Account Server Error",
+        "SPN 账户服务器错误"
+      ],
+      "message": [
+        "The status of your SPN account could not be updated: {{ERROR}}",
+        "无法更新 SPN 账户状态：{{ERROR}}"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-home-failure",
+      "events": [
+        "spn:home-hub-failure"
+      ],
+      "title": [
+        "SPN Failed to Connect",
+        "SPN 连接失败"
+      ],
+      "message": [
+        "Failed to connect to a home hub: {{ERROR}}. The Portmaster will retry to connect automatically.",
+        "无法连接入口节点：{{ERROR}}。Portmaster 将自动重试连接。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "spn-account-plain-deviceRemoved",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: This device may have been deactivated or removed from your account. Please log in again.",
+        "无法启用 SPN：此设备可能已在你的账户中停用或移除。请重新登录。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-plain-upgrade",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Get more features. Upgrade today.",
+        "无法启用 SPN：立即升级，获取更多功能。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-plain-renewalDelayed",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Your auto-renewal seems to be delayed. Please refresh and check the status of your payment. Payment information may be delayed.",
+        "无法启用 SPN：自动续订似乎有所延迟。请刷新并检查付款状态。付款信息可能延迟更新。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-plain-renewalSoon",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Your subscription will auto-renew soon. Please note that payment information may be delayed.",
+        "无法启用 SPN：你的订阅即将自动续订。请注意，付款信息可能延迟更新。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-plain-packageEnded",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Your package has ended. Extend it on the Account Page.",
+        "无法启用 SPN：你的套餐已到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-plain-packageEnding",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Your package ends soon. Extend it on the Account Page.",
+        "无法启用 SPN：你的套餐即将到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-plain-suspended",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Your account ({{USERNAME}}) was suspended. Please contact support for details.",
+        "无法启用 SPN：你的账户（{{USERNAME}}）已被停用。请联系支持团队了解详情。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-plain-namedPackageEnded",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Your package {{PLAN_NAME}} has ended. Extend it on the Account Page.",
+        "无法启用 SPN：你的 {{PLAN_NAME}} 套餐已到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-only",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. ",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-upgrade",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. Get more features. Upgrade today.",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。 立即升级，获取更多功能。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-renewalDelayed",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. Your auto-renewal seems to be delayed. Please refresh and check the status of your payment. Payment information may be delayed.",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。 自动续订似乎有所延迟。请刷新并检查付款状态。付款信息可能延迟更新。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-renewalSoon",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. Your subscription will auto-renew soon. Please note that payment information may be delayed.",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。 你的订阅即将自动续订。请注意，付款信息可能延迟更新。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-packageEnded",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. Your package has ended. Extend it on the Account Page.",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。 你的套餐已到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-packageEnding",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. Your package ends soon. Extend it on the Account Page.",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。 你的套餐即将到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-suspended",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. Your account ({{USERNAME}}) was suspended. Please contact support for details.",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。 你的账户（{{USERNAME}}）已被停用。请联系支持团队了解详情。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-unknownError-namedPackageEnded",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an unknown error in the communication with the account server. The shown information may not be accurate. Your package {{PLAN_NAME}} has ended. Extend it on the Account Page.",
+        "无法启用 SPN：与账户服务器通信时发生未知错误。显示的信息可能不准确。 你的 {{PLAN_NAME}} 套餐已到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-only",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. ",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-upgrade",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. Get more features. Upgrade today.",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。 立即升级，获取更多功能。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-renewalDelayed",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. Your auto-renewal seems to be delayed. Please refresh and check the status of your payment. Payment information may be delayed.",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。 自动续订似乎有所延迟。请刷新并检查付款状态。付款信息可能延迟更新。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-renewalSoon",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. Your subscription will auto-renew soon. Please note that payment information may be delayed.",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。 你的订阅即将自动续订。请注意，付款信息可能延迟更新。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-packageEnded",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. Your package has ended. Extend it on the Account Page.",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。 你的套餐已到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-packageEnding",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. Your package ends soon. Extend it on the Account Page.",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。 你的套餐即将到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-suspended",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. Your account ({{USERNAME}}) was suspended. Please contact support for details.",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。 你的账户（{{USERNAME}}）已被停用。请联系支持团队了解详情。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-connectionError-namedPackageEnded",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: Portmaster could not connect to the account server. The shown information may not be accurate. Your package {{PLAN_NAME}} has ended. Extend it on the Account Page.",
+        "无法启用 SPN：Portmaster 无法连接到账户服务器。显示的信息可能不准确。 你的 {{PLAN_NAME}} 套餐已到期。请前往账户页面续订。"
+      ],
+      "origin": "spn/access/account/view.go"
+    },
+    {
+      "id": "spn-account-fallback",
+      "events": [
+        "spn:subscription-inactive"
+      ],
+      "title": [
+        "Portmaster Package Issue",
+        "Portmaster 套餐问题"
+      ],
+      "message": [
+        "Cannot enable SPN: There is an issue with your Portmaster Package. Please check the Account Page.",
+        "无法启用 SPN：你的 Portmaster 套餐存在问题，请检查账户页面。"
+      ],
+      "origin": "spn/captain/client.go"
+    },
+    {
+      "id": "package-expiry-named-today",
+      "events": [
+        "access:end-of-package-near"
+      ],
+      "title": [
+        "{{PLAN}} About to Expire",
+        "{{PLAN}} 即将到期"
+      ],
+      "message": [
+        "Your current {{PLAN}} ends today. Extend it to keep your full privacy protections.",
+        "你当前的 {{PLAN}} 将于今天到期。续期以保持完整的隐私保护。"
+      ],
+      "origin": "spn/access/notify.go"
+    },
+    {
+      "id": "package-expiry-named-tomorrow",
+      "events": [
+        "access:end-of-package-near"
+      ],
+      "title": [
+        "{{PLAN}} About to Expire",
+        "{{PLAN}} 即将到期"
+      ],
+      "message": [
+        "Your current {{PLAN}} ends tomorrow. Extend it to keep your full privacy protections.",
+        "你当前的 {{PLAN}} 将于明天到期。续期以保持完整的隐私保护。"
+      ],
+      "origin": "spn/access/notify.go"
+    },
+    {
+      "id": "package-expiry-named-days",
+      "events": [
+        "access:end-of-package-near"
+      ],
+      "title": [
+        "{{PLAN}} About to Expire",
+        "{{PLAN}} 即将到期"
+      ],
+      "message": [
+        "Your current {{PLAN}} ends in {{DAYS}} days. Extend it to keep your full privacy protections.",
+        "你当前的 {{PLAN}} 将于{{DAYS}} 天后到期。续期以保持完整的隐私保护。"
+      ],
+      "origin": "spn/access/notify.go",
+      "numbers": [
+        "DAYS"
+      ]
+    },
+    {
+      "id": "package-expiry-appended-today",
+      "events": [
+        "access:end-of-package-near"
+      ],
+      "title": [
+        "{{PLAN}} About to Expire",
+        "{{PLAN}} 即将到期"
+      ],
+      "message": [
+        "Your current {{PLAN}} Package ends today. Extend it to keep your full privacy protections.",
+        "你当前的 {{PLAN}} 套餐 将于今天到期。续期以保持完整的隐私保护。"
+      ],
+      "origin": "spn/access/notify.go"
+    },
+    {
+      "id": "package-expiry-appended-tomorrow",
+      "events": [
+        "access:end-of-package-near"
+      ],
+      "title": [
+        "{{PLAN}} About to Expire",
+        "{{PLAN}} 即将到期"
+      ],
+      "message": [
+        "Your current {{PLAN}} Package ends tomorrow. Extend it to keep your full privacy protections.",
+        "你当前的 {{PLAN}} 套餐 将于明天到期。续期以保持完整的隐私保护。"
+      ],
+      "origin": "spn/access/notify.go"
+    },
+    {
+      "id": "package-expiry-appended-days",
+      "events": [
+        "access:end-of-package-near"
+      ],
+      "title": [
+        "{{PLAN}} About to Expire",
+        "{{PLAN}} 即将到期"
+      ],
+      "message": [
+        "Your current {{PLAN}} Package ends in {{DAYS}} days. Extend it to keep your full privacy protections.",
+        "你当前的 {{PLAN}} 套餐 将于{{DAYS}} 天后到期。续期以保持完整的隐私保护。"
+      ],
+      "origin": "spn/access/notify.go",
+      "numbers": [
+        "DAYS"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "events": [
+        "*"
+      ],
+      "source": "OK",
+      "target": "确定",
+      "ID": "ack",
+      "Type": "",
+      "Visibility": ""
+    },
+    {
+      "events": [
+        "resolver:suggest-using-stale-cache",
+        "access:end-of-package-near"
+      ],
+      "source": "Got it!",
+      "target": "知道了",
+      "ID": "ack",
+      "Type": "",
+      "Visibility": ""
+    },
+    {
+      "events": [
+        "resolver:suggest-using-stale-cache",
+        "interop:ivpn"
+      ],
+      "source": "Don't show again",
+      "target": "不再显示",
+      "ID": "suppress",
+      "Type": "",
+      "Visibility": "detailed"
+    },
+    {
+      "events": [
+        "resolver:suggest-using-stale-cache"
+      ],
+      "source": "Open Setting",
+      "target": "打开设置",
+      "ID": "",
+      "Type": "open-setting",
+      "Visibility": "in-app-only",
+      "Payload": {
+        "Key": "dns/useStaleCache",
+        "Profile": ""
+      }
+    },
+    {
+      "events": [
+        "*"
+      ],
+      "source": "Get Help",
+      "target": "获取帮助",
+      "ID": "",
+      "Type": "open-url",
+      "Visibility": "",
+      "Payload": "https://safing.io/support/"
+    },
+    {
+      "events": [
+        "spn:package-not-eligible",
+        "spn:subscription-inactive",
+        "access:end-of-package-near"
+      ],
+      "source": "Open Account Page",
+      "target": "打开账户页面",
+      "ID": "",
+      "Type": "open-url",
+      "Visibility": "",
+      "Payload": "https://account.safing.io"
+    },
+    {
+      "events": [
+        "filter:prompt-*"
+      ],
+      "source": "Allow",
+      "target": "允许",
+      "ID": "allow-domain-all",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2,
+      "ignoreVisibility": true
+    },
+    {
+      "events": [
+        "filter:prompt-*"
+      ],
+      "source": "Allow",
+      "target": "允许",
+      "ID": "allow-serving-ip",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2,
+      "ignoreVisibility": true
+    },
+    {
+      "events": [
+        "filter:prompt-*"
+      ],
+      "source": "Allow",
+      "target": "允许",
+      "ID": "allow-ip",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2,
+      "ignoreVisibility": true
+    },
+    {
+      "events": [
+        "filter:prompt-*"
+      ],
+      "source": "Block",
+      "target": "阻止",
+      "ID": "block-domain-all",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2,
+      "ignoreVisibility": true
+    },
+    {
+      "events": [
+        "filter:prompt-*"
+      ],
+      "source": "Block",
+      "target": "阻止",
+      "ID": "block-serving-ip",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2,
+      "ignoreVisibility": true
+    },
+    {
+      "events": [
+        "filter:prompt-*"
+      ],
+      "source": "Block",
+      "target": "阻止",
+      "ID": "block-ip",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2,
+      "ignoreVisibility": true
+    },
+    {
+      "events": [
+        "core:authorize-app-*"
+      ],
+      "source": "Authorize",
+      "target": "授权",
+      "ID": "allow",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2
+    },
+    {
+      "events": [
+        "core:authorize-app-*"
+      ],
+      "source": "Deny",
+      "target": "拒绝",
+      "ID": "deny",
+      "Type": "",
+      "Visibility": "",
+      "notificationType": 2
+    },
+    {
+      "events": [
+        "compat:manual-dns-setup-required"
+      ],
+      "source": "Revert",
+      "target": "恢复设置",
+      "ID": "",
+      "Type": "open-setting",
+      "Visibility": "",
+      "Payload": {
+        "Key": "filter/dnsQueryInterception",
+        "Profile": ""
+      }
+    },
+    {
+      "events": [
+        "nameserver:conflicting-service",
+        "nameserver:conflicting-service-secondary"
+      ],
+      "source": "Open Docs",
+      "target": "打开文档",
+      "ID": "",
+      "Type": "open-url",
+      "Visibility": "",
+      "Payload": "https://docs.safing.io/portmaster/install/status/software-compatibility"
+    },
+    {
+      "events": [
+        "resolver:all-configured-resolvers-failed"
+      ],
+      "source": "Change DNS Servers",
+      "target": "更改 DNS 服务器",
+      "ID": "",
+      "Type": "open-setting",
+      "Visibility": "",
+      "Payload": {
+        "Key": "dns/nameservers",
+        "Profile": ""
+      }
+    },
+    {
+      "events": [
+        "spn:not-logged-in"
+      ],
+      "source": "Login",
+      "target": "登录",
+      "ID": "",
+      "Type": "open-page",
+      "Visibility": "",
+      "Payload": "spn"
+    },
+    {
+      "events": [
+        "spn:all-home-hubs-excluded"
+      ],
+      "source": "Configure",
+      "target": "配置",
+      "ID": "",
+      "Type": "open-setting",
+      "Visibility": "",
+      "Payload": {
+        "Key": "spn/homePolicy",
+        "Profile": ""
+      }
+    },
+    {
+      "events": [
+        "spn:cannot-bootstrap"
+      ],
+      "source": "Re-Init SPN",
+      "target": "重新初始化 SPN",
+      "ID": "re-init",
+      "Type": "call-webhook",
+      "Visibility": "",
+      "Payload": {
+        "Method": "",
+        "URL": "spn/reinit",
+        "Payload": null,
+        "ResultAction": "display"
+      }
+    },
+    {
+      "events": [
+        "netenv:captive-portal"
+      ],
+      "source": "Ignore",
+      "target": "忽略",
+      "ID": "ack",
+      "Type": "",
+      "Visibility": ""
+    },
+    {
+      "events": [
+        "netenv:captive-portal"
+      ],
+      "source": "Open Portal",
+      "target": "打开认证门户",
+      "ID": "",
+      "Type": "open-url",
+      "Visibility": "",
+      "payloadFrom": "URL"
+    },
+    {
+      "events": [
+        "config:validation-error:*"
+      ],
+      "source": "Change",
+      "target": "更改",
+      "ID": "",
+      "Type": "open-setting",
+      "Visibility": "",
+      "settingFromEvent": "config:validation-error:"
+    },
+    {
+      "events": [
+        "updates:update-available"
+      ],
+      "source": "Upgrade Now",
+      "target": "立即升级",
+      "ID": "upgrade",
+      "Type": "call-webhook",
+      "Visibility": "",
+      "Payload": {
+        "Method": "POST",
+        "URL": "updates/apply",
+        "Payload": null,
+        "ResultAction": ""
+      }
+    },
+    {
+      "events": [
+        "updates:restart-required"
+      ],
+      "source": "Later",
+      "target": "稍后",
+      "ID": "ack",
+      "Type": "",
+      "Visibility": ""
+    },
+    {
+      "events": [
+        "updates:restart-required"
+      ],
+      "source": "Restart Now",
+      "target": "立即重启",
+      "ID": "restart",
+      "Type": "call-webhook",
+      "Visibility": "",
+      "Payload": {
+        "Method": "POST",
+        "URL": "core/restart?source=upgrade",
+        "Payload": null,
+        "ResultAction": ""
+      }
+    },
+    {
+      "events": [
+        "control:paused"
+      ],
+      "source": "Resume",
+      "target": "恢复",
+      "ID": "",
+      "Type": "call-webhook",
+      "Visibility": "",
+      "Payload": {
+        "Method": "",
+        "URL": "control/resume",
+        "Payload": null,
+        "ResultAction": "display"
+      }
+    },
+    {
+      "events": [
+        "profiles:match-conflict:*"
+      ],
+      "source": "Change (1)",
+      "target": "更改（1）",
+      "ID": "",
+      "Type": "open-profile",
+      "Visibility": "",
+      "profileIndex": 1
+    },
+    {
+      "events": [
+        "profiles:match-conflict:*"
+      ],
+      "source": "Change (2)",
+      "target": "更改（2）",
+      "ID": "",
+      "Type": "open-profile",
+      "Visibility": "",
+      "profileIndex": 2
+    }
+  ]
+}

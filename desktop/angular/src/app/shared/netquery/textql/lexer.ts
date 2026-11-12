@@ -242,7 +242,7 @@ export class Lexer {
     }
 
     // Failed to handle the input character
-    return this._input.croak(`Can't handle character: ${ch}`);
+    return this._input.croak($localize`:@@netquery.parse.unsupportedCharacter:Can't handle character: ${ch}:CHARACTER:`);
   }
 
   private revertWhitespace() {
